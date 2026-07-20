@@ -64,7 +64,7 @@ const isActive = (item: NavItem): boolean => {
 ---
 
 <header class="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
-  <div data-nav class="nav-shell relative mx-auto flex max-w-7xl items-center justify-between gap-4 rounded-2xl border border-ink-900/10 bg-white/85 px-4 py-3 shadow-card backdrop-blur-md transition-[background-color,padding,border-color,box-shadow] duration-300 sm:px-6">
+  <div data-nav class="nav-shell relative z-10 mx-auto flex max-w-7xl items-center justify-between gap-4 rounded-2xl border border-ink-900/10 bg-white/85 px-4 py-3 shadow-card backdrop-blur-md transition-[background-color,padding,border-color,box-shadow] duration-300 sm:px-6">
     <a href="/" class="group flex shrink-0 items-center gap-2.5" aria-label="Diesel Ingeniería, inicio">
       <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-steel-600 to-steel-800 text-oil-400 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:rotate-6">
         <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true">
@@ -163,6 +163,16 @@ const isActive = (item: NavItem): boolean => {
   .dd-panel {
     transform: translateY(0.5rem) scale(0.98);
     transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+  }
+  /* Puente invisible que cubre el hueco entre el tab y el panel,
+     para que el hover sea continuo y el indicador no vuelva al tab activo. */
+  .dd-panel::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -0.75rem;
+    height: 0.75rem;
   }
   .group:hover .dd-panel {
     transform: translateY(0.35rem) scale(1);

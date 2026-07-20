@@ -171,10 +171,23 @@ h1, h2, h3, h4, .font-display {
 }
 .surface-hover {
   position: relative;
-  transition: box-shadow 0.28s ease, border-color 0.28s ease, transform 0.28s ease;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
 }
-/* Barra de acento (oil → steel) que aparece en el borde superior al hover */
-.surface-hover::before {
+/* Hover asentado, sin salto: borde acero + lavado + profundidad */
+.surface-hover:hover {
+  border-color: rgb(27 81 130 / 0.4);
+  background-color: var(--color-steel-50);
+  box-shadow: var(--shadow-lift);
+}
+
+/* ---- Tech card: identidad blueprint para cards de tamaño uniforme ---- */
+.tech-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* Cinta superior oil → steel — siempre visible (etiqueta de plano) */
+.tech-card::before {
   content: "";
   position: absolute;
   inset: 0 0 auto 0;
@@ -182,20 +195,33 @@ h1, h2, h3, h4, .font-display {
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
   background: linear-gradient(90deg, var(--color-oil-500), var(--color-steel-500));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.32s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+/* Corchete de registro (esquina inf. derecha) que crece al hover */
+.tech-card::after {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-right: 1.5px solid rgb(27 81 130 / 0.3);
+  border-bottom: 1.5px solid rgb(27 81 130 / 0.3);
+  transition: width 0.35s ease, height 0.35s ease, border-color 0.35s ease;
   pointer-events: none;
 }
-.surface-hover:hover {
-  transform: translateY(-5px);
-  border-color: rgb(217 130 43 / 0.5);
-  box-shadow: 0 2px 4px rgb(14 22 32 / 0.06), 0 26px 52px -22px rgb(181 101 29 / 0.34);
+.tech-card:hover::after {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-color: var(--color-oil-500);
 }
-.surface-hover:hover::before { transform: scaleX(1); }
+/* Número fantasma que se enciende al hover */
+.card-index { transition: color 0.3s ease; }
+.tech-card:hover .card-index { color: var(--color-steel-300); }
+
 @media (prefers-reduced-motion: reduce) {
-  .surface-hover:hover { transform: none; }
-  .surface-hover::before { transition: none; }
+  .tech-card::after { transition: none; }
 }
 
 /* Subrayado animado para enlaces de texto */
