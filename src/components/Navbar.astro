@@ -1,0 +1,202 @@
+---
+interface NavChild {
+  label: string;
+  href: string;
+}
+interface NavItem {
+  label: string;
+  href: string;
+  children?: NavChild[];
+}
+
+const nav: NavItem[] = [
+  {
+    label: "Servicios",
+    href: "/servicios",
+    children: [
+      { label: "Mantenimiento predictivo", href: "/servicios#predictivo" },
+      { label: "Mantenimiento preventivo", href: "/servicios#preventivo" },
+      { label: "Mantenimiento correctivo", href: "/servicios#correctivo" },
+      { label: "Fabricación a medida", href: "/servicios#fabricacion" },
+      { label: "Filtración y microfiltrado", href: "/servicios#filtracion" },
+    ],
+  },
+  {
+    label: "Especialidades",
+    href: "/especialidades",
+    children: [
+      { label: "Bombas hidráulicas", href: "/especialidades#bombas" },
+      { label: "Motores hidráulicos", href: "/especialidades#motores" },
+      { label: "Válvulas y controles", href: "/especialidades#valvulas" },
+      { label: "Cilindros hidráulicos", href: "/especialidades#cilindros" },
+      { label: "Filtración", href: "/especialidades#filtracion" },
+      { label: "Ver todas las especialidades", href: "/especialidades" },
+    ],
+  },
+  {
+    label: "Sectores",
+    href: "/sectores",
+    children: [
+      { label: "Industrial", href: "/sectores#industrial" },
+      { label: "Agrícola", href: "/sectores#agricola" },
+      { label: "Construcción y minería", href: "/sectores#construccion-mineria" },
+      { label: "Forestal", href: "/sectores#forestal" },
+      { label: "Portuaria / Offshore", href: "/sectores#portuaria-offshore" },
+      { label: "Manipulación de cargas", href: "/sectores#manipulacion-cargas" },
+    ],
+  },
+  {
+    label: "Empresa",
+    href: "/nosotros",
+    children: [
+      { label: "Nosotros", href: "/nosotros" },
+      { label: "Proyectos", href: "/proyectos" },
+      { label: "Contacto", href: "/contacto" },
+    ],
+  },
+];
+
+const current = Astro.url.pathname;
+const isActive = (item: NavItem): boolean => {
+  const paths = [item.href, ...(item.children?.map((c) => c.href.split("#")[0]) ?? [])];
+  return paths.some((p) => current === p || (p !== "/" && current.startsWith(p)));
+};
+---
+
+<header class="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
+  <div data-nav class="nav-shell relative mx-auto flex max-w-7xl items-center justify-between gap-4 rounded-2xl border border-ink-900/10 bg-white/85 px-4 py-3 shadow-card backdrop-blur-md transition-[background-color,padding,border-color,box-shadow] duration-300 sm:px-6">
+    <a href="/" class="group flex shrink-0 items-center gap-2.5" aria-label="Diesel Ingeniería, inicio">
+      <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-steel-600 to-steel-800 text-oil-400 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:rotate-6">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true">
+          <path d="M12 2c-.3 0-.6.13-.8.36C9.1 5.2 6 9.9 6 13.5 6 17.6 8.7 21 12 21s6-3.4 6-7.5c0-3.6-3.1-8.3-5.2-11.14A1.02 1.02 0 0 0 12 2Zm0 15.5a3.75 3.75 0 0 1-3.75-3.75.75.75 0 0 1 1.5 0A2.25 2.25 0 0 0 12 16a.75.75 0 0 1 0 1.5Z"/>
+        </svg>
+      </span>
+      <span class="font-display leading-tight">
+        <span class="block text-sm font-bold tracking-wide text-ink-900 sm:text-base">DIESEL INGENIERÍA</span>
+        <span class="block text-[10px] font-semibold uppercase tracking-[0.18em] text-steel-600 sm:text-[11px]">Sistemas óleo-hidráulicos</span>
+      </span>
+    </a>
+
+    <nav data-nav-links class="relative hidden items-center gap-0.5 lg:flex" aria-label="Navegación principal">
+      <span data-nav-indicator class="pointer-events-none absolute left-0 top-1/2 z-0 h-9 -translate-y-1/2 rounded-lg bg-steel-100 opacity-0"></span>
+      {nav.map((item) => (
+        <div class="group relative z-10">
+          <a
+            data-nav-link
+            href={item.href}
+            class:list={["flex items-center gap-1 rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors", isActive(item) ? "is-active text-steel-700" : "text-ink-700 hover:text-steel-700"]}
+          >
+            {item.label}
+            {item.children && (
+              <svg viewBox="0 0 20 20" class="dd-caret h-3.5 w-3.5 text-ink-400 transition-transform duration-300 group-hover:rotate-180" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd"/>
+              </svg>
+            )}
+          </a>
+          {item.children && (
+            <div class="dd-panel invisible absolute left-0 top-full w-64 origin-top rounded-xl border border-ink-900/10 bg-white p-2 opacity-0 shadow-lift group-hover:visible group-hover:opacity-100">
+              {item.children.map((child) => (
+                <a href={child.href} class="dd-item block rounded-lg px-3 py-2 text-sm font-medium text-ink-600 transition-colors hover:bg-steel-50 hover:text-oil-700">
+                  {child.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </nav>
+
+    <div class="hidden shrink-0 items-center lg:flex">
+      <a
+        href="/contacto"
+        class="group cursor-pointer rounded-lg bg-oil-500 px-5 py-2.5 text-sm font-bold text-ink-950 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-oil-400 hover:shadow-glow"
+      >
+        Solicitar diagnóstico
+      </a>
+    </div>
+
+    <details class="group/mobile relative lg:hidden">
+      <summary class="flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-lg text-ink-800 transition-colors hover:bg-steel-50" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24" class="h-6 w-6 group-open/mobile:hidden" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+        <svg viewBox="0 0 24 24" class="hidden h-6 w-6 group-open/mobile:block" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/>
+        </svg>
+      </summary>
+      <div class="mobile-panel absolute right-0 top-full mt-3 max-h-[75vh] w-[85vw] max-w-sm overflow-y-auto rounded-xl border border-ink-900/10 bg-white p-3 shadow-lift">
+        {nav.map((item) => (
+          <div class="border-b border-ink-100 py-1.5 last:border-0">
+            <a href={item.href} class="block rounded-lg px-2 py-2 text-sm font-bold text-ink-900">
+              {item.label}
+            </a>
+            {item.children && (
+              <div class="ml-2 flex flex-col">
+                {item.children.map((child) => (
+                  <a href={child.href} class="rounded-lg px-2 py-1.5 text-sm text-ink-600 hover:text-oil-700">
+                    {child.label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+        <a href="/contacto" class="mt-3 block rounded-lg bg-oil-500 px-3 py-2 text-center text-sm font-bold text-ink-950">
+          Solicitar diagnóstico
+        </a>
+      </div>
+    </details>
+  </div>
+  <div class="pointer-events-none mx-auto mt-1 h-0.5 max-w-7xl origin-left scale-x-0 rounded-full bg-gradient-to-r from-oil-500 via-steel-500 to-transparent" data-scroll-progress></div>
+</header>
+
+<style>
+  .nav-shell.is-scrolled {
+    background-color: rgb(255 255 255 / 0.96);
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+    border-color: rgb(14 22 32 / 0.14);
+    box-shadow: var(--shadow-lift);
+  }
+
+  /* Dropdown: panel + stagger de los ítems */
+  .dd-panel {
+    transform: translateY(0.5rem) scale(0.98);
+    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+  }
+  .group:hover .dd-panel {
+    transform: translateY(0.35rem) scale(1);
+  }
+  .dd-item {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .group:hover .dd-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .group:hover .dd-item:nth-child(1) { transition-delay: 0.03s; }
+  .group:hover .dd-item:nth-child(2) { transition-delay: 0.06s; }
+  .group:hover .dd-item:nth-child(3) { transition-delay: 0.09s; }
+  .group:hover .dd-item:nth-child(4) { transition-delay: 0.12s; }
+  .group:hover .dd-item:nth-child(5) { transition-delay: 0.15s; }
+  .group:hover .dd-item:nth-child(6) { transition-delay: 0.18s; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-shell { animation: navIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    details[open] .mobile-panel { animation: mobileIn 0.22s ease both; }
+  }
+  @keyframes navIn {
+    from { opacity: 0; transform: translateY(-14px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes mobileIn {
+    from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dd-item { transition-delay: 0s !important; }
+  }
+</style>

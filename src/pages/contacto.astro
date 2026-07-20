@@ -1,0 +1,179 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { company, whatsappLink } from '../data/company';
+
+const contactCards = [
+  {
+    title: 'WhatsApp',
+    lines: [company.phones.whatsapp.display, ...company.phones.mobiles],
+    href: whatsappLink(),
+    cta: 'Escribir ahora',
+    icon: 'M12 21a9 9 0 1 0-7.9-4.7L3 21l4.8-1.3A8.9 8.9 0 0 0 12 21Z',
+  },
+  {
+    title: 'Teléfono fijo',
+    lines: [company.phones.landline],
+    href: 'tel:+5723995478',
+    cta: 'Llamar',
+    icon: 'M3 5.5A1.5 1.5 0 0 1 4.5 4h2.1a1 1 0 0 1 .96.73l.9 3.16a1 1 0 0 1-.29 1.03l-1.4 1.24a12.3 12.3 0 0 0 5.87 5.87l1.24-1.4a1 1 0 0 1 1.03-.29l3.16.9a1 1 0 0 1 .73.96v2.1A1.5 1.5 0 0 1 17.3 20C9.4 20 3 13.6 3 5.7Z',
+  },
+  {
+    title: 'Dirección',
+    lines: ['Calle 34 No. 3N-32', 'Barrio Bueno Madrid, Cali'],
+    href: 'https://maps.google.com/?q=Calle+34+No.+3N-32,+Barrio+Bueno+Madrid,+Santiago+de+Cali',
+    cta: 'Ver mapa',
+    icon: 'M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z',
+  },
+];
+
+const inputClass = "w-full rounded-lg border border-ink-900/15 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:border-oil-500 focus:outline-none focus:ring-2 focus:ring-oil-500/30";
+---
+
+<Layout
+  title="Contacto | Diesel Ingeniería SAS"
+  description="Solicite diagnóstico o cotización. WhatsApp, teléfono, correo y dirección en Cali. Servicio en el Valle del Cauca."
+  path="/contacto"
+>
+  <main>
+    <PageHero
+      kicker="Contacto"
+      title="Cuéntenos qué máquina y qué falla tiene"
+      lead="Respondemos por WhatsApp, teléfono o correo. Atendemos proyectos y servicio en el Valle del Cauca."
+      watermark="CONTACTO"
+    />
+
+    <section class="mx-auto max-w-7xl px-6 py-24" data-reveal-group>
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        {contactCards.map((c) => (
+          <a href={c.href} target="_blank" rel="noopener noreferrer" class="surface surface-hover reveal group cursor-pointer rounded-2xl p-7">
+            <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-oil-100 text-oil-700">
+              <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={c.icon}/></svg>
+            </span>
+            <h2 class="mt-5 font-display text-lg font-bold text-ink-900">{c.title}</h2>
+            <div class="mt-2 space-y-0.5">
+              {c.lines.map((line) => <p class="text-sm text-ink-600">{line}</p>)}
+            </div>
+            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-oil-700">
+              {c.cta}
+              <svg viewBox="0 0 20 20" class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="border-y border-ink-900/10 bg-steel-50 py-24" data-reveal-group>
+      <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 lg:grid-cols-[1fr_0.9fr]">
+        <div class="reveal">
+          <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ Solicitud de diagnóstico / cotización</span>
+          <h2 class="mt-4 font-display text-3xl font-bold leading-tight text-ink-900 text-balance sm:text-4xl">Complete el formulario y lo enviamos directo a nuestro WhatsApp</h2>
+          <p class="mt-4 max-w-md leading-relaxed text-ink-600">
+            Al enviar, se abre WhatsApp con su solicitud pre-diligenciada lista para enviarnos. También puede escribirnos directamente o llamarnos.
+          </p>
+
+          <form id="contact-form" data-wa={company.phones.whatsapp.e164} class="mt-8 space-y-5 rounded-2xl border border-ink-900/10 bg-white p-6 shadow-card sm:p-8" novalidate>
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div>
+                <label for="nombre" class="mb-1.5 block text-sm font-semibold text-ink-800">Nombre completo</label>
+                <input id="nombre" name="nombre" type="text" required class={inputClass} placeholder="Su nombre" />
+              </div>
+              <div>
+                <label for="empresa" class="mb-1.5 block text-sm font-semibold text-ink-800">Empresa</label>
+                <input id="empresa" name="empresa" type="text" class={inputClass} placeholder="Razón social (opcional)" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div>
+                <label for="telefono" class="mb-1.5 block text-sm font-semibold text-ink-800">Teléfono</label>
+                <input id="telefono" name="telefono" type="tel" required class={inputClass} placeholder="300 000 0000" />
+              </div>
+              <div>
+                <label for="correo" class="mb-1.5 block text-sm font-semibold text-ink-800">Correo</label>
+                <input id="correo" name="correo" type="email" class={inputClass} placeholder="correo@empresa.com" />
+              </div>
+            </div>
+
+            <div>
+              <label for="servicio" class="mb-1.5 block text-sm font-semibold text-ink-800">Tipo de servicio</label>
+              <select id="servicio" name="servicio" required class={`${inputClass} cursor-pointer`}>
+                <option value="">Seleccione una opción</option>
+                <option value="Mantenimiento predictivo">Mantenimiento predictivo</option>
+                <option value="Mantenimiento preventivo">Mantenimiento preventivo</option>
+                <option value="Mantenimiento correctivo">Mantenimiento correctivo</option>
+                <option value="Fabricación a medida">Fabricación a medida</option>
+                <option value="Filtración y microfiltrado">Filtración y microfiltrado</option>
+                <option value="Otro">Otro / no estoy seguro</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="mensaje" class="mb-1.5 block text-sm font-semibold text-ink-800">Máquina, marca y falla</label>
+              <textarea id="mensaje" name="mensaje" required rows="4" class={inputClass} placeholder="Cuéntenos el equipo, marca/modelo y la falla que presenta"></textarea>
+            </div>
+
+            <p id="form-error" class="hidden text-sm font-semibold text-oil-700">Por favor complete los campos obligatorios.</p>
+
+            <button type="submit" class="w-full cursor-pointer rounded-lg bg-oil-500 px-6 py-3.5 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto">
+              Enviar por WhatsApp
+            </button>
+          </form>
+        </div>
+
+        <div class="reveal">
+          <div class="overflow-hidden rounded-2xl border border-ink-900/10 shadow-card">
+            <iframe
+              title="Ubicación Diesel Ingeniería en Cali"
+              src="https://maps.google.com/maps?q=Calle%2034%20No.%203N-32%2C%20Barrio%20Bueno%20Madrid%2C%20Santiago%20de%20Cali&z=15&output=embed"
+              class="h-80 w-full"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+          <div class="surface mt-6 rounded-2xl p-6">
+            <h3 class="font-display text-sm font-bold uppercase tracking-wider text-steel-700">Cobertura regional</h3>
+            <p class="mt-2.5 leading-relaxed text-ink-600">
+              Nuestro taller está en Cali y prestamos servicio en sitio (pruebas, calibración y microfiltrado) en el Valle del Cauca.
+            </p>
+            <p class="mt-4 font-mono text-xs text-ink-500">
+              NIT {company.nit} · Sin redes sociales — escríbanos por WhatsApp, teléfono o correo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const errorEl = document.getElementById('form-error');
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const required = ['nombre', 'telefono', 'servicio', 'mensaje'];
+      const missing = required.some((field) => !String(data.get(field) ?? '').trim());
+
+      if (missing) {
+        errorEl?.classList.remove('hidden');
+        return;
+      }
+      errorEl?.classList.add('hidden');
+
+      const lines = [
+        'Hola Diesel Ingeniería, quisiera solicitar un diagnóstico/cotización:',
+        `Nombre: ${data.get('nombre')}`,
+        data.get('empresa') ? `Empresa: ${data.get('empresa')}` : '',
+        `Teléfono: ${data.get('telefono')}`,
+        data.get('correo') ? `Correo: ${data.get('correo')}` : '',
+        `Servicio: ${data.get('servicio')}`,
+        `Detalle: ${data.get('mensaje')}`,
+      ].filter(Boolean);
+
+      const wa = form.dataset.wa ?? '573167427795';
+      const url = `https://wa.me/${wa}?text=${encodeURIComponent(lines.join('\n'))}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    });
+  </script>
+</Layout>

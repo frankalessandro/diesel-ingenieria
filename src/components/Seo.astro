@@ -1,0 +1,53 @@
+---
+import { company } from '../data/company';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  schema?: Record<string, unknown>;
+}
+
+const { title, description, path = "/", schema } = Astro.props;
+const site = Astro.site ?? new URL("https://www.dieselingenieria.com.co");
+const canonical = new URL(path, site).toString();
+const ogImage = new URL("/og-cover.png", site).toString();
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: company.name,
+  description:
+    "Especialistas en sistemas óleo-hidráulicos, neumáticos e instrumentación: mantenimiento predictivo, preventivo, correctivo y fabricación de cilindros y unidades de potencia.",
+  url: site.toString(),
+  telephone: `+57 ${company.phones.whatsapp.display}`,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Calle 34 No. 3N-32, Barrio Bueno Madrid",
+    addressLocality: company.city,
+    addressRegion: company.region,
+    addressCountry: company.country,
+  },
+  areaServed: `${company.region}, Colombia`,
+  priceRange: "$$",
+};
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:locale" content="es_CO" />
+<meta property="og:site_name" content="Diesel Ingeniería" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schema ?? organizationSchema)} />
