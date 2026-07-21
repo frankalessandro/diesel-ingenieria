@@ -1,12 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import { company, figures } from '../data/company';
 
 const categories = [
   {
     id: 'bombas',
     title: 'Bombas hidráulicas',
     intro: 'Manuales, de engranajes, de paletas y de pistones. Las reparamos, mecanizamos y conseguimos a nivel nacional.',
+    icon: 'M4 4v5h5M4.5 9A7.5 7.5 0 0 1 18 6.5M20 20v-5h-5M19.5 15A7.5 7.5 0 0 1 6 17.5',
     items: [
       { name: 'Manuales', specs: 'Series PMP, PM, PMD · 6–45 cc · hasta 380 bar pico' },
       { name: 'De engranajes (piñones)', specs: 'Internas EIPS2/EIPI3/EIPH6 y externas · 5–125 cc · hasta 320 bar pico' },
@@ -21,6 +23,7 @@ const categories = [
     id: 'motores',
     title: 'Motores hidráulicos',
     intro: 'Transforman la energía del fluido en movimiento rotativo. Orbitales, engranajes, paletas, pistones y motores de rueda.',
+    icon: 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM12 3v3m0 12v3m9-9h-3M6 12H3m15.36-6.36-2.12 2.12M8.76 15.24l-2.12 2.12m0-10.72 2.12 2.12m6.48 6.48 2.12 2.12',
     items: [
       { name: 'Orbitales', specs: 'Series MLHM–MLHV · 12,5–1.000 cc · hasta 280 bar' },
       { name: 'De engranajes', specs: 'Bidireccionales, altas velocidades' },
@@ -35,6 +38,7 @@ const categories = [
     id: 'direcciones',
     title: 'Direcciones hidráulicas',
     intro: 'Orbitroles y válvulas de dirección proporcional para maquinaria agrícola, forestal, obras y embarcaciones.',
+    icon: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18ZM12 12 6.5 8.3M12 12l5.5-3.7M12 12v9',
     items: [
       { name: 'Columna de dirección KK', specs: 'Ejes estriados o chavetados' },
       { name: 'Válvula de dirección HKU/S', specs: 'Hasta 100 bar · volumen 40–1000 cc' },
@@ -46,6 +50,7 @@ const categories = [
     id: 'cilindros',
     title: 'Cilindros hidráulicos',
     intro: 'Fabricación a medida, suministro de componentes y reparación completa: desarme, rectificado, seal kit, mecanizado, prueba en banco y soldadura.',
+    icon: 'M4 9h10v6H4zM14 12h6M17 9v6',
     items: [
       { name: 'Fabricación a medida', specs: 'Según plano o requerimiento del proyecto' },
       { name: 'Reparación integral', specs: 'Desarme · rectificado · seal kit · mecanizado · prueba en banco · soldadura' },
@@ -56,6 +61,7 @@ const categories = [
     id: 'valvulas',
     title: 'Válvulas y controles',
     intro: 'Control direccional, de presión y de velocidad. Líneas, proporcionales, electroválvulas modulares y bloques manifold insertables.',
+    icon: 'M4 12h4l4-7 4 14 4-7h4',
     items: [
       { name: 'Válvulas en línea', specs: 'Retención, aguja, contrabalanceo, limitadora de presión, divisoras de flujo · hasta 500 bar' },
       { name: 'Proporcionales', specs: 'Direccional 4/3 vías DPG-03-3C2, limitadoras EBG/EDG, reguladoras QPG/PPG/EFBG' },
@@ -68,6 +74,7 @@ const categories = [
     id: 'acumuladores',
     title: 'Acumuladores',
     intro: 'Recipientes de acero de alta resistencia divididos por vejiga o membrana elástica entre gas (nitrógeno) y líquido.',
+    icon: 'M9 3h6v4a3 3 0 0 1-6 0V3ZM12 10v11M8 21h8',
     items: [
       { name: 'Vejiga HB 330', specs: 'Hasta 350 bar · acero forjado · 2,5–50 lts' },
       { name: 'Vejiga HTR', specs: 'Hasta 250 bar · 0,35–50 lts' },
@@ -80,6 +87,7 @@ const categories = [
     id: 'filtracion',
     title: 'Filtración',
     intro: 'Filtros de succión, retorno y presión, además de soluciones especializadas para petróleo y offshore.',
+    icon: 'M4 4h16l-6 8v6l-4 2v-8L4 4Z',
     items: [
       { name: 'Succión SC3', specs: '8–600 lpm · 149µ · -40 a 80°C' },
       { name: 'Retorno en tanque / en línea', specs: 'TIFP, HLIFE, HLIFR, HLSE · spin-on' },
@@ -92,6 +100,7 @@ const categories = [
     id: 'neumatica',
     title: 'Sistemas neumáticos',
     intro: 'Potencia por aire comprimido, complementaria a la línea óleo-hidráulica.',
+    icon: 'M3 8h10a3 3 0 1 0-3-3M3 16h14a3 3 0 1 1-3 3M3 12h17.5a2.5 2.5 0 1 0-2.5-2.5',
     items: [
       { name: 'Válvulas neumáticas', specs: 'Control direccional y de proceso' },
       { name: 'Actuadores y cilindros neumáticos', specs: 'Lineales y rotativos' },
@@ -102,6 +111,7 @@ const categories = [
     id: 'lubricacion',
     title: 'Sistemas de lubricación',
     intro: 'Engrase centralizado para equipos con múltiples puntos críticos.',
+    icon: 'M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11Z',
     items: [
       { name: 'Unidades de lubricación centralizada', specs: 'Automatización de puntos de engrase' },
       { name: 'Bombas neumáticas de diafragma', specs: 'Para grasa y aceites de lubricación' },
@@ -111,6 +121,7 @@ const categories = [
     id: 'instrumentacion',
     title: 'Instrumentación y diagnóstico',
     intro: 'Medición y monitoreo para diagnóstico predictivo y control de sistemas.',
+    icon: 'M12 21a8 8 0 1 1 0-16 8 8 0 0 1 0 16ZM12 13l4-4M9 21v-1.2M15 21v-1.2',
     items: [
       { name: 'Manómetros y vacuómetros', specs: 'Medición de presión y vacío' },
       { name: 'Indicadores de nivel y temperatura', specs: 'Con mirillas de nivel' },
@@ -122,6 +133,7 @@ const categories = [
     id: 'accesorios',
     title: 'Accesorios',
     intro: 'Campanas, bridas, soportes, tubing, tapas de llenado, acoples rápidos e intercambiadores de calor.',
+    icon: 'M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2 2.3-2.3Z',
     items: [
       { name: 'Campanas y acoples de unión', specs: 'Motores 0,75–420 HP · ejes 6–38,10 mm' },
       { name: 'Bridas SAE código 61', specs: '3.000 y 6.000 PSI · norma DIN 6162 · carbono o AISI 316L' },
@@ -132,6 +144,8 @@ const categories = [
     ],
   },
 ];
+
+const totalItems = categories.reduce((sum, c) => sum + c.items.length, 0);
 ---
 
 <Layout
@@ -147,23 +161,77 @@ const categories = [
       watermark="TÉCNICA"
     />
 
+    <!-- ============ TIRA DE CIFRAS ============ -->
+    <section class="border-b border-ink-900/10 bg-paper py-10">
+      <div class="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-6 sm:grid-cols-4" data-reveal-group>
+        <div class="reveal">
+          <p class="font-display text-4xl font-bold text-ink-900"><span data-counter={categories.length}>0</span></p>
+          <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-500">Especialidades técnicas</p>
+        </div>
+        <div class="reveal">
+          <p class="font-display text-4xl font-bold text-ink-900"><span data-counter={totalItems}>0</span>+</p>
+          <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-500">Líneas de producto</p>
+        </div>
+        <div class="reveal">
+          <p class="font-display text-4xl font-bold text-ink-900"><span data-counter={figures.years}>0</span></p>
+          <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-500">Años de experiencia</p>
+        </div>
+        <div class="reveal">
+          <p class="font-display text-4xl font-bold text-ink-900">{company.region}</p>
+          <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-500">Cobertura de servicio</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NAV DE CATEGORÍAS (scrollspy) ============ -->
+    <nav data-spy-nav class="sticky top-20 z-30 border-b border-ink-900/10 bg-paper/95 backdrop-blur-md">
+      <div class="mask-fade-x mx-auto flex max-w-7xl gap-1.5 overflow-x-auto px-6 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {categories.map((cat, i) => (
+          <a
+            href={`#${cat.id}`}
+            data-spy-link
+            class:list={["spy-link flex shrink-0 cursor-pointer items-center gap-2 rounded-full border border-transparent px-3.5 py-2 text-xs font-bold text-ink-600 transition-colors duration-200", i === 0 && "is-active"]}
+          >
+            <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={cat.icon}/></svg>
+            {cat.title}
+          </a>
+        ))}
+      </div>
+    </nav>
+
     <div class="mx-auto max-w-7xl px-6">
       {categories.map((cat, i) => (
-        <section id={cat.id} class:list={["scroll-mt-28 border-b border-ink-900/10 py-16", i % 2 === 1 && "bg-white"]} data-reveal-group>
-          <div class="grid grid-cols-1 gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-            <div class="reveal lg:sticky lg:top-28 lg:self-start">
-              <span class="font-display text-6xl font-bold text-ink-200">{String(i + 1).padStart(2, '0')}</span>
-              <h2 class="mt-2 font-display text-2xl font-bold text-ink-900 sm:text-3xl">{cat.title}</h2>
+        <section id={cat.id} data-parallax-scope class="relative scroll-mt-40 overflow-hidden border-b border-ink-900/10 py-16" data-reveal-group>
+          <span
+            class="pointer-events-none absolute -right-6 -top-4 select-none font-display text-[9rem] font-bold leading-none text-stroke opacity-60 sm:text-[11rem]"
+            data-parallax="0.1"
+            aria-hidden="true"
+          >{String(i + 1).padStart(2, '0')}</span>
+
+          <div class="relative grid grid-cols-1 gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+            <div class="reveal lg:sticky lg:top-40 lg:self-start">
+              <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-steel-50 text-steel-700">
+                <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={cat.icon}/></svg>
+              </span>
+              <h2 class="mask-reveal mt-4 overflow-hidden">
+                <span data-mask-inner class="block font-display text-2xl font-bold text-ink-900 sm:text-3xl">{cat.title}</span>
+              </h2>
               <p class="mt-3 leading-relaxed text-ink-600">{cat.intro}</p>
-              <a href="/contacto" class="mt-5 inline-flex cursor-pointer items-center gap-1.5 text-sm font-bold text-oil-700 hover:text-oil-600">
+              <span class="mt-4 inline-flex items-center gap-1.5 rounded-full border border-steel-600/25 bg-steel-50 px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-wide text-steel-700">
+                {cat.items.length} {cat.items.length === 1 ? 'línea' : 'líneas'} de producto
+              </span>
+              <a href="/contacto" class="mt-5 flex w-fit cursor-pointer items-center gap-1.5 text-sm font-bold text-oil-700 hover:text-oil-600">
                 ¿Necesita esto? Contáctenos
                 <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
               </a>
             </div>
             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {cat.items.map((item) => (
-                <div class="reveal surface surface-hover rounded-xl p-5">
-                  <p class="font-semibold text-ink-900">{item.name}</p>
+              {cat.items.map((item, idx) => (
+                <div class="tech-card surface surface-hover reveal rounded-xl p-5">
+                  <div class="flex items-start justify-between gap-3">
+                    <p class="font-semibold text-ink-900">{item.name}</p>
+                    <span class="card-index shrink-0 font-mono text-xs font-bold text-ink-200">{String(idx + 1).padStart(2, '0')}</span>
+                  </div>
                   <p class="mt-1.5 font-mono text-xs leading-relaxed text-steel-600">{item.specs}</p>
                 </div>
               ))}
@@ -183,3 +251,14 @@ const categories = [
     </section>
   </main>
 </Layout>
+
+<style>
+  .spy-link.is-active {
+    background-color: var(--color-steel-50);
+    border-color: rgb(27 81 130 / 0.25);
+    color: var(--color-steel-700);
+  }
+  .spy-link:hover:not(.is-active) {
+    background-color: var(--color-paper-2);
+  }
+</style>

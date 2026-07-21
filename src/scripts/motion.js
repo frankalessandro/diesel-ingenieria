@@ -266,6 +266,35 @@ function initNavIndicator() {
   }
 }
 
+/* ---------- Nav de categorías con scrollspy (p.ej. /especialidades) ---------- */
+function initCategorySpy() {
+  const nav = document.querySelector("[data-spy-nav]");
+  if (!nav) return;
+
+  const links = Array.from(nav.querySelectorAll("[data-spy-link]"));
+  const sections = links
+    .map((link) => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
+  if (!sections.length) return;
+
+  const setActive = (id) => {
+    links.forEach((link) => link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`));
+    const activeLink = nav.querySelector(`[data-spy-link][href="#${id}"]`);
+    if (activeLink) activeLink.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+  };
+
+  sections.forEach((section) => {
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 45%",
+      end: "bottom 45%",
+      onToggle: (self) => {
+        if (self.isActive) setActive(section.id);
+      },
+    });
+  });
+}
+
 function init() {
   initHeroIntro();
   initReveals();
@@ -275,6 +304,7 @@ function init() {
   initProgressBar();
   initNavbar();
   initNavIndicator();
+  initCategorySpy();
 
   // Refresh once fonts / layout settle
   requestAnimationFrame(() => ScrollTrigger.refresh());
