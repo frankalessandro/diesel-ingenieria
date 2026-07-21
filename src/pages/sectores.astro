@@ -51,6 +51,7 @@ const tabCss = sectors
     #tab-${s.id}:checked ~ .switch-grid [data-btn="${s.id}"] .btn-icon { background-color: rgb(8 13 19 / 0.14); color: var(--color-ink-950); }
     #tab-${s.id}:checked ~ .frame-corners [data-panel="${s.id}"] { display: grid; }
     #tab-${s.id}:focus-visible ~ .switch-grid [data-btn="${s.id}"] { outline: 2px solid var(--color-oil-400); outline-offset: 2px; }
+    #tab-${s.id}:checked ~ .carousel-dots [data-dot="${s.id}"] { background-color: var(--color-oil-400); width: 1.1rem; border-radius: 9999px; }
   `,
   )
   .join('\n');
@@ -94,15 +95,22 @@ const tabCss = sectors
             <input type="radio" name="sector-tab" id={`tab-${s.id}`} class="sr-only" checked={i === 0} />
           ))}
 
-          <div class="switch-grid grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          <div class="switch-grid -mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-1 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-6">
             {sectors.map((s) => (
-              <label for={`tab-${s.id}`} data-btn={s.id} class="switch-btn relative flex cursor-pointer flex-col items-center gap-3 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-6 text-center transition-colors duration-200">
+              <label for={`tab-${s.id}`} data-btn={s.id} class="switch-btn relative flex w-[40%] shrink-0 cursor-pointer snap-center flex-col items-center gap-3 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-6 text-center transition-colors duration-200 sm:w-auto sm:shrink">
                 <span class="btn-index absolute left-3 top-2.5 font-mono text-[10px] font-bold text-white/35 transition-colors duration-200">{s.n}</span>
                 <span class="btn-icon flex h-11 w-11 items-center justify-center rounded-lg bg-white/10 text-oil-400 transition-colors duration-200">
                   <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={s.icon}/></svg>
                 </span>
                 <span class="font-display text-sm font-bold leading-tight text-white">{s.title}</span>
               </label>
+            ))}
+          </div>
+
+          <!-- Indicador de posición del carrusel (solo mobile) -->
+          <div class="carousel-dots mt-4 flex justify-center gap-1.5 sm:hidden" aria-hidden="true">
+            {sectors.map((s) => (
+              <span data-dot={s.id} class="dot h-1.5 w-1.5 rounded-full bg-white/20 transition-colors duration-200"></span>
             ))}
           </div>
 
@@ -194,6 +202,20 @@ const tabCss = sectors
   .switch-btn:hover {
     border-color: rgb(217 130 43 / 0.4);
     background-color: rgb(255 255 255 / 0.08);
+  }
+
+  /* Carrusel de sectores en mobile: sin scrollbar visible, snap suave */
+  .switch-grid {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .switch-grid::-webkit-scrollbar {
+    display: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .switch-grid {
+      scroll-behavior: smooth;
+    }
   }
 
   /* Esquinas de plano técnico para el panel de detalle (sobre fondo oscuro) */
