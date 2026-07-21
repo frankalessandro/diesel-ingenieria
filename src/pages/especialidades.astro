@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import SteelBanner from '../components/SteelBanner.astro';
 import { company, figures } from '../data/company';
 
 const categories = [
@@ -224,32 +225,29 @@ const totalItems = categories.reduce((sum, c) => sum + c.items.length, 0);
       ))}
     </div>
 
-    <section class="bg-paper-2 py-24">
-      <div class="mx-auto max-w-4xl px-6" data-reveal-group>
-        <div class="frame-corners reveal relative overflow-hidden rounded-2xl border border-ink-900/10 bg-white p-10 text-center sm:p-14">
-          <span class="corner corner-tl" aria-hidden="true"></span>
-          <span class="corner corner-tr" aria-hidden="true"></span>
-          <span class="corner corner-bl" aria-hidden="true"></span>
-          <span class="corner corner-br" aria-hidden="true"></span>
-          <div class="dot-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden="true"></div>
+    <SteelBanner width="narrow">
+      <div class="frame-corners reveal relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.04] p-10 text-center sm:p-14">
+        <span class="corner corner-tl" aria-hidden="true"></span>
+        <span class="corner corner-tr" aria-hidden="true"></span>
+        <span class="corner corner-bl" aria-hidden="true"></span>
+        <span class="corner corner-br" aria-hidden="true"></span>
 
-          <div class="relative">
-            <span class="inline-flex items-center gap-2.5 rounded-full border border-steel-600/25 bg-steel-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-steel-700">
-              <span class="h-1.5 w-1.5 rounded-full bg-oil-500"></span>
-              ¿No lo encuentra en la lista?
-            </span>
-            <h2 class="mt-5 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Búsquelo, lo conseguimos o lo reparamos</h2>
-            <p class="mx-auto mt-4 max-w-xl text-lg text-ink-600">Trabajamos con marcas líderes del sector a nivel nacional. Cuéntenos qué necesita.</p>
-            <ul class="mt-6 flex flex-wrap justify-center gap-2">
-              {['Eaton', 'Rexroth', 'Parker', 'Vickers', 'Denison', 'Sun Hydraulics'].map((brand) => (
-                <li class="spec-chip rounded-full px-3 py-1.5 text-xs font-semibold">{brand}</li>
-              ))}
-            </ul>
-            <a href="/contacto" class="mt-8 inline-block cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">Contáctenos</a>
-          </div>
+        <div class="relative">
+          <span class="inline-flex items-center gap-2.5 rounded-full border border-oil-400/30 bg-oil-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-oil-400">
+            <span class="h-1.5 w-1.5 rounded-full bg-oil-400"></span>
+            ¿No lo encuentra en la lista?
+          </span>
+          <h2 class="mt-5 font-display text-4xl font-bold leading-tight text-balance sm:text-5xl">Búsquelo, lo conseguimos o lo reparamos</h2>
+          <p class="mx-auto mt-4 max-w-xl text-lg text-steel-200/85">Trabajamos con marcas líderes del sector a nivel nacional. Cuéntenos qué necesita.</p>
+          <ul class="mt-6 flex flex-wrap justify-center gap-2">
+            {['Eaton', 'Rexroth', 'Parker', 'Vickers', 'Denison', 'Sun Hydraulics'].map((brand) => (
+              <li class="spec-chip rounded-full px-3 py-1.5 text-xs font-semibold">{brand}</li>
+            ))}
+          </ul>
+          <a href="/contacto" class="mt-8 inline-block cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">Contáctenos</a>
         </div>
       </div>
-    </section>
+    </SteelBanner>
   </main>
 </Layout>
 
@@ -264,7 +262,7 @@ const totalItems = categories.reduce((sum, c) => sum + c.items.length, 0);
     position: absolute;
     width: 1.1rem;
     height: 1.1rem;
-    border-color: rgb(27 81 130 / 0.35);
+    border-color: rgb(236 156 68 / 0.55);
     pointer-events: none;
   }
   .corner-tl { top: 0.9rem; left: 0.9rem; border-top: 2px solid; border-left: 2px solid; }

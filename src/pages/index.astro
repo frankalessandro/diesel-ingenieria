@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SteelBanner from '../components/SteelBanner.astro';
 import { company, figures, whatsappLink } from '../data/company';
 
 const wa = whatsappLink();
@@ -433,18 +434,14 @@ const philosophy = [
     </section>
 
     <!-- ============ CTA FINAL ============ -->
-    <section class="noise relative overflow-hidden border-t border-ink-900/10 bg-steel-50 py-28">
-      <div class="absolute inset-0 blueprint-grid opacity-80" aria-hidden="true"></div>
-      <div class="pointer-events-none absolute left-1/2 top-6 h-64 w-64 -translate-x-1/2 rounded-full bg-oil-100/80 blur-[100px]" aria-hidden="true"></div>
-      <div class="relative z-10 mx-auto max-w-4xl px-6 text-center" data-reveal-group>
-        <h2 class="reveal font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-6xl">¿Qué máquina necesita que revisemos?</h2>
-        <p class="reveal mx-auto mt-5 max-w-xl text-lg text-ink-600">Cuéntenos marca, modelo y falla. Respondemos por WhatsApp, teléfono o correo, con servicio en el Valle del Cauca.</p>
-        <div class="reveal mt-9 flex flex-wrap items-center justify-center gap-4">
-          <a href="/contacto" class="cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">Solicitar diagnóstico</a>
-          <a href={wa} target="_blank" rel="noopener noreferrer" class="cursor-pointer rounded-lg border border-ink-900/15 bg-white px-7 py-4 text-sm font-bold text-ink-800 transition-colors hover:border-steel-500 hover:text-steel-700">{company.phones.whatsapp.display}</a>
-        </div>
-        <p class="reveal mt-8 font-mono text-xs uppercase tracking-[0.2em] text-ink-500">Cali · Valle del Cauca · Servicio en sitio</p>
+    <SteelBanner width="narrow" padding="py-28" class="text-center">
+      <h2 class="reveal font-display text-4xl font-bold leading-tight text-balance sm:text-6xl">¿Qué máquina necesita que revisemos?</h2>
+      <p class="reveal mx-auto mt-5 max-w-xl text-lg text-steel-200/85">Cuéntenos marca, modelo y falla. Respondemos por WhatsApp, teléfono o correo, con servicio en el Valle del Cauca.</p>
+      <div class="reveal mt-9 flex flex-wrap items-center justify-center gap-4">
+        <a href="/contacto" class="cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">Solicitar diagnóstico</a>
+        <a href={wa} target="_blank" rel="noopener noreferrer" class="cursor-pointer rounded-lg border border-white/25 bg-white/10 px-7 py-4 text-sm font-bold text-white transition-colors hover:border-oil-400 hover:bg-white/15">{company.phones.whatsapp.display}</a>
       </div>
-    </section>
+      <p class="reveal mt-8 font-mono text-xs uppercase tracking-[0.2em] text-steel-200/60">Cali · Valle del Cauca · Servicio en sitio</p>
+    </SteelBanner>
   </main>
 </Layout>

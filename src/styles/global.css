@@ -250,6 +250,12 @@ h1, h2, h3, h4, .font-display {
   color: #eaf2f8;
 }
 
+/* Los títulos quedan fijados en ink-900 arriba (pensado para fondos claros) con la
+   misma especificidad que las utilidades text-*. Dentro del panel oscuro se invierten. */
+.panel-steel :is(h1, h2, h3, h4, .font-display) {
+  color: #fff;
+}
+
 /* Diagonal section edges to break the horizontal-band rhythm */
 .edge-top { clip-path: polygon(0 2.5vw, 100% 0, 100% 100%, 0 100%); }
 .edge-bottom { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2.5vw), 0 100%); }
