@@ -5,20 +5,20 @@ import SteelBanner from '../components/SteelBanner.astro';
 
 const projects = [
   {
-    n: '01', span: 'lg:col-span-8', title: 'Mini centrales hidráulicas',
+    span: 'lg:col-span-8', title: 'Mini centrales hidráulicas',
     desc: 'Tanques de 1 a 20 litros, bomba de engranaje de 0,5 a 7,3 cc, motor eléctrico de 12/24/110/220/380 V y potencias de 1 a 5 Cv, hasta 180 bar.',
     apps: ['Canasta aérea', 'Elevadores', 'Camión remolque', 'Mesa pantográfica', 'Muelles', 'Cigüeña', 'Roll on / roll off'],
   },
   {
-    n: '02', span: 'lg:col-span-4', title: 'Compactadoras de residuos',
+    span: 'lg:col-span-4', title: 'Compactadoras de residuos',
     desc: 'Fabricación de sistemas hidráulicos para equipos compactadores.',
   },
   {
-    n: '03', span: 'lg:col-span-4', title: 'Elevadores hidráulicos',
+    span: 'lg:col-span-4', title: 'Elevadores hidráulicos',
     desc: 'Elevadores de carga y de pasajeros, además de modernización de elevadores hidráulicos existentes.',
   },
   {
-    n: '04', span: 'lg:col-span-8', title: 'Repotenciación de sistemas',
+    span: 'lg:col-span-8', title: 'Repotenciación de sistemas',
     desc: 'Actualización de equipos y tableros eléctricos de control para recuperar o mejorar el desempeño de sistemas hidráulicos que ya están en operación.',
   },
 ];
@@ -41,10 +41,7 @@ const projects = [
       <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
         {projects.map((p) => (
           <div class="surface surface-hover tech-card reveal flex flex-col rounded-2xl p-8 sm:p-10">
-            <div class="flex items-start justify-between">
-              <h2 class="max-w-md font-display text-2xl font-bold text-ink-900">{p.title}</h2>
-              <span class="card-index font-display text-5xl font-bold text-ink-100">{p.n}</span>
-            </div>
+            <h2 class="max-w-md font-display text-2xl font-bold text-ink-900">{p.title}</h2>
             <p class="mt-4 leading-relaxed text-ink-600">{p.desc}</p>
             {p.apps && (
               <ul class="mt-6 flex flex-wrap gap-2">

@@ -160,8 +160,8 @@ const philosophy = [
       <div class="grid grid-cols-2 divide-x divide-y divide-ink-100 overflow-hidden rounded-2xl border border-ink-900/10 bg-white shadow-lift lg:grid-cols-4 lg:divide-y-0">
         {stats.map((s) => (
           <div class="reveal px-6 py-8 sm:px-8">
-            <p class="font-display text-4xl font-bold text-ink-900 sm:text-5xl">
-              <span data-counter={s.value.includes('.') ? s.value.replace('.', '') : s.value}>0</span><span class="text-oil-600">{s.suffix}</span>
+            <p class="flex flex-wrap items-baseline gap-x-1 font-display text-3xl font-bold text-ink-900 sm:text-5xl">
+              <span data-counter={s.value.includes('.') ? s.value.replace('.', '') : s.value}>0</span>{s.suffix && <span class="text-oil-600">{s.suffix.trim()}</span>}
             </p>
             <p class="mt-2 text-sm font-semibold text-ink-600">{s.label}</p>
           </div>
@@ -201,7 +201,7 @@ const philosophy = [
     </section>
 
     <!-- ============ FEATURE: SIN DESMONTAR ============ -->
-    <section data-parallax-scope class="noise relative overflow-hidden border-y border-ink-900/10 bg-steel-50 py-28">
+    <section data-parallax-scope class="noise relative isolate overflow-hidden border-y border-ink-900/10 bg-steel-50 py-28">
       <div class="absolute inset-0 dot-grid opacity-70" aria-hidden="true"></div>
       <span class="pointer-events-none absolute -top-6 right-4 select-none whitespace-nowrap font-display text-[16vw] font-bold leading-none text-stroke-oil opacity-70" data-drift="-10" aria-hidden="true">SIN DESMONTAR</span>
 
@@ -309,7 +309,7 @@ const philosophy = [
     </section>
 
     <!-- ============ ESPECIALIDADES ============ -->
-    <section data-parallax-scope class="relative overflow-hidden border-y border-ink-900/10 bg-white py-28">
+    <section data-parallax-scope class="relative isolate overflow-hidden border-y border-ink-900/10 bg-white py-28">
       <span class="pointer-events-none absolute -top-2 right-0 select-none whitespace-nowrap font-display text-[15vw] font-bold leading-none text-stroke opacity-80" data-drift="-12" aria-hidden="true">DOMINIO TÉCNICO</span>
 
       <div class="relative z-10 mx-auto max-w-7xl px-6" data-reveal-group>
@@ -325,11 +325,11 @@ const philosophy = [
           </div>
 
           <div>
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {specStats.map((c) => (
                 <div class="reveal surface rounded-2xl p-6">
-                  <p class="font-display text-4xl font-bold text-ink-900 sm:text-5xl">
-                    <span data-counter={c.value.replace('.', '')}>0</span><span class="ml-1 text-lg text-oil-600">{c.unit}</span>
+                  <p class="flex flex-wrap items-baseline gap-x-1.5 font-display text-3xl font-bold text-ink-900 sm:text-5xl">
+                    <span data-counter={c.value.replace('.', '')}>0</span><span class="text-lg text-oil-600">{c.unit}</span>
                   </p>
                   <p class="mt-3 text-xs leading-relaxed text-ink-500">{c.label}</p>
                 </div>
@@ -382,9 +382,9 @@ const philosophy = [
         <div class="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-2">
           {projects.map((p) => (
             <div class="surface surface-hover tech-card reveal flex flex-col rounded-2xl p-8 sm:p-10">
-              <div class="flex items-start justify-between">
-                <h3 class="max-w-md font-display text-2xl font-bold text-ink-900">{p.title}</h3>
-                <span class="card-index font-display text-5xl font-bold text-ink-100">{p.n}</span>
+              <div class="flex items-start justify-between gap-4">
+                <h3 class="min-w-0 max-w-md font-display text-2xl font-bold text-ink-900">{p.title}</h3>
+                <span class="card-index shrink-0 font-display text-5xl font-bold text-ink-100">{p.n}</span>
               </div>
               <p class="mt-4 leading-relaxed text-ink-600">{p.desc}</p>
             </div>
