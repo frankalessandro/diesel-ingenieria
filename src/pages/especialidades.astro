@@ -183,33 +183,16 @@ const totalItems = categories.reduce((sum, c) => sum + c.items.length, 0);
       </div>
     </section>
 
-    <!-- ============ NAV DE CATEGORÍAS (scrollspy) ============ -->
-    <nav data-spy-nav class="sticky top-20 z-30 border-b border-ink-900/10 bg-paper/95 backdrop-blur-md">
-      <div class="mask-fade-x mx-auto flex max-w-7xl gap-1.5 overflow-x-auto px-6 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {categories.map((cat, i) => (
-          <a
-            href={`#${cat.id}`}
-            data-spy-link
-            class:list={["spy-link flex shrink-0 cursor-pointer items-center gap-2 rounded-full border border-transparent px-3.5 py-2 text-xs font-bold text-ink-600 transition-colors duration-200", i === 0 && "is-active"]}
-          >
-            <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={cat.icon}/></svg>
-            {cat.title}
-          </a>
-        ))}
-      </div>
-    </nav>
-
     <div class="mx-auto max-w-7xl px-6">
       {categories.map((cat, i) => (
-        <section id={cat.id} data-parallax-scope class="relative scroll-mt-40 overflow-hidden border-b border-ink-900/10 py-16" data-reveal-group>
+        <section id={cat.id} class="relative scroll-mt-28 overflow-hidden border-b border-ink-900/10 py-16" data-reveal-group>
           <span
             class="pointer-events-none absolute -right-6 -top-4 select-none font-display text-[9rem] font-bold leading-none text-stroke opacity-60 sm:text-[11rem]"
-            data-parallax="0.1"
             aria-hidden="true"
           >{String(i + 1).padStart(2, '0')}</span>
 
           <div class="relative grid grid-cols-1 gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-            <div class="reveal lg:sticky lg:top-40 lg:self-start">
+            <div class="reveal lg:sticky lg:top-28 lg:self-start">
               <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-steel-50 text-steel-700">
                 <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={cat.icon}/></svg>
               </span>
@@ -227,7 +210,7 @@ const totalItems = categories.reduce((sum, c) => sum + c.items.length, 0);
             </div>
             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {cat.items.map((item, idx) => (
-                <div class="tech-card surface surface-hover reveal rounded-xl p-5">
+                <div class="tech-card no-ribbon surface surface-hover reveal rounded-xl p-5">
                   <div class="flex items-start justify-between gap-3">
                     <p class="font-semibold text-ink-900">{item.name}</p>
                     <span class="card-index shrink-0 font-mono text-xs font-bold text-ink-200">{String(idx + 1).padStart(2, '0')}</span>
@@ -241,24 +224,51 @@ const totalItems = categories.reduce((sum, c) => sum + c.items.length, 0);
       ))}
     </div>
 
-    <section class="noise relative overflow-hidden bg-steel-50 py-24">
-      <div class="absolute inset-0 blueprint-grid opacity-70" aria-hidden="true"></div>
-      <div class="relative z-10 mx-auto max-w-4xl px-6 text-center" data-reveal-group>
-        <h2 class="reveal font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">¿Busca un componente que no aparece aquí?</h2>
-        <p class="reveal mx-auto mt-4 max-w-xl text-lg text-ink-600">Trabajamos con marcas líderes del sector a nivel nacional. Cuéntenos qué necesita y se lo conseguimos o reparamos.</p>
-        <a href="/contacto" class="reveal mt-8 inline-block cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">Contáctenos</a>
+    <section class="bg-paper-2 py-24">
+      <div class="mx-auto max-w-4xl px-6" data-reveal-group>
+        <div class="frame-corners reveal relative overflow-hidden rounded-2xl border border-ink-900/10 bg-white p-10 text-center sm:p-14">
+          <span class="corner corner-tl" aria-hidden="true"></span>
+          <span class="corner corner-tr" aria-hidden="true"></span>
+          <span class="corner corner-bl" aria-hidden="true"></span>
+          <span class="corner corner-br" aria-hidden="true"></span>
+          <div class="dot-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden="true"></div>
+
+          <div class="relative">
+            <span class="inline-flex items-center gap-2.5 rounded-full border border-steel-600/25 bg-steel-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-steel-700">
+              <span class="h-1.5 w-1.5 rounded-full bg-oil-500"></span>
+              ¿No lo encuentra en la lista?
+            </span>
+            <h2 class="mt-5 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Búsquelo, lo conseguimos o lo reparamos</h2>
+            <p class="mx-auto mt-4 max-w-xl text-lg text-ink-600">Trabajamos con marcas líderes del sector a nivel nacional. Cuéntenos qué necesita.</p>
+            <ul class="mt-6 flex flex-wrap justify-center gap-2">
+              {['Eaton', 'Rexroth', 'Parker', 'Vickers', 'Denison', 'Sun Hydraulics'].map((brand) => (
+                <li class="spec-chip rounded-full px-3 py-1.5 text-xs font-semibold">{brand}</li>
+              ))}
+            </ul>
+            <a href="/contacto" class="mt-8 inline-block cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">Contáctenos</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 </Layout>
 
 <style>
-  .spy-link.is-active {
-    background-color: var(--color-steel-50);
-    border-color: rgb(27 81 130 / 0.25);
-    color: var(--color-steel-700);
+  /* Quita la cinta superior del .tech-card global; conserva el corner-bracket de hover. */
+  .tech-card.no-ribbon::before {
+    display: none;
   }
-  .spy-link:hover:not(.is-active) {
-    background-color: var(--color-paper-2);
+
+  /* Esquinas de plano técnico para el panel de cierre */
+  .frame-corners .corner {
+    position: absolute;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-color: rgb(27 81 130 / 0.35);
+    pointer-events: none;
   }
+  .corner-tl { top: 0.9rem; left: 0.9rem; border-top: 2px solid; border-left: 2px solid; }
+  .corner-tr { top: 0.9rem; right: 0.9rem; border-top: 2px solid; border-right: 2px solid; }
+  .corner-bl { bottom: 0.9rem; left: 0.9rem; border-bottom: 2px solid; border-left: 2px solid; }
+  .corner-br { bottom: 0.9rem; right: 0.9rem; border-bottom: 2px solid; border-right: 2px solid; }
 </style>
