@@ -2,25 +2,25 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import SteelBanner from '../components/SteelBanner.astro';
-import { figures } from '../data/company';
+import { figures, company } from '../data/company';
 
 const sectors = [
   {
     id: 'industrial', n: '01', title: 'Industrial',
-    lead: 'Sistemas óleo-hidráulicos para líneas de producción y procesos.',
+    lead: 'Sistemas hidráulicos para líneas de producción y procesos.',
     apps: ['Inyección de plásticos', 'Siderúrgica', 'Pulpa de papel y convertidoras', 'Industria metalúrgica', 'Industria química', 'Alimentos y bebidas', 'Automotriz', 'Petrolera'],
     icon: 'M4 21V9l8-6 8 6v12M9 21v-6h6v6',
   },
   {
     id: 'agricola', n: '02', title: 'Agrícola',
     lead: 'Mantenimiento y reparación para la maquinaria del campo.',
-    apps: ['Tractores', 'Cosechadoras', 'Pulverizadoras', 'Máquinas e implementos agrícolas en general'],
+    apps: ['Tractores', 'Cosechadoras', 'Pulverizadoras', 'Alzadoras', 'Bulldozer', 'Excavadoras', 'Máquinas e implementos agrícolas en general'],
     icon: 'M12 3v9m0 0-3.5-3.5M12 12l3.5-3.5M5 21c0-4 3-7 7-7s7 3 7 7',
   },
   {
     id: 'construccion-mineria', n: '03', title: 'Construcción y minería',
     lead: 'Soporte para los equipos de mayor exigencia de presión y ciclo de trabajo.',
-    apps: ['Construcción civil', 'Manipulación de carga', 'Máquinas viales', 'Equipos mineros'],
+    apps: ['Retroexcavadoras', 'Cargadores', 'Percutores'],
     icon: 'M3 21h18M6 21V10l6-5 6 5v11M10 21v-6h4v6',
   },
   {
@@ -41,6 +41,18 @@ const sectors = [
     apps: ['Gatos hidráulicos', 'Mesas pantográficas', 'Elevadores', 'Apiladores', 'Canastas aéreas'],
     icon: 'M4 16h16M6 16V8h4v8M14 16V5h4v11',
   },
+  {
+    id: 'elevacion-alturas', n: '07', title: 'Elevación y Acceso en Alturas', full: 'Equipos de Elevación y Acceso en Alturas',
+    lead: 'Cilindros y centrales hidráulicas para equipos de elevación y acceso en alturas.',
+    apps: ['Grúas Canasta', 'Plataformas Elevadoras (Man Lift)'],
+    icon: 'M12 3v18M7 8l5-5 5 5M5 21h14',
+  },
+  {
+    id: 'infraestructura', n: '08', title: 'Infraestructura',
+    lead: 'Sistemas hidráulicos para equipos de montaje y obra de infraestructura.',
+    apps: ['Grúas de Brazo'],
+    icon: 'M4 21V10l4-3 4 3v11M12 21V6l4-3 4 3v15M4 21h16',
+  },
 ];
 
 // Reglas CSS generadas por sector (radio-tabs sin JS): botón activo + panel visible.
@@ -60,7 +72,7 @@ const tabCss = sectors
 
 <Layout
   title="Sectores atendidos | Diesel Ingeniería"
-  description="Sistemas óleo-hidráulicos para los sectores industrial, agrícola, construcción, minería, forestal, portuario/offshore y manipulación de cargas en Colombia."
+  description="Sistemas hidráulicos para los sectores industrial, agrícola, construcción, minería, forestal, portuario/offshore, manipulación de cargas, elevación en alturas e infraestructura en Colombia."
   path="/sectores"
 >
   <main>
@@ -81,7 +93,7 @@ const tabCss = sectors
             </span>
             <h2 class="mt-5 font-display text-4xl font-bold leading-tight text-white text-balance sm:text-5xl">Seleccione un sector</h2>
           </div>
-          <p class="max-w-sm font-mono text-sm text-steel-200/70">{sectors.length} sectores atendidos · {figures.years} años de trayectoria en sistemas óleo-hidráulicos.</p>
+          <p class="max-w-sm font-mono text-sm text-steel-200/70">{sectors.length} sectores atendidos · {figures.years} años de trayectoria en sistemas hidráulicos.</p>
         </div>
 
         <!-- Selector radio (sin JS): array de botones tipo panel de control -->
@@ -90,7 +102,7 @@ const tabCss = sectors
             <input type="radio" name="sector-tab" id={`tab-${s.id}`} class="sr-only" checked={i === 0} />
           ))}
 
-          <div class="switch-grid -mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-1 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-6">
+          <div class="switch-grid -mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-1 sm:mx-0 sm:grid sm:grid-cols-4 sm:gap-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
             {sectors.map((s) => (
               <label for={`tab-${s.id}`} data-btn={s.id} class="switch-btn relative flex w-[40%] shrink-0 cursor-pointer snap-center flex-col items-center gap-3 rounded-xl border border-white/25 bg-white/[0.09] px-4 py-6 text-center shadow-[0_1px_0_0_rgb(255_255_255_/_0.06)_inset] transition-colors duration-200 sm:w-auto sm:shrink">
                 <span class="btn-icon flex h-11 w-11 items-center justify-center rounded-lg bg-white/10 text-oil-400 transition-colors duration-200">
@@ -119,7 +131,7 @@ const tabCss = sectors
                 <div class="flex flex-col justify-between p-8 sm:p-10">
                   <div>
                     <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-400">Sector / {s.n}</span>
-                    <h3 class="mt-2 font-display text-2xl font-bold leading-tight text-white sm:text-3xl">{s.title}</h3>
+                    <h3 class="mt-2 font-display text-2xl font-bold leading-tight text-white sm:text-3xl">{s.full ?? s.title}</h3>
                     <p class="mt-4 leading-relaxed text-steel-200/85">{s.lead}</p>
                   </div>
                   <a href="/contacto" class="mt-8 inline-flex w-fit cursor-pointer items-center gap-1.5 text-sm font-bold text-oil-400 hover:text-oil-300">
@@ -165,7 +177,7 @@ const tabCss = sectors
     <section class="bg-paper py-24">
       <div class="mx-auto max-w-4xl px-6 text-center" data-reveal-group>
         <h2 class="reveal font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">¿No encuentra su sector?</h2>
-        <p class="reveal mx-auto mt-4 max-w-xl text-lg text-ink-600">Atendemos maquinaria óleo-hidráulica de diversas industrias en el Valle del Cauca.</p>
+        <p class="reveal mx-auto mt-4 max-w-xl text-lg text-ink-600">Atendemos maquinaria hidráulica de diversas industrias en {company.coverage}.</p>
         <a href="/contacto" class="reveal mt-8 inline-block cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">Contáctenos</a>
       </div>
     </section>

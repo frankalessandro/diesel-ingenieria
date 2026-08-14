@@ -11,13 +11,13 @@ const categories = [
     intro: 'Manuales, de engranajes, de paletas y de pistones. Las reparamos, mecanizamos y conseguimos a nivel nacional.',
     icon: 'M4 4v5h5M4.5 9A7.5 7.5 0 0 1 18 6.5M20 20v-5h-5M19.5 15A7.5 7.5 0 0 1 6 17.5',
     items: [
-      { name: 'Manuales', specs: 'Series PMP, PM, PMD · 6–45 cc · hasta 380 bar pico' },
-      { name: 'De engranajes (piñones)', specs: 'Internas EIPS2/EIPI3/EIPH6 y externas · 5–125 cc · hasta 320 bar pico' },
-      { name: 'De engranajes móviles', specs: 'NPH (camión) y KZTR (tractor) · 17–150 cc · hasta 325 bar' },
-      { name: 'De paletas', specs: 'Caudal fijo V10–45VQ y variable VCMSM/VCMSF/VCMDF · 20–180 bar' },
-      { name: 'De pistones', specs: 'Axiales A2F/A10VSO/A7V/A8VO y radiales PPZ-PZ · hasta 700 bar' },
-      { name: 'De tornillo / husillo', specs: 'Mediana presión, bajo nivel de ruido (~15 dB menos que engranajes)' },
-      { name: 'Transmisión hidrostática', specs: 'Bomba 416 + motor 406 · lazo cerrado · 71–125 cc' },
+      { name: 'Manuales', specs: '' },
+      { name: 'De engranajes (piñones)', specs: '' },
+      { name: 'De engranajes móviles', specs: '' },
+      { name: 'De paletas', specs: '' },
+      { name: 'De pistones — Axiales', specs: '' },
+      { name: 'De tornillo / husillo', specs: '' },
+      { name: 'Transmisión hidrostática', specs: '' },
     ],
   },
   {
@@ -26,13 +26,13 @@ const categories = [
     intro: 'Transforman la energía del fluido en movimiento rotativo. Orbitales, engranajes, paletas, pistones y motores de rueda.',
     icon: 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM12 3v3m0 12v3m9-9h-3M6 12H3m15.36-6.36-2.12 2.12M8.76 15.24l-2.12 2.12m0-10.72 2.12 2.12m6.48 6.48 2.12 2.12',
     items: [
-      { name: 'Orbitales', specs: 'Series MLHM–MLHV · 12,5–1.000 cc · hasta 280 bar' },
-      { name: 'De engranajes', specs: 'Bidireccionales, altas velocidades' },
-      { name: 'De paletas', specs: 'Movimiento radial por fuerza centrífuga' },
-      { name: 'Axiales de pistones', specs: 'A2F y A6VM · hasta 350 bar · potencias hasta 755 kW' },
-      { name: 'Radiales de pistones', specs: 'NHM · 113–16.000 cc · hasta 280 bar' },
-      { name: 'De rueda', specs: 'BBC / BB (Sampo, Black Bruin) · freno dinámico, disco o tambor · rueda libre' },
-      { name: 'Radiales industriales SAI', specs: 'TV3.5 / S7B / TS8 / GM3 · el GM3 se usa en máquinas de picar caña JD 3520 y 3510' },
+      { name: 'Orbitales', specs: '' },
+      { name: 'De engranajes', specs: '' },
+      { name: 'De paletas', specs: '' },
+      { name: 'Axiales de pistones', specs: '' },
+      { name: 'Radiales de pistones', specs: '' },
+      { name: 'De rueda', specs: '' },
+      { name: 'Radiales industriales SAI', specs: '' },
     ],
   },
   {
@@ -41,10 +41,10 @@ const categories = [
     intro: 'Orbitroles y válvulas de dirección proporcional para maquinaria agrícola, forestal, obras y embarcaciones.',
     icon: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18ZM12 12 6.5 8.3M12 12l5.5-3.7M12 12v9',
     items: [
-      { name: 'Columna de dirección KK', specs: 'Ejes estriados o chavetados' },
-      { name: 'Válvula de dirección HKU/S', specs: 'Hasta 100 bar · volumen 40–1000 cc' },
-      { name: 'Válvula de control BKH', specs: 'Protege contra sobrepresión, impactos y cavitación' },
-      { name: 'Eje cardán hidráulico', specs: 'Sustituye transmisión por cardán con bomba/motor' },
+      { name: 'Columna de dirección KK', specs: '' },
+      { name: 'Válvula de dirección HKU/S', specs: '' },
+      { name: 'Válvula de control BKH', specs: '' },
+      { name: 'Eje cardán hidráulico', specs: '' },
     ],
   },
   {
@@ -61,14 +61,14 @@ const categories = [
   {
     id: 'valvulas',
     title: 'Válvulas y controles',
-    intro: 'Control direccional, de presión y de velocidad. Líneas, proporcionales, electroválvulas modulares y bloques manifold insertables.',
+    intro: 'Control direccional, de presión y de velocidad. Lineales, proporcionales, electroválvulas modulares y bloques manifold insertables.',
     icon: 'M4 12h4l4-7 4 14 4-7h4',
     items: [
-      { name: 'Válvulas en línea', specs: 'Retención, aguja, contrabalanceo, limitadora de presión, divisoras de flujo · hasta 500 bar' },
-      { name: 'Proporcionales', specs: 'Direccional 4/3 vías DPG-03-3C2, limitadoras EBG/EDG, reguladoras QPG/PPG/EFBG' },
-      { name: 'Electroválvulas modulares', specs: 'TN6–TN32 · reguladoras, retención pilotada, secuencia, contrabalanceo' },
-      { name: 'Bloques manifold (Sun Hydraulics)', specs: 'TN6–TN32, 1 a 9 estaciones · hasta 1.600 l/min y 420 bar' },
-      { name: 'Comando manual monoblock y modular', specs: '40–1000 lpm · 1 a 8 palancas · manual, cable, joystick o eléctrico' },
+      { name: 'Válvulas en línea', specs: '' },
+      { name: 'Proporcionales', specs: '' },
+      { name: 'Electroválvulas modulares', specs: '' },
+      { name: 'Bloques manifold (Sun Hydraulics)', specs: '' },
+      { name: 'Comando manual monoblock y modular', specs: '' },
     ],
   },
   {
@@ -77,11 +77,7 @@ const categories = [
     intro: 'Recipientes de acero de alta resistencia divididos por vejiga o membrana elástica entre gas (nitrógeno) y líquido.',
     icon: 'M9 3h6v4a3 3 0 0 1-6 0V3ZM12 10v11M8 21h8',
     items: [
-      { name: 'Vejiga HB 330', specs: 'Hasta 350 bar · acero forjado · 2,5–50 lts' },
-      { name: 'Vejiga HTR', specs: 'Hasta 250 bar · 0,35–50 lts' },
-      { name: 'Membrana HST', specs: 'Hasta 300 bar · precarga máx 210 bar · 0,05–2,3 lts' },
-      { name: 'Membrana descartable H/210', specs: 'Hasta 250 bar · 0,15–3,0 lts (no reparable)' },
-      { name: 'Servicio', specs: 'Suministro de vejigas, carga de nitrógeno, desarme y ensamble' },
+      { name: 'Servicio ', specs: 'Suministro de vejigas, carga de nitrógeno, desarme y ensamble' },
     ],
   },
   {
@@ -100,7 +96,7 @@ const categories = [
   {
     id: 'neumatica',
     title: 'Sistemas neumáticos',
-    intro: 'Potencia por aire comprimido, complementaria a la línea óleo-hidráulica.',
+    intro: 'Potencia por aire comprimido, complementaria a la línea hidráulica.',
     icon: 'M3 8h10a3 3 0 1 0-3-3M3 16h14a3 3 0 1 1-3 3M3 12h17.5a2.5 2.5 0 1 0-2.5-2.5',
     items: [
       { name: 'Válvulas neumáticas', specs: 'Control direccional y de proceso' },
@@ -150,7 +146,7 @@ const totalItems = categories.reduce((sum, c) => sum + c.items.length, 0);
 ---
 
 <Layout
-  title="Especialidades técnicas óleo-hidráulicas | Diesel Ingeniería"
+  title="Especialidades técnicas hidráulicas | Diesel Ingeniería"
   description="Bombas, motores, válvulas, cilindros, acumuladores, filtración, neumática e instrumentación: los componentes que reparamos, mecanizamos y conseguimos para nuestros clientes en Colombia."
   path="/especialidades"
 >
@@ -161,28 +157,6 @@ const totalItems = categories.reduce((sum, c) => sum + c.items.length, 0);
       lead="No es una vitrina de venta: es el mapa de lo que conocemos a fondo. Reparamos, mecanizamos y conseguimos a nivel nacional cada uno de estos componentes para sus proyectos."
       watermark="TÉCNICA"
     />
-
-    <!-- ============ TIRA DE CIFRAS ============ -->
-    <section class="border-b border-ink-900/10 bg-paper py-10">
-      <div class="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-6 sm:grid-cols-4" data-reveal-group>
-        <div class="reveal">
-          <p class="font-display text-4xl font-bold text-ink-900"><span data-counter={categories.length}>0</span></p>
-          <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-500">Especialidades técnicas</p>
-        </div>
-        <div class="reveal">
-          <p class="font-display text-4xl font-bold text-ink-900"><span data-counter={totalItems}>0</span>+</p>
-          <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-500">Líneas de producto</p>
-        </div>
-        <div class="reveal">
-          <p class="font-display text-4xl font-bold text-ink-900"><span data-counter={figures.years}>0</span></p>
-          <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-500">Años de experiencia</p>
-        </div>
-        <div class="reveal">
-          <p class="font-display text-4xl font-bold text-ink-900">{company.region}</p>
-          <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-500">Cobertura de servicio</p>
-        </div>
-      </div>
-    </section>
 
     <div class="mx-auto max-w-7xl px-6">
       {categories.map((cat) => (
@@ -206,9 +180,9 @@ const totalItems = categories.reduce((sum, c) => sum + c.items.length, 0);
             </div>
             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {cat.items.map((item) => (
-                <div class="tech-card no-ribbon surface surface-hover reveal rounded-xl p-5">
+                <div class:list={["tech-card no-ribbon surface surface-hover reveal rounded-xl p-5", !item.specs && "flex items-center"]}>
                   <p class="font-semibold text-ink-900">{item.name}</p>
-                  <p class="mt-1.5 font-mono text-xs leading-relaxed text-steel-600">{item.specs}</p>
+                  {item.specs && <p class="mt-1.5 font-mono text-xs leading-relaxed text-steel-600">{item.specs}</p>}
                 </div>
               ))}
             </div>

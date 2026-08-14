@@ -11,8 +11,8 @@ export const company = {
   city: "Cali",
   region: "Valle del Cauca",
   country: "CO",
-  // Cobertura de servicio (departamental, no nacional).
-  coverage: "Valle del Cauca",
+  // Cobertura de servicio (aprobada por el cliente en la revisión de contenido).
+  coverage: "Suroccidente Colombiano y Eje Cafetero",
 
   // [PENDIENTE] Confirmar valor exacto con el cliente antes de publicar.
   email: "",
@@ -35,6 +35,8 @@ export const figures = {
   pressureBar: "700", // Presión en componentes específicos (bombas radiales PPZ-PZ, acoples Faster)
   nhmMaxCc: "16.000", // Desplazamiento máx. en motores radiales NHM
   manifoldMaxLpm: "1.600", // Caudal en cartuchos de bloques manifold (Sun Hydraulics)
+  pressCapacityGal: "1.000", // Rediseño y reparación de prensas hidráulicas
+  pressurePsi: "10.000", // Niveles de presión
 } as const;
 
 // Construye un enlace de WhatsApp con texto opcional pre-diligenciado.

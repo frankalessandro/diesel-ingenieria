@@ -6,8 +6,8 @@ import { company, figures, whatsappLink } from '../data/company';
 const wa = whatsappLink();
 
 const specSheet = [
-  { k: 'Especialidad', v: 'Óleo-hidráulica' },
-  { k: 'Cobertura', v: 'Valle del Cauca' },
+  { k: 'Especialidad', v: 'Hidráulica' },
+  { k: 'Cobertura', v: company.coverage },
   { k: 'Fabricación', v: 'Cilindros y unidades de potencia' },
   { k: 'Servicio', v: 'En sitio' },
   { k: 'Mantenimiento', v: 'Predictivo, preventivo y correctivo' },
@@ -16,32 +16,32 @@ const specSheet = [
 const stats = [
   { value: figures.years, suffix: '', label: 'Años de experiencia' },
   { value: figures.maintenanceGamas, suffix: '', label: 'Gamas de mantenimiento' },
-  { value: figures.tankMaxLitros, suffix: ' L', label: 'Centrales y tanques a medida' },
-  { value: figures.pressureBar, suffix: ' bar', label: 'En componentes específicos' },
+  { value: figures.pressCapacityGal, suffix: ' Gal', label: 'Rediseño y reparación de prensas hidráulicas' },
+  { value: figures.pressurePsi, suffix: ' psi', label: 'Niveles de presión' },
 ];
 
 const whatWeDo = [
   {
-    n: '01', span: 'lg:col-span-7', title: 'Mantenimiento predictivo', tag: 'El diferenciador',
+    n: '01', span: 'lg:col-span-7', title: 'Mantenimiento Predictivo', tag: 'El diferenciador',
     desc: 'Medimos la eficiencia de bombas y motores con la máquina operando, sin desmontarla, para proyectar el desgaste antes de la falla.',
     href: '/servicios#predictivo',
     icon: 'M3 12h3l2-7 4 14 2-7h4',
   },
   {
-    n: '02', span: 'lg:col-span-5', title: 'Mantenimiento preventivo', tag: '',
+    n: '02', span: 'lg:col-span-5', title: 'Mantenimiento Preventivo', tag: '',
     desc: 'Check-lists en sitio, microfiltrado de aceite y calibración de válvulas para mantener la disponibilidad del equipo.',
     href: '/servicios#preventivo',
     icon: 'M9 12l2 2 4-4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z',
   },
   {
-    n: '03', span: 'lg:col-span-5', title: 'Mantenimiento correctivo', tag: '',
+    n: '03', span: 'lg:col-span-5', title: 'Mantenimiento Correctivo', tag: '',
     desc: 'Reparación de bombas, motores, cilindros, válvulas, tarjetas electrónicas y tableros de control.',
     href: '/servicios#correctivo',
     icon: 'M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2 2.3-2.3Z',
   },
   {
     n: '04', span: 'lg:col-span-7', title: 'Fabricación a medida', tag: 'Construcción propia',
-    desc: 'Fabricación de cilindros hidráulicos y unidades de potencia con su tablero eléctrico de control, más centrales y tanques de 20 a 1.500 litros.',
+    desc: 'Cilindros hidráulicos, unidades de potencia con tablero eléctrico, de acuerdo con la necesidad del Cliente.',
     href: '/servicios#fabricacion',
     icon: 'M4 21h16M6 21V8l6-4 6 4v13M9 21v-5h6v5',
   },
@@ -50,9 +50,10 @@ const whatWeDo = [
 const servicePanels = [
   { n: '01', tag: 'Predictivo', title: 'Diagnóstico sin desmontar', desc: 'Calculamos la eficiencia de bombas y motores con el equipo en su ciclo de trabajo, para proyectar el desgaste antes de la falla.', points: ['Medición con la máquina operando', 'Estanqueidad de cilindros en campo', 'Herramienta para mantenimiento'] },
   { n: '02', tag: 'Preventivo', title: 'Check-lists y calibración en sitio', desc: 'Ejecución de check-lists según la necesidad del cliente y el lugar donde se requiera, con técnicos capacitados y herramientas adecuadas.', points: ['Microfiltrado del aceite en sitio', 'Bloques de válvula calibrados', 'Mayor tiempo de operatividad'] },
-  { n: '03', tag: 'Correctivo', title: 'Reparación de componentes', desc: 'Reparación completa de la parte óleo-hidráulica y eléctrica de control.', points: ['Bombas, motores y cilindros', 'Válvulas y mandos direccionales', 'Tarjetas y tableros eléctricos'] },
+  { n: '03', tag: 'Correctivo', title: 'Reparación de componentes', desc: 'Reparación completa de la parte hidráulica y eléctrica de control.', points: ['Bombas, motores y cilindros', 'Válvulas y mandos direccionales', 'Tarjetas y tableros eléctricos'] },
   { n: '04', tag: 'Fabricación', title: 'Construcción a medida', desc: 'Fabricación de cilindros hidráulicos y unidades de potencia; construcción de centrales hidráulicas.', points: ['Cilindros y unidades de potencia', 'Tanques de 20 a 1.500 litros', 'Bancos de prueba'] },
   { n: '05', tag: 'Filtración', title: 'Microfiltrado de aceite UMFT', desc: 'Unidades de filtración portátiles propias, de alta eficiencia, para aceites muy viscosos, con servicio en el sitio del cliente.', points: ['Capacidad 27 a 55 L/min', 'Filtrado simple 10µ / doble 5µ', 'Indicador visual de saturación'] },
+  { n: '06', tag: 'Suministro', title: 'Suministro de componentes', desc: 'Conseguimos y suministramos a nivel nacional los componentes hidráulicos que su equipo necesita, de las marcas líderes del sector.', points: ['Bombas, motores y válvulas', 'Marcas líderes del sector', 'Entrega a nivel nacional'] },
 ];
 
 const specStats = [
@@ -65,22 +66,24 @@ const specStats = [
 const specialties = ['Bombas hidráulicas', 'Motores hidráulicos', 'Válvulas y controles', 'Direcciones hidráulicas', 'Cilindros', 'Acumuladores', 'Filtración', 'Neumática', 'Lubricación', 'Instrumentación', 'Accesorios'];
 
 const sectors = [
-  { name: 'Industrial', href: '/sectores#industrial', icon: 'M4 21V9l8-6 8 6v12M9 21v-6h6v6', apps: 'Plásticos · siderúrgica · papel · química · alimentos' },
-  { name: 'Agrícola', href: '/sectores#agricola', icon: 'M12 3v9m0 0-3.5-3.5M12 12l3.5-3.5M5 21c0-4 3-7 7-7s7 3 7 7', apps: 'Tractores · cosechadoras · pulverizadoras' },
-  { name: 'Construcción y minería', href: '/sectores#construccion-mineria', icon: 'M3 21h18M6 21V10l6-5 6 5v11M10 21v-6h4v6', apps: 'Obra civil · viales · equipos mineros' },
-  { name: 'Forestal', href: '/sectores#forestal', icon: 'M12 3 6 12h3l-4 6h5v3h4v-3h5l-4-6h3L12 3Z', apps: 'Cargadores · forwarders · rotadores' },
-  { name: 'Portuaria / Offshore', href: '/sectores#portuaria-offshore', icon: 'M3 20h18M4 20V9l4-2 4 2 4-2 4 2v11M8 12h.01M14 12h.01', apps: 'Plataformas · grúas · petrolera' },
-  { name: 'Manipulación de cargas', href: '/sectores#manipulacion-cargas', icon: 'M4 16h16M6 16V8h4v8M14 16V5h4v11', apps: 'Elevadores · pantográficas · canastas' },
+  { name: 'Industrial', href: '/sectores#industrial', icon: 'M4 21V9l8-6 8 6v12M9 21v-6h6v6', apps: 'Plásticos · Siderúrgica · Papel · Química · Alimentos' },
+  { name: 'Agrícola', href: '/sectores#agricola', icon: 'M12 3v9m0 0-3.5-3.5M12 12l3.5-3.5M5 21c0-4 3-7 7-7s7 3 7 7', apps: 'Tractores · Cosechadoras · Pulverizadoras · Alzadoras · Bulldozer · Excavadoras' },
+  { name: 'Construcción y minería', href: '/sectores#construccion-mineria', icon: 'M3 21h18M6 21V10l6-5 6 5v11M10 21v-6h4v6', apps: 'Retroexcavadoras · Cargadores · Percutores' },
+  { name: 'Forestal', href: '/sectores#forestal', icon: 'M12 3 6 12h3l-4 6h5v3h4v-3h5l-4-6h3L12 3Z', apps: 'Cargadores · Forwarders · Rotadores' },
+  { name: 'Portuaria / Offshore', href: '/sectores#portuaria-offshore', icon: 'M3 20h18M4 20V9l4-2 4 2 4-2 4 2v11M8 12h.01M14 12h.01', apps: 'Plataformas · grúas' },
+  { name: 'Manipulación de cargas', href: '/sectores#manipulacion-cargas', icon: 'M4 16h16M6 16V8h4v8M14 16V5h4v11', apps: 'Elevadores · Pantográficas · Canastas' },
+  { name: 'Equipos de Elevación y Acceso en Alturas', href: '/sectores#elevacion-alturas', icon: 'M12 3v18M7 8l5-5 5 5M5 21h14', apps: 'Grúas Canasta · Plataformas Elevadoras (Man Lift)' },
+  { name: 'Infraestructura', href: '/sectores#infraestructura', icon: 'M4 21V10l4-3 4 3v11M12 21V6l4-3 4 3v15M4 21h16', apps: 'Grúas de Brazo' },
 ];
 
 const projects = [
   { n: '01', span: 'lg:col-span-8', title: 'Mini centrales hidráulicas', desc: 'Tanques de 1 a 20 litros, bomba de engranaje de 0,5 a 7,3 cc, motor eléctrico de 12/24/110/220/380 V y potencias de 1 a 5 Cv, hasta 180 bar. Para canasta aérea, elevadores, camión remolque, mesa pantográfica y más.' },
   { n: '02', span: 'lg:col-span-4', title: 'Compactadoras de residuos', desc: 'Fabricación de sistemas hidráulicos para equipos compactadores.' },
-  { n: '03', span: 'lg:col-span-4', title: 'Elevadores hidráulicos', desc: 'De carga y de pasajeros, más modernización de elevadores hidráulicos existentes.' },
-  { n: '04', span: 'lg:col-span-8', title: 'Repotenciación de sistemas y equipos', desc: 'Actualización de tableros eléctricos de control y recuperación del desempeño de sistemas hidráulicos que ya están en operación.' },
+  { n: '03', span: 'lg:col-span-4', title: 'Elevadores hidráulicos', desc: 'De carga, más modernización de elevadores hidráulicos existentes.' },
+  { n: '04', span: 'lg:col-span-8', title: 'Repotenciación de sistemas y equipos', desc: 'Actualización de tableros eléctricos y recuperación del desempeño de sistemas hidráulicos en operación.' },
 ];
 
-const brands = ['Eaton', 'Vickers', 'Parker', 'Rexroth', 'Sauer Danfoss', 'Denison', 'Nachi', 'Sun Hydraulics', 'Stauff', 'Swagelok', 'MP Filtri', 'Faster', 'Stucchi', 'Baltrotors', 'Black Bruin', 'SAI', 'WEG', 'CARDEV'];
+const brands = ['John Deere', 'Volvo', 'CAT', 'Komatsu', 'Hitachi', 'Case', 'Doosan', 'Zoom Lion', 'Terex', 'Ford'];
 
 const philosophy = [
   { title: 'Calidad', desc: 'Control en cada reparación, mecanizado y prueba en banco.' },
@@ -91,8 +94,8 @@ const philosophy = [
 ---
 
 <Layout
-  title="Diesel Ingeniería SAS | Sistemas óleo-hidráulicos en Cali, Colombia"
-  description="25 años en sistemas óleo-hidráulicos. Mantenimiento predictivo, preventivo y correctivo, fabricación de cilindros y unidades de potencia. Cali y Valle del Cauca."
+  title="Diesel Ingeniería SAS | Sistemas Hidráulicos en Cali, Colombia"
+  description="25 años en Sistemas Hidráulicos. Mantenimiento predictivo, preventivo y correctivo, fabricación y suministro de componentes. Cali, Suroccidente Colombiano y Eje Cafetero."
   path="/"
 >
   <main>
@@ -105,16 +108,16 @@ const philosophy = [
         <div>
           <span data-hero-kicker class="inline-flex items-center gap-2.5 rounded-full border border-steel-600/25 bg-steel-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-steel-700">
             <span class="h-1.5 w-1.5 rounded-full bg-oil-500"></span>
-            Óleo-hidráulicos · Neumáticos · Instrumentación
+            Hidráulicos · Neumáticos
           </span>
 
           <h1 class="mt-7 font-display text-[12vw] font-bold leading-[0.96] tracking-tight text-ink-900 text-balance sm:text-6xl lg:text-[4.8rem]">
             <span data-hero-line class="block">Especialistas en sistemas</span>
-            <span data-hero-line class="block text-steel-700">óleo-hidráulicos</span>
+            <span data-hero-line class="block text-steel-700">Hidráulicos</span>
           </h1>
 
           <p data-hero-sub class="mt-7 max-w-xl text-lg leading-relaxed text-ink-600">
-            Diagnosticamos, reparamos y fabricamos los sistemas óleo-hidráulicos que mueven su maquinaria pesada e industrial. 25 años de experiencia en bombas, motores, cilindros y válvulas de aceite a presión.
+            Diagnosticamos, reparamos y fabricamos los sistemas hidráulicos movidos con aceite sintético o mineral utilizados en su maquinaria pesada e industrial. Con 25 años de experiencia en reparación de los accesorios que componen el Equipo Hidráulico de bombas, motores, cilindros y válvulas.
           </p>
 
           <div class="mt-9 flex flex-wrap items-center gap-4">
@@ -174,7 +177,7 @@ const philosophy = [
       <div class="reveal flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div class="max-w-2xl">
           <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ 01 — Qué hacemos</span>
-          <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Todo el ciclo del sistema óleo-hidráulico</h2>
+          <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Todo el ciclo del sistema hidráulico</h2>
         </div>
         <p class="max-w-sm text-ink-600">Las tres gamas de mantenimiento más nuestra capacidad de fabricación de cilindros y unidades de potencia.</p>
       </div>
@@ -212,7 +215,7 @@ const philosophy = [
             Predecimos el desgaste <span class="text-oil-600">sin desmontar</span> la máquina
           </h2>
           <p class="reveal mt-6 max-w-lg text-lg leading-relaxed text-ink-600">
-            Contamos con equipos de medición para calcular la eficiencia de bombas y motores hidráulicos sin necesidad de desmontarlos de la máquina. Así entregamos a su departamento de mantenimiento una herramienta para proyectar el desgaste del equipo en la parte oleohidráulica.
+            Equipos de medición para calcular la eficiencia de bombas y motores hidráulicos sin necesidad de desmontarlos, entregando al departamento de mantenimiento una herramienta para proyectar el desgaste del equipo.
           </p>
           <ul class="reveal mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {['Diagnóstico con la máquina en marcha', 'Estanqueidad de cilindros en campo', 'Proyección del desgaste del equipo', 'Menos paradas no planificadas'].map((p) => (
@@ -270,8 +273,8 @@ const philosophy = [
         <div data-hscroll-track class="flex flex-col gap-6 px-6 lg:h-[72vh] lg:flex-row lg:items-stretch lg:gap-8 lg:px-16">
           <div class="flex shrink-0 flex-col justify-center lg:w-[34vw] lg:max-w-md">
             <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ 02 — Servicios</span>
-            <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Cinco frentes de trabajo</h2>
-            <p class="mt-5 max-w-sm text-ink-600">Desde anticipar una falla hasta fabricar el componente que la máquina necesita. Desliza para recorrerlos.</p>
+            <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Seis frentes de trabajo</h2>
+            <p class="mt-5 max-w-sm text-ink-600">Desde anticipar una falla hasta suministrar el componente que la máquina necesita. Desliza para recorrerlos.</p>
             <a href="/servicios" class="mt-7 inline-flex w-fit cursor-pointer items-center gap-2 rounded-lg bg-ink-900 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-steel-700">
               Ver servicios en detalle
               <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
@@ -395,7 +398,7 @@ const philosophy = [
 
     <!-- ============ MARCAS — MARQUEE ============ -->
     <section class="border-b border-ink-900/10 bg-white py-16">
-      <p class="px-6 text-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Respaldo de marcas líderes que conseguimos y reparamos</p>
+      <p class="px-6 text-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas de Equipos</p>
       <div class="marquee mask-fade-x mt-10" style="--marquee-duration:46s">
         <div class="marquee-track">
           {[...brands, ...brands].map((b) => (
@@ -435,13 +438,13 @@ const philosophy = [
 
     <!-- ============ CTA FINAL ============ -->
     <SteelBanner width="narrow" padding="py-28" class="text-center">
-      <h2 class="reveal font-display text-4xl font-bold leading-tight text-balance sm:text-6xl">¿Qué máquina necesita que revisemos?</h2>
-      <p class="reveal mx-auto mt-5 max-w-xl text-lg text-steel-200/85">Cuéntenos marca, modelo y falla. Respondemos por WhatsApp, teléfono o correo, con servicio en el Valle del Cauca.</p>
+      <h2 class="reveal font-display text-4xl font-bold leading-tight text-balance sm:text-6xl">¿Qué equipo necesita que le revisemos?</h2>
+      <p class="reveal mx-auto mt-5 max-w-xl text-lg text-steel-200/85">Cuéntenos marca, modelo y falla. Respondemos por WhatsApp, teléfono o correo, con servicio en {company.coverage}.</p>
       <div class="reveal mt-9 flex flex-wrap items-center justify-center gap-4">
         <a href="/contacto" class="cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">Solicitar diagnóstico</a>
         <a href={wa} target="_blank" rel="noopener noreferrer" class="cursor-pointer rounded-lg border border-white/25 bg-white/10 px-7 py-4 text-sm font-bold text-white transition-colors hover:border-oil-400 hover:bg-white/15">{company.phones.whatsapp.display}</a>
       </div>
-      <p class="reveal mt-8 font-mono text-xs uppercase tracking-[0.2em] text-steel-200/60">Cali · Valle del Cauca · Servicio en sitio</p>
+      <p class="reveal mt-8 font-mono text-xs uppercase tracking-[0.2em] text-steel-200/60">Cali · {company.coverage} · Servicio en sitio</p>
     </SteelBanner>
   </main>
 </Layout>

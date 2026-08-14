@@ -32,14 +32,14 @@ const inputClass = "w-full rounded-lg border border-ink-900/15 bg-white px-3.5 p
 
 <Layout
   title="Contacto | Diesel Ingeniería SAS"
-  description="Solicite diagnóstico o cotización. WhatsApp, teléfono, correo y dirección en Cali. Servicio en el Valle del Cauca."
+  description={`Solicite diagnóstico o cotización. WhatsApp, teléfono, correo y dirección en Cali. Servicio en ${company.coverage}.`}
   path="/contacto"
 >
   <main>
     <PageHero
       kicker="Contacto"
       title="Cuéntenos qué máquina y qué falla tiene"
-      lead="Respondemos por WhatsApp, teléfono o correo. Atendemos proyectos y servicio en el Valle del Cauca."
+      lead={`Respondemos por WhatsApp, teléfono o correo. Atendemos proyectos y servicio en ${company.coverage}.`}
       watermark="CONTACTO"
     />
 
@@ -134,7 +134,7 @@ const inputClass = "w-full rounded-lg border border-ink-900/15 bg-white px-3.5 p
           <div class="surface mt-6 rounded-2xl p-6">
             <h3 class="font-display text-sm font-bold uppercase tracking-wider text-steel-700">Cobertura regional</h3>
             <p class="mt-2.5 leading-relaxed text-ink-600">
-              Nuestro taller está en Cali y prestamos servicio en sitio (pruebas, calibración y microfiltrado) en el Valle del Cauca.
+              Nuestro taller está en Cali y prestamos servicio en sitio (pruebas, calibración y microfiltrado) en {company.coverage}.
             </p>
             <p class="mt-4 font-mono text-xs text-ink-500">
               NIT {company.nit} · Sin redes sociales — escríbanos por WhatsApp, teléfono o correo.

@@ -19,18 +19,23 @@ const brands = [
   'Baltrotors', 'Sampo Hydraulics', 'Black Bruin', 'SAI', 'ASA Hydraulik',
   'Thermal Transfer Products', 'CARDEV',
 ];
+
+const equipmentBrands = [
+  'John Deere', 'Volvo', 'CAT', 'Komatsu', 'Hitachi', 'Case', 'Doosan',
+  'Zoom Lion', 'Terex', 'Ford', 'Kobelco',
+];
 ---
 
 <Layout
   title="Nosotros | Diesel Ingeniería SAS"
-  description="25 años de trayectoria en sistemas óleo-hidráulicos, electrohidráulicos, neumáticos e instrumentación. Misión, visión y filosofía de trabajo de Diesel Ingeniería."
+  description="25 años de trayectoria en Sistemas Hidráulicos y Neumáticos. Misión, visión y filosofía de trabajo de Diesel Ingeniería."
   path="/nosotros"
 >
   <main>
     <PageHero
       kicker="Nosotros"
-      title="25 años dedicados a la óleo-hidráulica"
-      lead="Somos especialistas en sistemas óleo-hidráulicos, electrohidráulicos, neumáticos e instrumentación, con mantenimiento predictivo, preventivo y correctivo, además de fabricación y reparación de componentes."
+      title="25 años dedicados a la Hidráulica"
+      lead="Somos especialistas en Sistemas Hidráulicos y Neumáticos, con Mantenimiento Predictivo, Preventivo y Correctivo, además de reparación y suministro de componentes."
       watermark="NOSOTROS"
     />
 
@@ -38,12 +43,12 @@ const brands = [
       <div class="grid grid-cols-1 gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
         <div class="reveal">
           <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ Quiénes somos</span>
-          <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance">Especialistas en sistemas óleo-hidráulicos</h2>
+          <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance">Especialistas en Sistemas Hidráulicos</h2>
           <p class="mt-6 leading-relaxed text-ink-600">
-            Diesel Ingeniería S.A.S. es una empresa colombiana especializada en el mantenimiento de sistemas electrohidráulicos en sus tres gamas —predictivo, preventivo y correctivo— tanto en equipos móviles como en la industria (siderúrgica, construcción, agrícola y alimenticia).
+            Diesel Ingeniería S.A.S. es una empresa colombiana especializada en el mantenimiento de Sistemas Hidráulicos en sus tres gamas —Predictivo, Preventivo y Correctivo— tanto en equipos móviles como en la industria (Siderúrgica, Infraestructura, Construcción, Agrícola, Alimenticia, Forestal, Portuaria).
           </p>
           <p class="mt-4 leading-relaxed text-ink-600">
-            Nuestra disciplina núcleo es la óleo-hidráulica: la potencia transmitida por aceite a presión que mueve la maquinaria pesada e industrial. A esto sumamos la neumática y la instrumentación como especialidades complementarias, con capacidad de fabricación y reparación de bombas, motores, cilindros y válvulas.
+            Su disciplina núcleo es la Hidráulica: potencia transmitida por aceite a presión que mueve la maquinaria pesada e industrial, complementada con neumática, capacidad de reparación y suministro de bombas, motores, cilindros y válvulas.
           </p>
         </div>
 
@@ -51,7 +56,7 @@ const brands = [
           <p class="font-display text-7xl font-bold text-ink-900"><span data-counter={figures.years}>0</span></p>
           <p class="mt-2 text-sm font-bold uppercase tracking-[0.14em] text-oil-600">Años de trayectoria</p>
           <p class="mt-6 border-t border-ink-100 pt-6 leading-relaxed text-ink-600">
-            Dos décadas y media de experiencia que nos permiten diagnosticar, anticipar fallas y respaldar cada reparación con conocimiento del componente óleo-hidráulico.
+            Dos décadas y media de experiencia que nos permiten diagnosticar, anticipar fallas y respaldar cada reparación con conocimiento del componente hidráulico.
           </p>
         </div>
       </div>
@@ -65,7 +70,7 @@ const brands = [
             <h3 class="font-display text-2xl font-bold text-ink-900">Misión</h3>
           </div>
           <p class="mt-5 leading-relaxed text-ink-600">
-            Contribuir al mejoramiento de la productividad de los procesos de nuestros clientes, brindando soluciones integrales en la especialidad de sistemas electrohidráulicos que permitan mantener y aumentar la disponibilidad de sus equipos, siempre bajo una filosofía de calidad, seguridad, protección del medio ambiente y mejoramiento continuo.
+            Contribuir al mejoramiento de la productividad de los procesos de los clientes, brindando soluciones integrales en Sistemas Hidráulicos que permitan mantener y aumentar la disponibilidad de sus equipos, bajo una filosofía de Calidad, Seguridad, Protección del Medio Ambiente y Mejoramiento Continuo.
           </p>
         </div>
         <div class="reveal surface rounded-2xl p-9">
@@ -97,7 +102,18 @@ const brands = [
     </section>
 
     <section class="border-t border-ink-900/10 bg-paper-2 py-16">
-      <p class="px-6 text-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas con las que trabajamos y conseguimos para nuestros clientes</p>
+      <p class="px-6 text-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas de equipos con las que se trabaja</p>
+      <div class="marquee mask-fade-x mt-10" style="--marquee-duration:40s">
+        <div class="marquee-track">
+          {[...equipmentBrands, ...equipmentBrands].map((b) => (
+            <span class="font-display text-xl font-bold text-ink-300 transition-colors hover:text-steel-600">{b}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="border-t border-ink-900/10 bg-paper-2 py-16">
+      <p class="px-6 text-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas de partes con las que se trabaja</p>
       <div class="marquee mask-fade-x mt-10" style="--marquee-duration:52s">
         <div class="marquee-track">
           {[...brands, ...brands].map((b) => (
