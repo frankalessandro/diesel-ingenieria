@@ -2,7 +2,19 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import SteelBanner from '../components/SteelBanner.astro';
+import MediaFrame from '../components/MediaFrame.astro';
+import BrandGrid from '../components/BrandGrid.astro';
 import { figures } from '../data/company';
+import logoJohnDeere from '../assets/logos-marcas/john-deere-6-logo.svg';
+import logoVolvo from '../assets/logos-marcas/volvo-logo.svg';
+import logoCat from '../assets/logos-marcas/cat-logo-png-transparent.png';
+import logoKomatsu from '../assets/logos-marcas/Komatsu-Logo.png';
+import logoHitachi from '../assets/logos-marcas/Hitachi-Logo-1968.png';
+import logoCase from '../assets/logos-marcas/case-logo-png-transparent.png';
+import logoDoosan from '../assets/logos-marcas/Doosan-Logo-2022.png';
+import logoZoomlion from '../assets/logos-marcas/zoomlion-logo-png_seeklogo-321945.png';
+import logoTerex from '../assets/logos-marcas/Terex-logo.png';
+import logoFord from '../assets/logos-marcas/ford.svg';
 
 const philosophy = [
   { n: '01', title: 'Calidad', desc: 'Control en cada reparación, mecanizado y prueba en banco.' },
@@ -21,8 +33,17 @@ const brands = [
 ];
 
 const equipmentBrands = [
-  'John Deere', 'Volvo', 'CAT', 'Komatsu', 'Hitachi', 'Case', 'Doosan',
-  'Zoom Lion', 'Terex', 'Ford', 'Kobelco',
+  { name: 'John Deere', logo: logoJohnDeere },
+  { name: 'Volvo', logo: logoVolvo },
+  { name: 'CAT', logo: logoCat },
+  { name: 'Komatsu', logo: logoKomatsu },
+  { name: 'Hitachi', logo: logoHitachi },
+  { name: 'Case', logo: logoCase },
+  { name: 'Doosan', logo: logoDoosan },
+  { name: 'Zoom Lion', logo: logoZoomlion },
+  { name: 'Terex', logo: logoTerex },
+  { name: 'Ford', logo: logoFord },
+  { name: 'Kobelco' },
 ];
 ---
 
@@ -60,6 +81,10 @@ const equipmentBrands = [
           </p>
         </div>
       </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-6 pb-16" data-reveal-group>
+      <MediaFrame ratio="21/9" label="Foto — Nuestro equipo en el taller" class="reveal" />
     </section>
 
     <section class="border-y border-ink-900/10 bg-steel-50 py-24" data-reveal-group>
@@ -101,14 +126,10 @@ const equipmentBrands = [
       </div>
     </section>
 
-    <section class="border-t border-ink-900/10 bg-paper-2 py-16">
-      <p class="px-6 text-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas de equipos con las que se trabaja</p>
-      <div class="marquee mask-fade-x mt-10" style="--marquee-duration:40s">
-        <div class="marquee-track">
-          {[...equipmentBrands, ...equipmentBrands].map((b) => (
-            <span class="font-display text-xl font-bold text-ink-300 transition-colors hover:text-steel-600">{b}</span>
-          ))}
-        </div>
+    <section class="border-t border-ink-900/10 bg-paper py-24">
+      <div class="mx-auto max-w-7xl px-6" data-reveal-group>
+        <p class="reveal text-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas de equipos con las que se trabaja</p>
+        <BrandGrid brands={equipmentBrands} class="reveal mt-8" />
       </div>
     </section>
 

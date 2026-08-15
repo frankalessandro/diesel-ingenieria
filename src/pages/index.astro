@@ -1,7 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SteelBanner from '../components/SteelBanner.astro';
+import MediaFrame from '../components/MediaFrame.astro';
+import CircuitLine from '../components/CircuitLine.astro';
+import BrandGrid from '../components/BrandGrid.astro';
 import { company, figures, whatsappLink } from '../data/company';
+import logoJohnDeere from '../assets/logos-marcas/john-deere-6-logo.svg';
+import logoVolvo from '../assets/logos-marcas/volvo-logo.svg';
+import logoCat from '../assets/logos-marcas/cat-logo-png-transparent.png';
+import logoKomatsu from '../assets/logos-marcas/Komatsu-Logo.png';
+import logoHitachi from '../assets/logos-marcas/Hitachi-Logo-1968.png';
+import logoCase from '../assets/logos-marcas/case-logo-png-transparent.png';
+import logoDoosan from '../assets/logos-marcas/Doosan-Logo-2022.png';
+import logoZoomlion from '../assets/logos-marcas/zoomlion-logo-png_seeklogo-321945.png';
+import logoTerex from '../assets/logos-marcas/Terex-logo.png';
+import logoFord from '../assets/logos-marcas/ford.svg';
 
 const wa = whatsappLink();
 
@@ -83,7 +96,18 @@ const projects = [
   { n: '04', span: 'lg:col-span-8', title: 'Repotenciación de sistemas y equipos', desc: 'Actualización de tableros eléctricos y recuperación del desempeño de sistemas hidráulicos en operación.' },
 ];
 
-const brands = ['John Deere', 'Volvo', 'CAT', 'Komatsu', 'Hitachi', 'Case', 'Doosan', 'Zoom Lion', 'Terex', 'Ford'];
+const brands = [
+  { name: 'John Deere', logo: logoJohnDeere },
+  { name: 'Volvo', logo: logoVolvo },
+  { name: 'CAT', logo: logoCat },
+  { name: 'Komatsu', logo: logoKomatsu },
+  { name: 'Hitachi', logo: logoHitachi },
+  { name: 'Case', logo: logoCase },
+  { name: 'Doosan', logo: logoDoosan },
+  { name: 'Zoom Lion', logo: logoZoomlion },
+  { name: 'Terex', logo: logoTerex },
+  { name: 'Ford', logo: logoFord },
+];
 
 const philosophy = [
   { title: 'Calidad', desc: 'Control en cada reparación, mecanizado y prueba en banco.' },
@@ -103,6 +127,8 @@ const philosophy = [
     <section data-hero data-parallax-scope class="noise relative isolate overflow-hidden bg-paper pt-32 pb-24 lg:pt-40">
       <div class="pointer-events-none absolute -right-24 -top-24 h-[38rem] w-[38rem] rounded-full bg-steel-200/45 blur-[130px]" data-parallax="0.2" aria-hidden="true"></div>
       <div class="pointer-events-none absolute -left-32 bottom-[-6rem] h-96 w-96 rounded-full bg-oil-100/70 blur-[110px]" data-parallax="0.12" aria-hidden="true"></div>
+      <CircuitLine class="pointer-events-none absolute -right-10 bottom-0 hidden h-64 w-[26rem] text-steel-600/[0.09] lg:block" data-parallax="0.06" aria-hidden="true" />
+      <span class="pointer-events-none absolute -bottom-10 left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-[19vw] font-bold leading-none text-stroke opacity-70 sm:text-[15vw]" data-drift="10" aria-hidden="true">HIDRÁULICA</span>
 
       <div class="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-14 px-6 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
@@ -121,7 +147,7 @@ const philosophy = [
           </p>
 
           <div class="mt-9 flex flex-wrap items-center gap-4">
-            <a data-hero-cta href="/contacto" class="cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">
+            <a data-hero-cta href="/contacto" class="cta-pulse cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">
               Solicitar diagnóstico
             </a>
             <a data-hero-cta href={wa} target="_blank" rel="noopener noreferrer" class="group flex cursor-pointer items-center gap-2 rounded-lg border border-ink-900/15 bg-white px-7 py-4 text-sm font-bold text-ink-800 transition-colors hover:border-steel-500 hover:text-steel-700">
@@ -172,6 +198,24 @@ const philosophy = [
       </div>
     </section>
 
+    <!-- ============ ASÍ TRABAJAMOS (espacio de imagen) ============ -->
+    <section class="mx-auto max-w-7xl px-6 pt-24" data-reveal-group>
+      <div class="reveal grid grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_1fr]">
+        <MediaFrame ratio="4/3" label="Foto — Taller / Bahía de trabajo" class="order-2 lg:order-1" />
+        <div class="order-1 lg:order-2">
+          <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ Así se ve el trabajo</span>
+          <h2 class="mt-4 font-display text-3xl font-bold leading-tight text-ink-900 text-balance sm:text-4xl">Taller propio, técnicos en sitio</h2>
+          <p class="mt-5 max-w-md leading-relaxed text-ink-600">
+            Desde el banco de pruebas hidráulico hasta la intervención en campo: diagnóstico, mecanizado y reparación con equipo propio, respaldado por 25 años de trayectoria.
+          </p>
+          <a href="/nosotros" class="mt-7 inline-flex w-fit cursor-pointer items-center gap-1.5 text-sm font-bold text-steel-700 hover:text-oil-700">
+            Conocer al equipo
+            <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ QUÉ HACEMOS (bento asimétrico) ============ -->
     <section class="mx-auto max-w-7xl px-6 py-28" data-reveal-group>
       <div class="reveal flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -184,7 +228,7 @@ const philosophy = [
 
       <div class="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-2">
         {whatWeDo.map((item) => (
-          <a href={item.href} class="surface surface-hover tech-card reveal group flex cursor-pointer flex-col rounded-2xl p-8 sm:p-10">
+          <a href={item.href} data-tilt="6" class="surface surface-hover tech-card reveal group flex cursor-pointer flex-col rounded-2xl p-8 sm:p-10">
             <div class="flex items-start justify-between">
               <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-steel-50 text-steel-700 transition-colors group-hover:bg-oil-500 group-hover:text-ink-950">
                 <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={item.icon}/></svg>
@@ -231,15 +275,16 @@ const philosophy = [
 
         <div data-hero-side class="relative mx-auto w-full max-w-md" aria-hidden="true">
           <div class="surface relative aspect-square rounded-3xl p-8">
-            <svg viewBox="0 0 200 200" class="h-full w-full">
-              <circle cx="100" cy="100" r="88" fill="none" stroke="rgb(14 22 32 / 0.08)" stroke-width="2"/>
-              <circle cx="100" cy="100" r="70" fill="none" stroke="rgb(14 22 32 / 0.05)" stroke-width="1"/>
+            <svg viewBox="0 0 200 200" class="h-full w-full" data-draw-scope>
+              <circle data-draw cx="100" cy="100" r="88" fill="none" stroke="rgb(14 22 32 / 0.08)" stroke-width="2"/>
+              <circle data-draw cx="100" cy="100" r="70" fill="none" stroke="rgb(14 22 32 / 0.05)" stroke-width="1"/>
               {Array.from({ length: 44 }).map((_, i) => {
                 const a = (i / 44) * 270 - 225;
                 const r1 = i % 4 === 0 ? 62 : 68;
                 const rad = (a * Math.PI) / 180;
                 return (
                   <line
+                    data-draw
                     x1={100 + r1 * Math.cos(rad)} y1={100 + r1 * Math.sin(rad)}
                     x2={100 + 74 * Math.cos(rad)} y2={100 + 74 * Math.sin(rad)}
                     stroke={i > 33 ? 'rgb(217 130 43 / 0.95)' : 'rgb(27 81 130 / 0.45)'} stroke-width={i % 4 === 0 ? 2.5 : 1}
@@ -268,10 +313,10 @@ const philosophy = [
     </section>
 
     <!-- ============ SERVICIOS — HORIZONTAL SCROLL ============ -->
-    <section data-hscroll class="relative bg-paper lg:h-screen lg:overflow-hidden">
-      <div class="mx-auto flex h-full max-w-none flex-col justify-center py-24 lg:py-0">
-        <div data-hscroll-track class="flex flex-col gap-6 px-6 lg:h-[72vh] lg:flex-row lg:items-stretch lg:gap-8 lg:px-16">
-          <div class="flex shrink-0 flex-col justify-center lg:w-[34vw] lg:max-w-md">
+    <section data-hscroll class="relative bg-paper py-24 lg:overflow-hidden lg:py-28">
+      <div class="mx-auto max-w-none">
+        <div data-hscroll-track class="flex flex-col gap-6 px-6 lg:flex-row lg:items-stretch lg:gap-8 lg:px-16">
+          <div class="flex shrink-0 flex-col justify-center lg:w-[30vw] lg:max-w-md">
             <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ 02 — Servicios</span>
             <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Seis frentes de trabajo</h2>
             <p class="mt-5 max-w-sm text-ink-600">Desde anticipar una falla hasta suministrar el componente que la máquina necesita. Desliza para recorrerlos.</p>
@@ -288,7 +333,8 @@ const philosophy = [
           {servicePanels.map((s) => (
             <article class="surface surface-hover group flex shrink-0 flex-col justify-between rounded-2xl p-8 lg:w-[31vw] lg:max-w-sm">
               <div>
-                <div class="flex items-center justify-between">
+                <MediaFrame ratio="16/9" label={`Foto — ${s.tag}`} class="h-24 sm:h-28" />
+                <div class="mt-5 flex items-center justify-between">
                   <span class="font-display text-6xl font-bold text-ink-100 transition-colors group-hover:text-oil-300">{s.n}</span>
                   <span class="rounded-full bg-steel-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-steel-700">{s.tag}</span>
                 </div>
@@ -384,7 +430,8 @@ const philosophy = [
         </div>
         <div class="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-2">
           {projects.map((p) => (
-            <div class="surface surface-hover tech-card reveal flex flex-col rounded-2xl p-8 sm:p-10">
+            <div data-tilt="5" class="surface surface-hover tech-card reveal flex flex-col rounded-2xl p-8 sm:p-10">
+              <MediaFrame ratio="4/3" label={`Foto — Proyecto ${p.n}`} class="mb-6" />
               <div class="flex items-start justify-between gap-4">
                 <h3 class="min-w-0 max-w-md font-display text-2xl font-bold text-ink-900">{p.title}</h3>
                 <span class="card-index shrink-0 font-display text-5xl font-bold text-ink-100">{p.n}</span>
@@ -396,22 +443,11 @@ const philosophy = [
       </div>
     </section>
 
-    <!-- ============ MARCAS — MARQUEE ============ -->
-    <section class="border-b border-ink-900/10 bg-white py-16">
-      <p class="px-6 text-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas de Equipos</p>
-      <div class="marquee mask-fade-x mt-10" style="--marquee-duration:46s">
-        <div class="marquee-track">
-          {[...brands, ...brands].map((b) => (
-            <span class="font-display text-2xl font-bold text-ink-300 transition-colors hover:text-steel-600">{b}</span>
-          ))}
-        </div>
-      </div>
-      <div class="marquee mask-fade-x mt-6" style="--marquee-duration:56s">
-        <div class="marquee-track" style="animation-direction:reverse">
-          {[...brands.slice().reverse(), ...brands.slice().reverse()].map((b) => (
-            <span class="font-display text-2xl font-bold text-ink-200 transition-colors hover:text-oil-600">{b}</span>
-          ))}
-        </div>
+    <!-- ============ MARCAS DE EQUIPOS ============ -->
+    <section class="border-b border-ink-900/10 bg-paper py-24">
+      <div class="mx-auto max-w-7xl px-6" data-reveal-group>
+        <p class="reveal text-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas de Equipos</p>
+        <BrandGrid brands={brands} class="reveal mt-8" />
       </div>
     </section>
 

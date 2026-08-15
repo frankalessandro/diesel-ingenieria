@@ -1,0 +1,61 @@
+---
+// Grilla de marcas — panel claro (acorde al resto del sitio) con marcas de
+// registro por celda (mismo lenguaje que .frame-corners) en vez del marquee
+// de texto corrido. Logo real de cada fabricante vía astro:assets; en
+// escala de grises por defecto y a color al hover para lectura homogénea.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Brand {
+  name: string;
+  /** Si falta el logo verificado del fabricante, se muestra el wordmark
+   * en tipografía display en su lugar (regla del proyecto: "logos
+   * correctos, no adivinados"). */
+  logo?: ImageMetadata;
+}
+
+interface Props {
+  brands: Brand[];
+  class?: string;
+}
+const { brands, class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    'surface relative isolate overflow-hidden rounded-2xl',
+    className,
+  ]}
+>
+  <div class="pointer-events-none absolute inset-0 blueprint-grid-fine opacity-70" aria-hidden="true"></div>
+  <div class="relative grid grid-cols-2 divide-x divide-y divide-ink-900/8 sm:grid-cols-3 lg:grid-cols-5">
+    {brands.map((b) => (
+      <div class="frame-corners corners-tight group relative flex items-center justify-center px-5 py-9 transition-colors duration-200 hover:bg-steel-50 sm:px-6 sm:py-11">
+        <span class="corner corner-tl transition-colors duration-200 group-hover:border-oil-500"></span>
+        <span class="corner corner-tr transition-colors duration-200 group-hover:border-oil-500"></span>
+        <span class="corner corner-bl transition-colors duration-200 group-hover:border-oil-500"></span>
+        <span class="corner corner-br transition-colors duration-200 group-hover:border-oil-500"></span>
+        {b.logo ? (
+          <span class="flex h-14 w-full items-center justify-center sm:h-16">
+            <Image
+              src={b.logo}
+              alt={`Logo ${b.name}`}
+              width={280}
+              height={140}
+              class="h-full w-full object-contain grayscale opacity-70 transition duration-200 group-hover:grayscale-0 group-hover:opacity-100"
+            />
+          </span>
+        ) : (
+          <span class="flex flex-col items-center gap-1.5">
+            <span class="font-display text-center text-lg font-bold tracking-tight text-ink-700 transition-colors duration-200 group-hover:text-ink-900 sm:text-xl">
+              {b.name}
+            </span>
+            <span class="font-mono text-[10px] font-medium uppercase tracking-[0.15em] text-ink-400">
+              Logo próximamente
+            </span>
+          </span>
+        )}
+      </div>
+    ))}
+  </div>
+</div>

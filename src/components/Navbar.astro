@@ -94,6 +94,18 @@ const isActive = (item: NavItem): boolean => {
         <span class="hidden xl:inline">Solicitar diagnóstico</span>
       </a>
 
+      {/* Manómetro de progreso de lectura — reemplaza la barra lineal anterior */}
+      <div
+        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink-900/10 bg-white/70 sm:h-10 sm:w-10"
+        aria-hidden="true"
+        title="Progreso de la página"
+      >
+        <svg viewBox="0 0 36 36" class="h-[1.55rem] w-[1.55rem] -rotate-90 sm:h-7 sm:w-7">
+          <circle cx="18" cy="18" r="15" fill="none" stroke="var(--color-ink-100)" stroke-width="3" />
+          <circle data-scroll-gauge cx="18" cy="18" r="15" fill="none" stroke="var(--color-oil-500)" stroke-width="3" stroke-linecap="round" />
+        </svg>
+      </div>
+
       <details data-mobile-menu class="group/mobile lg:hidden">
         <summary
           id="nav-toggle"
@@ -160,8 +172,6 @@ const isActive = (item: NavItem): boolean => {
       </details>
     </div>
   </div>
-
-  <div class="pointer-events-none mx-auto mt-1 h-0.5 max-w-7xl origin-left scale-x-0 rounded-full bg-gradient-to-r from-oil-500 via-steel-500 to-transparent" data-scroll-progress></div>
 </header>
 
 <style>

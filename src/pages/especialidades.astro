@@ -192,7 +192,7 @@ const totalItems = categories.reduce((sum, c) => sum + c.items.length, 0);
     </div>
 
     <SteelBanner width="narrow">
-      <div class="frame-corners reveal relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.04] p-10 text-center sm:p-14">
+      <div class="frame-corners frame-corners-dark reveal relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.04] p-10 text-center sm:p-14">
         <span class="corner corner-tl" aria-hidden="true"></span>
         <span class="corner corner-tr" aria-hidden="true"></span>
         <span class="corner corner-bl" aria-hidden="true"></span>
@@ -222,17 +222,4 @@ const totalItems = categories.reduce((sum, c) => sum + c.items.length, 0);
   .tech-card.no-ribbon::before {
     display: none;
   }
-
-  /* Esquinas de plano técnico para el panel de cierre */
-  .frame-corners .corner {
-    position: absolute;
-    width: 1.1rem;
-    height: 1.1rem;
-    border-color: rgb(236 156 68 / 0.55);
-    pointer-events: none;
-  }
-  .corner-tl { top: 0.9rem; left: 0.9rem; border-top: 2px solid; border-left: 2px solid; }
-  .corner-tr { top: 0.9rem; right: 0.9rem; border-top: 2px solid; border-right: 2px solid; }
-  .corner-bl { bottom: 0.9rem; left: 0.9rem; border-bottom: 2px solid; border-left: 2px solid; }
-  .corner-br { bottom: 0.9rem; right: 0.9rem; border-bottom: 2px solid; border-right: 2px solid; }
 </style>

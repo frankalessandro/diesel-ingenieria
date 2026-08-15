@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import SteelBanner from '../components/SteelBanner.astro';
+import MediaFrame from '../components/MediaFrame.astro';
 import { figures, company } from '../data/company';
 
 const sectors = [
@@ -120,14 +121,14 @@ const tabCss = sectors
             ))}
           </div>
 
-          <div class="frame-corners relative mt-4 overflow-hidden rounded-2xl border border-white/15 bg-white/[0.03]">
+          <div class="frame-corners frame-corners-dark relative mt-4 overflow-hidden rounded-2xl border border-white/15 bg-white/[0.03]">
             <span class="corner corner-tl" aria-hidden="true"></span>
             <span class="corner corner-tr" aria-hidden="true"></span>
             <span class="corner corner-bl" aria-hidden="true"></span>
             <span class="corner corner-br" aria-hidden="true"></span>
 
             {sectors.map((s) => (
-              <div data-panel={s.id} class="sector-panel relative hidden w-full grid-cols-1 md:grid-cols-[1fr_1.15fr]">
+              <div data-panel={s.id} class="sector-panel relative hidden w-full grid-cols-1 md:grid-cols-[1fr_0.85fr_1.1fr]">
                 <div class="flex flex-col justify-between p-8 sm:p-10">
                   <div>
                     <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-400">Sector / {s.n}</span>
@@ -138,6 +139,10 @@ const tabCss = sectors
                     Hablar sobre este sector
                     <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
                   </a>
+                </div>
+
+                <div class="flex items-center border-t border-white/10 bg-black/15 p-6 sm:p-8 md:border-l md:border-t-0">
+                  <MediaFrame ratio="1/1" variant="dark" label={`Foto — ${s.title}`} class="w-full" />
                 </div>
 
                 <div class="flex flex-col justify-center border-t border-white/10 bg-black/15 p-8 sm:p-10 md:border-l md:border-t-0">
@@ -205,18 +210,4 @@ const tabCss = sectors
       scroll-behavior: smooth;
     }
   }
-
-  /* Esquinas de plano técnico para el panel de detalle (sobre fondo oscuro) */
-  .frame-corners .corner {
-    position: absolute;
-    width: 1.1rem;
-    height: 1.1rem;
-    border-color: rgb(236 156 68 / 0.55);
-    pointer-events: none;
-    z-index: 1;
-  }
-  .corner-tl { top: 0.75rem; left: 0.75rem; border-top: 2px solid; border-left: 2px solid; }
-  .corner-tr { top: 0.75rem; right: 0.75rem; border-top: 2px solid; border-right: 2px solid; }
-  .corner-bl { bottom: 0.75rem; left: 0.75rem; border-bottom: 2px solid; border-left: 2px solid; }
-  .corner-br { bottom: 0.75rem; right: 0.75rem; border-bottom: 2px solid; border-right: 2px solid; }
 </style>

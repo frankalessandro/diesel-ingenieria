@@ -81,8 +81,8 @@ h1, h2, h3, h4, .font-display {
 ::-webkit-scrollbar-thumb:hover { background: var(--color-oil-500); }
 
 /* ---- GSAP reveal base states ---- */
-.reveal { opacity: 0; transform: translateY(32px); }
-.reveal-x { opacity: 0; transform: translateX(-40px); }
+.reveal { opacity: 0; transform: translateY(38px) scale(0.965); }
+.reveal-x { opacity: 0; transform: translateX(-44px) scale(0.98); }
 .mask-reveal { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -103,6 +103,12 @@ h1, h2, h3, h4, .font-display {
     linear-gradient(rgb(27 81 130 / 0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgb(27 81 130 / 0.06) 1px, transparent 1px);
   background-size: 24px 24px;
+}
+.blueprint-grid-dark {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.07) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 /* Dotted engineering paper */
 .dot-grid {
@@ -241,6 +247,52 @@ h1, h2, h3, h4, .font-display {
   transition: transform 0.25s ease;
 }
 .link-underline:hover::after { transform: scaleX(1); }
+
+/* Anillo de pulso sutil en el CTA principal del hero — llama la atención sin
+   moverse ni "engancharse" al cursor. */
+.cta-pulse {
+  position: relative;
+  isolation: isolate;
+}
+.cta-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1.5px solid var(--color-oil-400);
+  opacity: 0;
+  z-index: -1;
+  animation: ctaPulse 2.6s ease-out infinite;
+}
+@keyframes ctaPulse {
+  0% { opacity: 0.55; transform: scale(1); }
+  75%, 100% { opacity: 0; transform: scale(1.28); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-pulse::after { animation: none; display: none; }
+}
+
+/* ---- Frame corners: esquinas de registro de plano técnico (reusable) ---- */
+.frame-corners { position: relative; }
+.frame-corners .corner {
+  position: absolute;
+  width: 1.1rem;
+  height: 1.1rem;
+  pointer-events: none;
+  z-index: 1;
+}
+.frame-corners .corner-tl { top: 0.75rem; left: 0.75rem; border-top: 2px solid; border-left: 2px solid; }
+.frame-corners .corner-tr { top: 0.75rem; right: 0.75rem; border-top: 2px solid; border-right: 2px solid; }
+.frame-corners .corner-bl { bottom: 0.75rem; left: 0.75rem; border-bottom: 2px solid; border-left: 2px solid; }
+.frame-corners .corner-br { bottom: 0.75rem; right: 0.75rem; border-bottom: 2px solid; border-right: 2px solid; }
+/* Sobre fondos claros (por defecto acero); sobre fondos oscuros usar .frame-corners-dark */
+.frame-corners .corner { border-color: rgb(27 81 130 / 0.3); }
+.frame-corners-dark .corner { border-color: rgb(236 156 68 / 0.55); }
+.frame-corners.corners-tight .corner { width: 0.85rem; height: 0.85rem; }
+.frame-corners.corners-tight .corner-tl { top: 0.6rem; left: 0.6rem; }
+.frame-corners.corners-tight .corner-tr { top: 0.6rem; right: 0.6rem; }
+.frame-corners.corners-tight .corner-bl { bottom: 0.6rem; left: 0.6rem; }
+.frame-corners.corners-tight .corner-br { bottom: 0.6rem; right: 0.6rem; }
 
 /* Steel panel — dark brand block on light page (used sparingly for weight) */
 .panel-steel {

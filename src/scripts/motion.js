@@ -1,7 +1,9 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin);
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -21,15 +23,16 @@ function initHeroIntro() {
   if (kicker) tl.from(kicker, { opacity: 0, y: 20, duration: 0.6 });
 
   if (lines.length) {
-    lines.forEach((line) => {
-      const text = line.textContent;
-      line.innerHTML = `<span class="inline-block will-change-transform">${text}</span>`;
+    // Momento de mayor impacto del sitio: cada línea del H1 se divide en
+    // palabras (no en caracteres — a nivel char, los spans inline-block
+    // rompen el word-wrap normal y pueden partir una palabra a la mitad)
+    // y entran con un stagger marcado, en vez del simple slide de línea
+    // completa que había antes.
+    const wordBatches = Array.from(lines).map((line) => {
+      const split = new SplitText(line, { type: "words", wordsClass: "inline-block will-change-transform" });
+      return split.words;
     });
-    tl.from(
-      Array.from(lines).map((l) => l.firstElementChild),
-      { yPercent: 118, duration: 1, stagger: 0.12 },
-      "-=0.2",
-    );
+    tl.from(wordBatches.flat(), { yPercent: 130, duration: 0.9, stagger: 0.045, ease: "power4.out" }, "-=0.2");
   }
   if (sub) tl.from(sub, { opacity: 0, y: 18, duration: 0.7 }, "-=0.55");
   if (cta.length) tl.from(cta, { opacity: 0, y: 18, duration: 0.6, stagger: 0.08 }, "-=0.5");
@@ -47,7 +50,8 @@ function initReveals() {
       opacity: 1,
       x: 0,
       y: 0,
-      duration: 0.85,
+      scale: 1,
+      duration: 0.9,
       ease: "power3.out",
       stagger: 0.1,
       scrollTrigger: { trigger: group, start: "top 80%", once: true },
@@ -61,7 +65,8 @@ function initReveals() {
         opacity: 1,
         x: 0,
         y: 0,
-        duration: 0.85,
+        scale: 1,
+        duration: 0.9,
         ease: "power3.out",
         scrollTrigger: { trigger: el, start: "top 85%", once: true },
       });
@@ -77,6 +82,131 @@ function initReveals() {
       ease: "power4.out",
       scrollTrigger: { trigger: line, start: "top 88%", once: true },
     });
+  });
+}
+
+/* ---------- Split-text reveals (headlines marcados a mano) ---------- */
+function initSplitReveal() {
+  if (reduceMotion) return;
+  document.querySelectorAll("[data-split]").forEach((el) => {
+    const type = el.dataset.split === "chars" ? "chars" : "words";
+    const split = new SplitText(el, { type, wordsClass: "inline-block", charsClass: "inline-block" });
+    const targets = type === "chars" ? split.chars : split.words;
+    gsap.from(targets, {
+      opacity: 0,
+      yPercent: 100,
+      duration: 0.7,
+      stagger: type === "chars" ? 0.012 : 0.045,
+      ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 85%", once: true },
+    });
+  });
+}
+
+/* ---------- SVG técnico que se "dibuja" al entrar (CircuitLine, dial del hero) ---------- */
+function initDrawSVG() {
+  document.querySelectorAll("[data-draw-scope]").forEach((svg) => {
+    const targets = svg.querySelectorAll("[data-draw]");
+    if (!targets.length) return;
+    if (reduceMotion) {
+      gsap.set(targets, { drawSVG: "100%" });
+      return;
+    }
+    gsap.set(targets, { drawSVG: "0%" });
+    gsap.to(targets, {
+      drawSVG: "100%",
+      duration: 1.3,
+      stagger: 0.05,
+      ease: "power2.inOut",
+      scrollTrigger: { trigger: svg, start: "top 85%", once: true },
+    });
+  });
+}
+
+/* ---------- Pull magnético (solo 1-2 elementos focales por pantalla) ---------- */
+function initMagnetic() {
+  if (reduceMotion) return;
+  if (window.matchMedia("(hover: none), (pointer: coarse)").matches) return;
+
+  document.querySelectorAll("[data-magnetic]").forEach((el) => {
+    const strength = parseFloat(el.dataset.magnetic || "0.3");
+    const xTo = gsap.quickTo(el, "x", { duration: 0.45, ease: "elastic.out(1,0.4)" });
+    const yTo = gsap.quickTo(el, "y", { duration: 0.45, ease: "elastic.out(1,0.4)" });
+
+    el.addEventListener("mousemove", (e) => {
+      const r = el.getBoundingClientRect();
+      xTo((e.clientX - r.left - r.width / 2) * strength);
+      yTo((e.clientY - r.top - r.height / 2) * strength);
+    });
+    el.addEventListener("mouseleave", () => {
+      xTo(0);
+      yTo(0);
+    });
+  });
+}
+
+/* ---------- Tilt 3D en tarjetas insignia (data-tilt) ---------- */
+function initTilt() {
+  if (reduceMotion) return;
+  if (window.matchMedia("(hover: none), (pointer: coarse)").matches) return;
+
+  document.querySelectorAll("[data-tilt]").forEach((card) => {
+    const strength = parseFloat(card.dataset.tilt || "7");
+    gsap.set(card, { transformPerspective: 800, transformStyle: "preserve-3d" });
+    const rxTo = gsap.quickTo(card, "rotationX", { duration: 0.5, ease: "power3.out" });
+    const ryTo = gsap.quickTo(card, "rotationY", { duration: 0.5, ease: "power3.out" });
+    const liftTo = gsap.quickTo(card, "y", { duration: 0.5, ease: "power3.out" });
+
+    card.addEventListener("mousemove", (e) => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      ryTo(px * strength);
+      rxTo(-py * strength);
+    });
+    card.addEventListener("mouseenter", () => liftTo(-4));
+    card.addEventListener("mouseleave", () => {
+      rxTo(0);
+      ryTo(0);
+      liftTo(0);
+    });
+  });
+}
+
+/* ---------- Selector de sectores: entrada suave del panel (la base sigue
+   siendo el radio+CSS, esto es puramente aditivo y no rompe el fallback) ---------- */
+function initSectorFlip() {
+  if (reduceMotion) return;
+  const radios = document.querySelectorAll('input[name="sector-tab"]');
+  if (!radios.length) return;
+
+  radios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      if (!radio.checked) return;
+      const id = radio.id.replace("tab-", "");
+      const panel = document.querySelector(`[data-panel="${id}"]`);
+      const btn = document.querySelector(`[data-btn="${id}"]`);
+      if (panel) gsap.fromTo(panel, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" });
+      if (btn) gsap.fromTo(btn, { scale: 0.94 }, { scale: 1, duration: 0.35, ease: "back.out(2)" });
+    });
+  });
+}
+
+/* ---------- Manómetro de progreso de scroll (navbar) ---------- */
+function initScrollGauge() {
+  const arc = document.querySelector("[data-scroll-gauge]");
+  if (!arc || typeof arc.getTotalLength !== "function") return;
+  const len = arc.getTotalLength();
+  gsap.set(arc, { strokeDasharray: len, strokeDashoffset: len });
+
+  if (reduceMotion) {
+    gsap.set(arc, { strokeDashoffset: 0 });
+    return;
+  }
+  gsap.to(arc, {
+    strokeDashoffset: 0,
+    ease: "none",
+    scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true },
   });
 }
 
@@ -201,17 +331,6 @@ function initHorizontalScroll() {
   });
 }
 
-/* ---------- Global scroll progress bar ---------- */
-function initProgressBar() {
-  const bar = document.querySelector("[data-scroll-progress]");
-  if (!bar || reduceMotion) return;
-  gsap.to(bar, {
-    scaleX: 1,
-    ease: "none",
-    scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true },
-  });
-}
-
 /* ---------- Navbar solidify on scroll ---------- */
 function initNavbar() {
   const nav = document.querySelector("[data-nav]");
@@ -269,10 +388,15 @@ function initNavIndicator() {
 function init() {
   initHeroIntro();
   initReveals();
+  initSplitReveal();
+  initDrawSVG();
+  initMagnetic();
+  initTilt();
+  initSectorFlip();
   initCounters();
   initParallax();
   initHorizontalScroll();
-  initProgressBar();
+  initScrollGauge();
   initNavbar();
   initNavIndicator();
 

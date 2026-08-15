@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import SteelBanner from '../components/SteelBanner.astro';
+import MediaFrame from '../components/MediaFrame.astro';
 import { company } from '../data/company';
 
 const services = [
@@ -81,24 +82,29 @@ const services = [
     {services.map((s, i) => (
       <section id={s.id} class:list={["scroll-mt-28 py-24", i % 2 === 1 ? "border-y border-ink-900/10 bg-steel-50" : "bg-paper"]} data-reveal-group>
         {s.brands ? (
-          <div class="mx-auto max-w-4xl px-6 text-center">
-            <span class="font-display text-7xl font-bold text-ink-200">{s.n}</span>
-            <p class="mt-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">{s.tag}</p>
-            <h2 class="reveal mt-4 font-display text-3xl font-bold leading-tight text-ink-900 text-balance sm:text-4xl">{s.title}</h2>
-            <p class="reveal mx-auto mt-5 max-w-2xl leading-relaxed text-ink-600">{s.lead}</p>
+          <div class="mx-auto max-w-4xl px-6">
+            <div class="text-center lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:items-center lg:justify-center">
+              <MediaFrame ratio="4/3" label={`Foto — ${s.tag}`} class="mx-auto mb-8 max-w-sm" />
+              <span class="font-display text-7xl font-bold text-ink-200">{s.n}</span>
+              <p class="mt-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">{s.tag}</p>
+              <h2 class="reveal mt-4 font-display text-3xl font-bold leading-tight text-ink-900 text-balance sm:text-4xl">{s.title}</h2>
+              <p class="reveal mx-auto mt-5 max-w-2xl leading-relaxed text-ink-600">{s.lead}</p>
+            </div>
 
-            <ul class="reveal mx-auto mt-10 grid grid-cols-1 gap-4 text-left sm:grid-cols-2">
-              {s.points.map((point) => (
-                <li class="surface surface-hover flex gap-4 rounded-2xl p-6 sm:p-7">
-                  <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-oil-500/15 text-oil-700">
-                    <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 0 1 1.4-1.4l3.8 3.8 6.8-6.8a1 1 0 0 1 1.4 0Z" clip-rule="evenodd"/></svg>
-                  </span>
-                  <span class="leading-relaxed text-ink-700">{point}</span>
-                </li>
-              ))}
-            </ul>
+            {s.points.length > 0 && (
+              <ul class="reveal mx-auto mt-10 grid grid-cols-1 gap-4 text-left sm:grid-cols-2">
+                {s.points.map((point) => (
+                  <li class="surface surface-hover flex gap-4 rounded-2xl p-6 sm:p-7">
+                    <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-oil-500/15 text-oil-700">
+                      <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 0 1 1.4-1.4l3.8 3.8 6.8-6.8a1 1 0 0 1 1.4 0Z" clip-rule="evenodd"/></svg>
+                    </span>
+                    <span class="leading-relaxed text-ink-700">{point}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
 
-            <div class="reveal mt-12">
+            <div class="reveal mt-12 text-center lg:py-24">
               <p class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas que conseguimos</p>
               <div class="mt-5 flex flex-wrap justify-center gap-2.5">
                 {s.brands.map((b) => (
@@ -108,15 +114,18 @@ const services = [
             </div>
           </div>
         ) : (
-          <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-            <div class="reveal lg:sticky lg:top-28">
-              <span class="font-display text-7xl font-bold text-ink-200">{s.n}</span>
-              <p class="mt-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">{s.tag}</p>
-              <h2 class="mt-4 font-display text-3xl font-bold leading-tight text-ink-900 text-balance sm:text-4xl">{s.title}</h2>
-              <p class="mt-5 leading-relaxed text-ink-600">{s.lead}</p>
+          <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 lg:grid-cols-[1fr_1.1fr] lg:items-start">
+            <div class="lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center">
+              <div class="reveal w-full">
+                <MediaFrame ratio="4/3" label={`Foto — ${s.tag}`} class="mb-7 w-full" />
+                <span class="font-display text-7xl font-bold text-ink-200">{s.n}</span>
+                <p class="mt-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">{s.tag}</p>
+                <h2 class="mt-4 font-display text-3xl font-bold leading-tight text-ink-900 text-balance sm:text-4xl">{s.title}</h2>
+                <p class="mt-5 leading-relaxed text-ink-600">{s.lead}</p>
+              </div>
             </div>
 
-            <ul class="space-y-4">
+            <ul class="space-y-4 lg:py-24">
               {s.points.map((point) => (
                 <li class="surface surface-hover reveal flex gap-4 rounded-2xl p-6 sm:p-7">
                   <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-oil-500/15 text-oil-700">
