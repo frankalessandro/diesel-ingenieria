@@ -89,6 +89,7 @@ h1, h2, h3, h4, .font-display {
   .reveal, .reveal-x { opacity: 1 !important; transform: none !important; }
   html { scroll-behavior: auto; }
   .marquee-track { animation: none !important; }
+  .animate-scroll-hint { animation: none !important; }
 }
 
 /* ---- Textures (light / blueprint) ---- */
@@ -167,6 +168,13 @@ h1, h2, h3, h4, .font-display {
 }
 
 .text-balance { text-wrap: balance; }
+
+/* ---- Pista de scroll lateral (carruseles mobile) ---- */
+.animate-scroll-hint { animation: scroll-hint 1.4s ease-in-out infinite; }
+@keyframes scroll-hint {
+  0%, 100% { transform: translateX(0); opacity: 0.5; }
+  50% { transform: translateX(4px); opacity: 1; }
+}
 .text-pretty { text-wrap: pretty; }
 
 /* ---- Surfaces (light cards with real depth) ---- */

@@ -103,15 +103,24 @@ const tabCss = sectors
             <input type="radio" name="sector-tab" id={`tab-${s.id}`} class="sr-only" checked={i === 0} />
           ))}
 
-          <div class="switch-grid -mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-1 sm:mx-0 sm:grid sm:grid-cols-4 sm:gap-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
-            {sectors.map((s) => (
-              <label for={`tab-${s.id}`} data-btn={s.id} class="switch-btn relative flex w-[40%] shrink-0 cursor-pointer snap-center flex-col items-center gap-3 rounded-xl border border-white/25 bg-white/[0.09] px-4 py-6 text-center shadow-[0_1px_0_0_rgb(255_255_255_/_0.06)_inset] transition-colors duration-200 sm:w-auto sm:shrink">
-                <span class="btn-icon flex h-11 w-11 items-center justify-center rounded-lg bg-white/10 text-oil-400 transition-colors duration-200">
-                  <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={s.icon}/></svg>
-                </span>
-                <span class="font-display text-sm font-bold leading-tight text-white">{s.title}</span>
-              </label>
-            ))}
+          <div class="relative -mx-6 px-6 sm:mx-0 sm:px-0">
+            <div class="switch-grid touch-pan-x flex snap-x snap-proximity gap-3 overflow-x-auto overscroll-x-contain pb-1 sm:grid sm:grid-cols-4 sm:gap-3 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
+              {sectors.map((s) => (
+                <label for={`tab-${s.id}`} data-btn={s.id} class="switch-btn relative flex w-[40%] shrink-0 cursor-pointer snap-center flex-col items-center gap-3 rounded-xl border border-white/25 bg-white/[0.09] px-4 py-6 text-center shadow-[0_1px_0_0_rgb(255_255_255_/_0.06)_inset] transition-colors duration-200 sm:w-auto sm:shrink">
+                  <span class="btn-icon flex h-11 w-11 items-center justify-center rounded-lg bg-white/10 text-oil-400 transition-colors duration-200">
+                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={s.icon}/></svg>
+                  </span>
+                  <span class="font-display text-sm font-bold leading-tight text-white">{s.title}</span>
+                </label>
+              ))}
+            </div>
+
+            <!-- Pista sutil de scroll lateral (solo mobile): flecha flotante, desaparece al llegar al final -->
+            <div class="scroll-hint pointer-events-none absolute inset-y-0 right-1 flex items-center pb-1 transition-opacity duration-300 sm:hidden" aria-hidden="true">
+              <span class="animate-scroll-hint flex h-7 w-7 items-center justify-center rounded-full bg-steel-900/80 text-white shadow-lift ring-1 ring-white/15 backdrop-blur-sm">
+                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 4.5 12.5 10l-5 5.5"/></svg>
+              </span>
+            </div>
           </div>
 
           <!-- Indicador de posición del carrusel (solo mobile) -->
@@ -210,4 +219,36 @@ const tabCss = sectors
       scroll-behavior: smooth;
     }
   }
+
+  /* Difumina el borde derecho real del carrusel (sin parche de color superpuesto) */
+  @media (max-width: 639px) {
+    .switch-grid {
+      -webkit-mask-image: linear-gradient(to left, transparent 0, #000 40px);
+      mask-image: linear-gradient(to left, transparent 0, #000 40px);
+      transition: -webkit-mask-image 0.3s, mask-image 0.3s;
+    }
+    .switch-grid.is-at-end {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+
+  /* Se oculta cuando el carrusel llega al final (sin más contenido a la derecha) */
+  .scroll-hint.is-at-end {
+    opacity: 0;
+  }
 </style>
+
+<script>
+  const track = document.querySelector<HTMLElement>('.switch-grid');
+  const hint = document.querySelector<HTMLElement>('.scroll-hint');
+  if (track && hint) {
+    const updateHint = () => {
+      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      hint.classList.toggle('is-at-end', atEnd);
+      track.classList.toggle('is-at-end', atEnd);
+    };
+    track.addEventListener('scroll', updateHint, { passive: true });
+    updateHint();
+  }
+</script>
