@@ -1,0 +1,94 @@
+---
+// Espacio de imagen reservado — placeholder "blueprint técnico" listo para
+// reemplazar por <Image /> de astro:assets cuando exista la foto real.
+// El aspect-ratio queda fijo desde el día uno para que ese reemplazo no
+// mueva un solo píxel del layout (CLS = 0).
+interface Props {
+  /** Relación de aspecto del marco. */
+  ratio?: '16/9' | '4/3' | '1/1' | '21/9';
+  /** Texto corto tipo spec-chip, ej. "Foto — Taller / Bahía 2". */
+  label: string;
+  /** Variante de color: 'light' para fondos claros, 'dark' dentro de SteelBanner. */
+  variant?: 'light' | 'dark';
+  class?: string;
+}
+
+const { ratio = '4/3', label, variant = 'light', class: className } = Astro.props;
+const hasIcon = Astro.slots.has('default');
+
+const ratioClass: Record<string, string> = {
+  '16/9': 'aspect-[16/9]',
+  '4/3': 'aspect-[4/3]',
+  '1/1': 'aspect-square',
+  '21/9': 'aspect-[21/9]',
+};
+---
+
+<div
+  class:list={[
+    'media-frame frame-corners relative isolate overflow-hidden rounded-2xl',
+    ratioClass[ratio] ?? ratioClass['4/3'],
+    variant === 'dark' ? 'media-frame-dark frame-corners-dark border border-white/12' : 'border border-ink-900/10',
+    className,
+  ]}
+>
+  <span class="corner corner-tl" aria-hidden="true"></span>
+  <span class="corner corner-tr" aria-hidden="true"></span>
+  <span class="corner corner-bl" aria-hidden="true"></span>
+  <span class="corner corner-br" aria-hidden="true"></span>
+
+  <div class:list={['absolute inset-0', variant === 'dark' ? 'blueprint-grid-dark' : 'blueprint-grid']} aria-hidden="true"></div>
+
+  <div class="relative flex h-full w-full flex-col items-center justify-center gap-3 p-6 text-center">
+    <span
+      class:list={[
+        'flex h-12 w-12 items-center justify-center rounded-xl',
+        variant === 'dark' ? 'bg-white/10 text-oil-400' : 'bg-steel-50 text-steel-600',
+      ]}
+    >
+      {hasIcon ? (
+        <slot />
+      ) : (
+        <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3.5" y="4.5" width="17" height="15" rx="1.5"/>
+          <circle cx="8.5" cy="9.5" r="1.5"/>
+          <path d="M20.5 15.5 15 10l-8.5 9.5"/>
+        </svg>
+      )}
+    </span>
+
+    <span
+      class:list={[
+        'inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-wider',
+        variant === 'dark' ? 'border-oil-400/30 bg-black/30 text-oil-300' : 'border-steel-600/25 bg-white/90 text-steel-700',
+      ]}
+    >
+      <span class:list={['h-1.5 w-1.5 rounded-full', variant === 'dark' ? 'bg-oil-400' : 'bg-oil-500']}></span>
+      {label}
+    </span>
+  </div>
+</div>
+
+<style>
+  /* Franja diagonal sutil para reforzar la lectura de "espacio técnico
+     pendiente" sin parecer una foto rota o un error de carga. */
+  .media-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent 0 18px,
+      rgb(27 81 130 / 0.05) 18px 19px
+    );
+  }
+  .media-frame-dark::after {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent 0 18px,
+      rgb(255 255 255 / 0.05) 18px 19px
+    );
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+// Banda oscura de acero — el "cambio de aire" del sitio.
+// Uso deliberado: máximo UNA por página, en el momento de cierre (CTA) o en un
+// bloque ancla de peso. Si aparece dos veces seguidas deja de leerse como pausa.
+interface Props {
+  /** Ancho del contenedor interno: 'wide' para grids, 'narrow' para CTA centrada. */
+  width?: 'wide' | 'narrow';
+  /** Franjas hazard arriba/abajo — marca de borde propia del banner.
+   *  El Footer ya no lleva la suya para no duplicarlas. */
+  hazard?: boolean;
+  /** Padding vertical (utilidad Tailwind). */
+  padding?: string;
+  class?: string;
+}
+
+const { width = 'wide', hazard = true, padding = 'py-24', class: className } = Astro.props;
+---
+
+<section class:list={['panel-steel noise relative overflow-hidden', padding, className]}>
+  {hazard && (
+    <>
+      <div class="hazard absolute inset-x-0 top-0 h-1.5" aria-hidden="true"></div>
+      <div class="hazard absolute inset-x-0 bottom-0 h-1.5" aria-hidden="true"></div>
+    </>
+  )}
+  <div class="pointer-events-none absolute -right-24 top-1/3 h-[26rem] w-[26rem] rounded-full bg-oil-500/10 blur-[120px]" aria-hidden="true"></div>
+
+  <div class:list={['relative z-10 mx-auto px-6', width === 'narrow' ? 'max-w-4xl' : 'max-w-7xl']} data-reveal-group>
+    <slot />
+  </div>
+</section>

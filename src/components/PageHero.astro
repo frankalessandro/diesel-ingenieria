@@ -1,0 +1,33 @@
+---
+interface Props {
+  kicker: string;
+  title: string;
+  lead: string;
+  watermark?: string;
+  index?: string;
+}
+const { kicker, title, lead, watermark, index } = Astro.props;
+---
+
+<section data-hero data-parallax-scope class="noise relative isolate overflow-hidden border-b border-ink-900/10 bg-paper pt-36 pb-20">
+  <div class="pointer-events-none absolute -right-24 -top-28 h-[30rem] w-[30rem] rounded-full bg-steel-200/50 blur-[120px]" data-parallax="0.16" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -left-24 bottom-[-8rem] h-72 w-72 rounded-full bg-oil-100/70 blur-[100px]" data-parallax="0.1" aria-hidden="true"></div>
+
+  {watermark && (
+    <span class="pointer-events-none absolute -bottom-4 left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-[20vw] font-bold leading-none text-stroke" data-drift="8" aria-hidden="true">{watermark}</span>
+  )}
+
+  <div class="relative z-10 mx-auto max-w-5xl px-6">
+    <div class="flex items-center gap-4">
+      {index && <span class="font-mono text-sm font-bold text-oil-600">{index}</span>}
+      <span data-hero-kicker class="inline-flex items-center gap-2.5 rounded-full border border-steel-600/25 bg-steel-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-steel-700">
+        <span class="h-1.5 w-1.5 rounded-full bg-oil-500"></span>
+        {kicker}
+      </span>
+    </div>
+    <h1 class="mt-7 max-w-4xl wrap-break-word font-display text-4xl font-bold leading-[1.05] tracking-tight text-ink-900 text-balance sm:text-6xl sm:leading-[1.02] lg:text-7xl">
+      <span data-hero-line class="block">{title}</span>
+    </h1>
+    <p data-hero-sub class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-600">{lead}</p>
+  </div>
+</section>

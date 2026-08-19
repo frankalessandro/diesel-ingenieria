@@ -1,0 +1,153 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import SteelBanner from '../components/SteelBanner.astro';
+import MediaFrame from '../components/MediaFrame.astro';
+import BrandGrid from '../components/BrandGrid.astro';
+import { figures } from '../data/company';
+import logoJohnDeere from '../assets/logos-marcas/john-deere-6-logo.svg';
+import logoVolvo from '../assets/logos-marcas/volvo-logo.svg';
+import logoCat from '../assets/logos-marcas/cat-logo-png-transparent.png';
+import logoKomatsu from '../assets/logos-marcas/Komatsu-Logo.png';
+import logoHitachi from '../assets/logos-marcas/Hitachi-Logo-1968.png';
+import logoCase from '../assets/logos-marcas/case-logo-png-transparent.png';
+import logoDoosan from '../assets/logos-marcas/Doosan-Logo-2022.png';
+import logoZoomlion from '../assets/logos-marcas/zoomlion-logo-png_seeklogo-321945.png';
+import logoTerex from '../assets/logos-marcas/Terex-logo.png';
+import logoFord from '../assets/logos-marcas/ford.svg';
+
+const philosophy = [
+  { n: '01', title: 'Calidad', desc: 'Control en cada reparación, mecanizado y prueba en banco.' },
+  { n: '02', title: 'Seguridad', desc: 'Trabajo seguro tanto en taller como en intervenciones de campo.' },
+  { n: '03', title: 'Protección ambiental', desc: 'Manejo responsable de aceites, filtros y residuos derivados del mantenimiento hidráulico.' },
+  { n: '04', title: 'Mejoramiento continuo', desc: 'Actualización constante en técnicas de diagnóstico y nuevas tecnologías del sector.' },
+];
+
+const brands = [
+  'Eaton', 'Vickers', 'Parker', 'Rexroth', 'Sauer Danfoss', 'Denison', 'Nachi',
+  'Commercial Hydraulics', 'Hercules Sealing Products', 'Stauff', 'Swagelok',
+  'Faster', 'Stucchi', 'MP Filtri', 'Hydroline', 'Vivolo', 'Roquet', 'Turolla',
+  'Hydro-Gear', 'WEG', 'Sun Hydraulics', 'Badestnost', 'CBF Hydraulic',
+  'Baltrotors', 'Sampo Hydraulics', 'Black Bruin', 'SAI', 'ASA Hydraulik',
+  'Thermal Transfer Products', 'CARDEV',
+];
+
+const equipmentBrands = [
+  { name: 'John Deere', logo: logoJohnDeere },
+  { name: 'Volvo', logo: logoVolvo },
+  { name: 'CAT', logo: logoCat },
+  { name: 'Komatsu', logo: logoKomatsu },
+  { name: 'Hitachi', logo: logoHitachi },
+  { name: 'Case', logo: logoCase },
+  { name: 'Doosan', logo: logoDoosan },
+  { name: 'Zoom Lion', logo: logoZoomlion },
+  { name: 'Terex', logo: logoTerex },
+  { name: 'Ford', logo: logoFord },
+  { name: 'Kobelco' },
+];
+---
+
+<Layout
+  title="Nosotros | Diesel Ingeniería SAS"
+  description="25 años de trayectoria en Sistemas Hidráulicos y Neumáticos. Misión, visión y filosofía de trabajo de Diesel Ingeniería."
+  path="/nosotros"
+>
+  <main>
+    <PageHero
+      kicker="Nosotros"
+      title="25 años dedicados a la Hidráulica"
+      lead="Somos especialistas en Sistemas Hidráulicos y Neumáticos, con Mantenimiento Predictivo, Preventivo y Correctivo, además de reparación y suministro de componentes."
+      watermark="NOSOTROS"
+    />
+
+    <section class="mx-auto max-w-7xl px-6 py-28" data-reveal-group>
+      <div class="grid grid-cols-1 gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+        <div class="reveal">
+          <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ Quiénes somos</span>
+          <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance">Especialistas en Sistemas Hidráulicos</h2>
+          <p class="mt-6 leading-relaxed text-ink-600">
+            Diesel Ingeniería S.A.S. es una empresa colombiana especializada en el mantenimiento de Sistemas Hidráulicos en sus tres gamas —Predictivo, Preventivo y Correctivo— tanto en equipos móviles como en la industria (Siderúrgica, Infraestructura, Construcción, Agrícola, Alimenticia, Forestal, Portuaria).
+          </p>
+          <p class="mt-4 leading-relaxed text-ink-600">
+            Su disciplina núcleo es la Hidráulica: potencia transmitida por aceite a presión que mueve la maquinaria pesada e industrial, complementada con neumática, capacidad de reparación y suministro de bombas, motores, cilindros y válvulas.
+          </p>
+        </div>
+
+        <div class="reveal surface flex flex-col justify-center rounded-2xl p-9 lg:sticky lg:top-28">
+          <p class="font-display text-7xl font-bold text-ink-900"><span data-counter={figures.years}>0</span></p>
+          <p class="mt-2 text-sm font-bold uppercase tracking-[0.14em] text-oil-600">Años de trayectoria</p>
+          <p class="mt-6 border-t border-ink-100 pt-6 leading-relaxed text-ink-600">
+            Dos décadas y media de experiencia que nos permiten diagnosticar, anticipar fallas y respaldar cada reparación con conocimiento del componente hidráulico.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-6 pb-16" data-reveal-group>
+      <MediaFrame ratio="21/9" label="Foto — Nuestro equipo en el taller" class="reveal" />
+    </section>
+
+    <section class="border-y border-ink-900/10 bg-steel-50 py-24" data-reveal-group>
+      <div class="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-6 lg:grid-cols-2">
+        <div class="reveal surface rounded-2xl p-9">
+          <div class="flex items-center gap-3">
+            <span class="h-8 w-1.5 rounded-full bg-oil-500"></span>
+            <h3 class="font-display text-2xl font-bold text-ink-900">Misión</h3>
+          </div>
+          <p class="mt-5 leading-relaxed text-ink-600">
+            Contribuir al mejoramiento de la productividad de los procesos de los clientes, brindando soluciones integrales en Sistemas Hidráulicos que permitan mantener y aumentar la disponibilidad de sus equipos, bajo una filosofía de Calidad, Seguridad, Protección del Medio Ambiente y Mejoramiento Continuo.
+          </p>
+        </div>
+        <div class="reveal surface rounded-2xl p-9">
+          <div class="flex items-center gap-3">
+            <span class="h-8 w-1.5 rounded-full bg-steel-500"></span>
+            <h3 class="font-display text-2xl font-bold text-ink-900">Visión</h3>
+          </div>
+          <p class="mt-5 leading-relaxed text-ink-600">
+            Ser una empresa competitiva y sostenible en el mercado, generando valor a sus clientes, colaboradores, accionistas y la sociedad.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-6 py-28" data-reveal-group>
+      <div class="reveal max-w-2xl">
+        <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ Filosofía de trabajo</span>
+        <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Cuatro principios detrás de cada intervención</h2>
+      </div>
+      <div class="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {philosophy.map((p, i) => (
+          <div class:list={["surface surface-hover reveal rounded-2xl p-7", i % 2 === 1 && "lg:mt-8"]}>
+            <span class="font-display text-4xl font-bold text-ink-100">{p.n}</span>
+            <h3 class="mt-4 font-display text-lg font-bold text-ink-900">{p.title}</h3>
+            <p class="mt-2.5 leading-relaxed text-ink-600">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="border-t border-ink-900/10 bg-paper py-24">
+      <div class="mx-auto max-w-7xl px-6" data-reveal-group>
+        <p class="reveal text-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas de equipos con las que se trabaja</p>
+        <BrandGrid brands={equipmentBrands} class="reveal mt-8" />
+      </div>
+    </section>
+
+    <section class="border-t border-ink-900/10 bg-paper-2 py-16">
+      <p class="px-6 text-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas de partes con las que se trabaja</p>
+      <div class="marquee mask-fade-x mt-10" style="--marquee-duration:52s">
+        <div class="marquee-track">
+          {[...brands, ...brands].map((b) => (
+            <span class="font-display text-xl font-bold text-ink-300 transition-colors hover:text-steel-600">{b}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <SteelBanner width="narrow" class="text-center">
+      <h2 class="reveal font-display text-4xl font-bold leading-tight text-balance sm:text-5xl">Hablemos de su equipo</h2>
+      <p class="reveal mx-auto mt-4 max-w-xl text-lg text-steel-200/85">Cuéntenos qué máquina tiene y qué necesita. Respondemos por WhatsApp, teléfono o correo.</p>
+      <a href="/contacto" class="reveal mt-8 inline-block cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">Contáctenos</a>
+    </SteelBanner>
+  </main>
+</Layout>

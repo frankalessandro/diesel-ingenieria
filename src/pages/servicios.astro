@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import SteelBanner from '../components/SteelBanner.astro';
+import MediaFrame from '../components/MediaFrame.astro';
+import { company } from '../data/company';
+
+const services = [
+  {
+    id: 'predictivo', n: '01', tag: 'Mantenimiento predictivo',
+    title: 'Diagnóstico sin desmontar la máquina',
+    lead: 'Equipos de medición para calcular la eficiencia de bombas y motores hidráulicos sin desmontarlos de la máquina.',
+    points: [
+      'Medición de la eficiencia de bombas y motores hidráulicos con el equipo operando.',
+      'Entrega al departamento de mantenimiento una herramienta para proyectar el desgaste de la parte hidráulica.',
+      'Prueba de estanqueidad de cilindros hidráulicos en campo, para prever su estado antes de desmontarlos de la máquina o vehículo.',
+    ],
+  },
+  {
+    id: 'preventivo', n: '02', tag: 'Mantenimiento preventivo',
+    title: 'Check-lists y calibración en sitio',
+    lead: 'Ejecución de los diferentes check-lists según la necesidad del cliente y el lugar donde se requiera.',
+    points: [
+      'Técnicos capacitados con herramientas adecuadas para cada tipo de equipo.',
+      'Servicio de  Microfiltradora para la limpieza del aceite.',
+      'Bloques de válvula probados y calibrados en sitio, para mayor eficiencia en el tiempo de operatividad de la máquina.',
+    ],
+  },
+  {
+    id: 'correctivo', n: '03', tag: 'Mantenimiento correctivo',
+    title: 'Reparación de componentes hidráulicos',
+    lead: 'Intervención cuando la falla ya está presente, con capacidad de reparación completa.',
+    points: [
+      'Bombas hidráulicas y motores hidráulicos.',
+      'Mandos direccionales, cilindros hidráulicos y válvulas de control.',
+      'Tarjetas electrónicas de control y tableros eléctricos de control.',
+    ],
+  },
+  {
+    id: 'fabricacion', n: '04', tag: 'Fabricación',
+    title: 'Construcción a medida',
+    lead: 'Fabricación de Equipos Hidráulicos y construcción de Sistemas Hidráulicos de acuerdo con necesidades del cliente.',
+    points: [
+      'Fabricación de cilindros hidráulicos a medida.',
+      'Fabricación de unidades de potencia con sus respectivos tableros eléctricos de control.',
+      'Reparación de cilindros: desarme, rectificado, suministro de seal kit, mecanizado de piezas, pruebas en banco hidráulico y soldadura.',
+    ],
+  },
+  {
+    id: 'filtracion', n: '05', tag: 'Filtración y microfiltrado',
+    title: 'Microfiltrado de aceites en sitio',
+    lead: 'Filtrado simple o doble, con indicador visual de saturación y manómetro, aplicado directamente en las instalaciones del cliente.',
+    points: [
+      'Grados de filtrado: simple 10µ o doble 5µ, con indicador visual de saturación y manómetro.',
+      'Servicio de microfiltrado de aceites en el sitio del cliente.',
+    ],
+  },
+  {
+    id: 'suministro', n: '06', tag: '',
+    title: 'Suministro de componentes',
+    lead: '',
+    points: [
+    ],
+    brands: ['Eaton', 'Vickers', 'Parker', 'Rexroth', 'Sauer Danfoss', 'Denison', 'Nachi', 'Commercial Hydraulics', 'Hercules Sealing Products', 'Stauff', 'Swagelok', 'Faster', 'Stucchi', 'MP Filtri', 'Hydroline', 'Vivolo', 'Roquet', 'Turolla', 'Hydro-Gear', 'WEG', 'Sun Hydraulics', 'Badestnost', 'CBF Hydraulic', 'Baltrotors', 'Sampo Hydraulics', 'Black Bruin', 'SAI', 'ASA Hydraulik', 'Thermal Transfer Products', 'CARDEV'],
+  },
+];
+---
+
+<Layout
+  title="Servicios de mantenimiento hidráulico | Diesel Ingeniería"
+  description={`Mantenimiento predictivo, preventivo y correctivo, fabricación y suministro de componentes hidráulicos. Servicio en sitio en ${company.coverage}.`}
+  path="/servicios"
+>
+  <main>
+    <PageHero
+      kicker="Servicios"
+      title="Seis frentes de trabajo, un solo taller"
+      lead="Cubrimos el ciclo del sistema hidráulico: desde predecir una falla antes de que ocurra, hasta reparar o suministrar el componente que la máquina necesita."
+      watermark="SERVICIOS"
+    />
+
+    {services.map((s, i) => (
+      <section id={s.id} class:list={["scroll-mt-28 py-24", i % 2 === 1 ? "border-y border-ink-900/10 bg-steel-50" : "bg-paper"]} data-reveal-group>
+        {s.brands ? (
+          <div class="mx-auto max-w-4xl px-6">
+            <div class="text-center lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:items-center lg:justify-center">
+              <MediaFrame ratio="4/3" label={`Foto — ${s.tag}`} class="mx-auto mb-8 max-w-sm" />
+              <span class="font-display text-7xl font-bold text-ink-200">{s.n}</span>
+              <p class="mt-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">{s.tag}</p>
+              <h2 class="reveal mt-4 font-display text-3xl font-bold leading-tight text-ink-900 text-balance sm:text-4xl">{s.title}</h2>
+              <p class="reveal mx-auto mt-5 max-w-2xl leading-relaxed text-ink-600">{s.lead}</p>
+            </div>
+
+            {s.points.length > 0 && (
+              <ul class="reveal mx-auto mt-10 grid grid-cols-1 gap-4 text-left sm:grid-cols-2">
+                {s.points.map((point) => (
+                  <li class="surface surface-hover flex gap-4 rounded-2xl p-6 sm:p-7">
+                    <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-oil-500/15 text-oil-700">
+                      <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 0 1 1.4-1.4l3.8 3.8 6.8-6.8a1 1 0 0 1 1.4 0Z" clip-rule="evenodd"/></svg>
+                    </span>
+                    <span class="leading-relaxed text-ink-700">{point}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <div class="reveal mt-12 text-center lg:py-24">
+              <p class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas que conseguimos</p>
+              <div class="mt-5 flex flex-wrap justify-center gap-2.5">
+                {s.brands.map((b) => (
+                  <span class="rounded-full border border-ink-900/10 bg-white px-4 py-1.5 text-sm font-semibold text-ink-700 shadow-card">{b}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 lg:grid-cols-[1fr_1.1fr] lg:items-start">
+            <div class="lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center">
+              <div class="reveal w-full">
+                <MediaFrame ratio="4/3" label={`Foto — ${s.tag}`} class="mb-7 w-full" />
+                <span class="font-display text-7xl font-bold text-ink-200">{s.n}</span>
+                <p class="mt-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">{s.tag}</p>
+                <h2 class="mt-4 font-display text-3xl font-bold leading-tight text-ink-900 text-balance sm:text-4xl">{s.title}</h2>
+                <p class="mt-5 leading-relaxed text-ink-600">{s.lead}</p>
+              </div>
+            </div>
+
+            <ul class="space-y-4 lg:py-24">
+              {s.points.map((point) => (
+                <li class="surface surface-hover reveal flex gap-4 rounded-2xl p-6 sm:p-7">
+                  <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-oil-500/15 text-oil-700">
+                    <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 0 1 1.4-1.4l3.8 3.8 6.8-6.8a1 1 0 0 1 1.4 0Z" clip-rule="evenodd"/></svg>
+                  </span>
+                  <span class="leading-relaxed text-ink-700">{point}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </section>
+    ))}
+
+    <SteelBanner width="narrow" class="text-center">
+      <h2 class="reveal font-display text-4xl font-bold leading-tight text-balance sm:text-5xl">¿No sabe cuál servicio necesita su equipo?</h2>
+      <p class="reveal mx-auto mt-4 max-w-xl text-lg text-steel-200/85">Cuéntenos la marca, el modelo y la falla — le orientamos sobre si el caso es predictivo, preventivo o correctivo.</p>
+      <a href="/contacto" class="reveal mt-8 inline-block cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">Solicitar diagnóstico</a>
+    </SteelBanner>
+  </main>
+</Layout>

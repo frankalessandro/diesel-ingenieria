@@ -1,0 +1,346 @@
+---
+import { company, whatsappLink } from "../data/company";
+
+interface NavChild {
+  label: string;
+  href: string;
+}
+interface NavItem {
+  label: string;
+  href: string;
+  children?: NavChild[];
+}
+
+const nav: NavItem[] = [
+  { label: "Servicios", href: "/servicios" },
+  { label: "Especialidades", href: "/especialidades" },
+  { label: "Sectores", href: "/sectores" },
+  {
+    label: "Empresa",
+    href: "/nosotros",
+    children: [
+      { label: "Nosotros", href: "/nosotros" },
+      { label: "Proyectos", href: "/proyectos" },
+      { label: "Contacto", href: "/contacto" },
+    ],
+  },
+];
+
+const current = Astro.url.pathname;
+const isActive = (item: NavItem): boolean => {
+  const paths = [item.href, ...(item.children?.map((c) => c.href.split("#")[0]) ?? [])];
+  return paths.some((p) => current === p || (p !== "/" && current.startsWith(p)));
+};
+---
+
+<header class="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
+  <div
+    data-nav
+    class="nav-shell relative z-10 mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-2xl border border-ink-900/10 shadow-card transition-[padding,border-color,box-shadow] duration-300 px-3 py-2.5 sm:gap-4 sm:px-5 sm:py-3 lg:px-6"
+  >
+    {/* Capa de vidrio separada: mantiene el backdrop-filter fuera de la cadena de
+        ancestros del menú móvil (un backdrop-filter crea containing block y
+        rompería el `fixed` del backdrop a pantalla completa). */}
+    <div class="nav-glass pointer-events-none absolute inset-0 -z-10 rounded-2xl bg-white/85 backdrop-blur-md transition-colors duration-300"></div>
+
+    <a href="/" class="group flex min-w-0 items-center gap-2.5" aria-label="Diesel Ingeniería, inicio">
+      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-steel-600 to-steel-800 text-oil-400 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:rotate-6">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true">
+          <path d="M12 2c-.3 0-.6.13-.8.36C9.1 5.2 6 9.9 6 13.5 6 17.6 8.7 21 12 21s6-3.4 6-7.5c0-3.6-3.1-8.3-5.2-11.14A1.02 1.02 0 0 0 12 2Zm0 15.5a3.75 3.75 0 0 1-3.75-3.75.75.75 0 0 1 1.5 0A2.25 2.25 0 0 0 12 16a.75.75 0 0 1 0 1.5Z"/>
+        </svg>
+      </span>
+      <span class="min-w-0 font-display leading-tight">
+        <span class="block truncate text-[13px] font-bold tracking-wide text-ink-900 sm:text-[15px] lg:text-base">DIESEL INGENIERÍA</span>
+        <span class="hidden truncate text-[10px] font-semibold uppercase tracking-[0.18em] text-steel-600 sm:block lg:text-[11px]">Sistemas Hidráulicos</span>
+      </span>
+    </a>
+
+    <nav data-nav-links class="relative hidden items-center gap-0.5 lg:flex" aria-label="Navegación principal">
+      <span data-nav-indicator class="pointer-events-none absolute left-0 top-1/2 z-0 h-9 -translate-y-1/2 rounded-lg bg-steel-100 opacity-0"></span>
+      {nav.map((item) => (
+        <div class="group relative z-10">
+          <a
+            data-nav-link
+            href={item.href}
+            class:list={["flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-semibold transition-colors xl:px-3.5", isActive(item) ? "is-active text-steel-700" : "text-ink-700 hover:text-steel-700"]}
+          >
+            {item.label}
+            {item.children && (
+              <svg viewBox="0 0 20 20" class="dd-caret h-3.5 w-3.5 text-ink-400 transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd"/>
+              </svg>
+            )}
+          </a>
+          {item.children && (
+            <div class="dd-panel invisible absolute left-0 top-full w-64 origin-top rounded-xl border border-ink-900/10 bg-white p-2 opacity-0 shadow-lift">
+              {item.children.map((child) => (
+                <a href={child.href} class="dd-item block rounded-lg px-3 py-2 text-sm font-medium text-ink-600 transition-colors hover:bg-steel-50 hover:text-oil-700">
+                  {child.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </nav>
+
+    <div class="flex shrink-0 items-center gap-1.5 sm:gap-2">
+      {/* CTA: compacta en tablet, completa en desktop grande */}
+      <a
+        href="/contacto"
+        class="hidden cursor-pointer items-center rounded-lg bg-oil-500 px-4 py-2.5 text-sm font-bold text-ink-950 shadow-sm transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-oil-400 hover:shadow-glow sm:inline-flex lg:px-4 xl:px-5"
+      >
+        <span class="xl:hidden">Diagnóstico</span>
+        <span class="hidden xl:inline">Solicitar diagnóstico</span>
+      </a>
+
+      {/* Manómetro de progreso de lectura — reemplaza la barra lineal anterior */}
+      <div
+        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink-900/10 bg-white/70 sm:h-10 sm:w-10"
+        aria-hidden="true"
+        title="Progreso de la página"
+      >
+        <svg viewBox="0 0 36 36" class="h-[1.55rem] w-[1.55rem] -rotate-90 sm:h-7 sm:w-7">
+          <circle cx="18" cy="18" r="15" fill="none" stroke="var(--color-ink-100)" stroke-width="3" />
+          <circle data-scroll-gauge cx="18" cy="18" r="15" fill="none" stroke="var(--color-oil-500)" stroke-width="3" stroke-linecap="round" />
+        </svg>
+      </div>
+
+      <details data-mobile-menu class="group/mobile lg:hidden">
+        <summary
+          id="nav-toggle"
+          aria-controls="nav-mobile-panel"
+          aria-expanded="false"
+          aria-label="Abrir menú de navegación"
+          class="relative flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-lg text-ink-800 transition-colors hover:bg-steel-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel-600"
+        >
+          <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <line data-burger="top" x1="4" y1="7" x2="20" y2="7"/>
+            <line data-burger="mid" x1="4" y1="12" x2="20" y2="12"/>
+            <line data-burger="bot" x1="4" y1="17" x2="20" y2="17"/>
+          </svg>
+        </summary>
+
+        <div data-mobile-scrim class="mobile-scrim fixed inset-0 -z-20"></div>
+
+        <div
+          id="nav-mobile-panel"
+          data-mobile-panel
+          class="mobile-panel absolute inset-x-0 top-full z-10 mt-2.5 max-h-[calc(100dvh-6.5rem)] origin-top overflow-y-auto overscroll-contain rounded-2xl border border-ink-900/10 bg-white p-2 shadow-lift"
+        >
+          <nav class="flex flex-col" aria-label="Navegación móvil">
+            {nav.map((item) => (
+              <div data-mobile-item class="border-b border-ink-100 py-1.5 last:border-0">
+                <a
+                  href={item.href}
+                  class:list={["flex min-h-11 items-center rounded-lg px-3 text-[15px] font-bold transition-colors hover:bg-steel-50", isActive(item) ? "text-steel-700" : "text-ink-900"]}
+                >
+                  {item.label}
+                </a>
+                {item.children && (
+                  <div class="ml-3 mt-0.5 flex flex-col border-l border-ink-100 pl-3">
+                    {item.children.map((child) => (
+                      <a
+                        href={child.href}
+                        class:list={["flex min-h-11 items-center rounded-lg px-3 text-[15px] font-medium transition-colors hover:bg-steel-50 hover:text-oil-700", current === child.href ? "text-oil-700" : "text-ink-600"]}
+                      >
+                        {child.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </nav>
+
+          <a href="/contacto" data-mobile-item class="mt-2 flex min-h-12 cursor-pointer items-center justify-center rounded-lg bg-oil-500 px-3 text-[15px] font-bold text-ink-950 transition-colors hover:bg-oil-400">
+            Solicitar diagnóstico
+          </a>
+          <a
+            href={whatsappLink()}
+            target="_blank"
+            rel="noopener"
+            data-mobile-item
+            class="mt-1.5 flex min-h-11 items-center justify-center gap-2 rounded-lg border border-ink-900/10 px-3 text-sm font-semibold text-ink-700 transition-colors hover:bg-steel-50 hover:text-steel-700"
+          >
+            <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="currentColor" aria-hidden="true">
+              <path d="M2 22l1.4-5.1A9.9 9.9 0 1 1 7.2 20.6L2 22Zm5.5-3.3.3.2a8.2 8.2 0 1 0-2.8-2.9l.2.3-.8 3 3.1-.6Zm9.9-4c-.1-.2-.4-.3-.8-.5-.4-.2-2.1-1-2.4-1.1-.3-.1-.5-.2-.8.2s-.9 1.1-1.1 1.3c-.2.2-.4.2-.7.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4 0-.6.2-.8l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.4 0-.6L8.6 7c-.2-.5-.4-.5-.6-.5h-.6c-.2 0-.6.1-.9.5-.3.4-1.2 1.2-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.7 5.8 5a9.8 9.8 0 0 0 2 .6c.8.1 1.5.1 2.1 0 .6-.1 2-.8 2.3-1.6.3-.9.3-1.5.2-1.7Z"/>
+            </svg>
+            WhatsApp {company.phones.whatsapp.display}
+          </a>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav-shell.is-scrolled {
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+    border-color: rgb(14 22 32 / 0.14);
+    box-shadow: var(--shadow-lift);
+  }
+  .nav-shell.is-scrolled .nav-glass {
+    background-color: rgb(255 255 255 / 0.96);
+  }
+
+  /* Dropdown: panel + stagger de los ítems. Hover en puntero, focus-within
+     para teclado (el panel es inalcanzable con Tab si solo depende de :hover). */
+  .dd-panel {
+    transform: translateY(0.5rem) scale(0.98);
+    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+  }
+  /* Puente invisible que cubre el hueco entre el tab y el panel,
+     para que el hover sea continuo y el indicador no vuelva al tab activo. */
+  .dd-panel::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -0.75rem;
+    height: 0.75rem;
+  }
+  .group:hover .dd-panel,
+  .group:focus-within .dd-panel {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0.35rem) scale(1);
+  }
+  .dd-item {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .group:hover .dd-item,
+  .group:focus-within .dd-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .group:hover .dd-item:nth-child(1), .group:focus-within .dd-item:nth-child(1) { transition-delay: 0.03s; }
+  .group:hover .dd-item:nth-child(2), .group:focus-within .dd-item:nth-child(2) { transition-delay: 0.06s; }
+  .group:hover .dd-item:nth-child(3), .group:focus-within .dd-item:nth-child(3) { transition-delay: 0.09s; }
+  .group:hover .dd-item:nth-child(4), .group:focus-within .dd-item:nth-child(4) { transition-delay: 0.12s; }
+  .group:hover .dd-item:nth-child(5), .group:focus-within .dd-item:nth-child(5) { transition-delay: 0.15s; }
+  .group:hover .dd-item:nth-child(6), .group:focus-within .dd-item:nth-child(6) { transition-delay: 0.18s; }
+
+  /* Velo de marca (steel), no un gris plano: oscurece hacia abajo y desenfoca la
+     página para que el panel blanco flote con contraste real. */
+  .mobile-scrim {
+    background:
+      radial-gradient(130% 90% at 50% 0%, rgb(27 81 130 / 0.34) 0%, rgb(13 39 64 / 0.62) 100%);
+    -webkit-backdrop-filter: blur(8px) saturate(120%);
+    backdrop-filter: blur(8px) saturate(120%);
+  }
+
+  /* `backwards` (no `both`): evita que quede un transform aplicado tras la
+     animación, que crearía un containing block y rompería el `fixed` del velo. */
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-shell { animation: navIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+  }
+  @keyframes navIn {
+    from { opacity: 0; transform: translateY(-14px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dd-item { transition-delay: 0s !important; }
+  }
+
+  /* Bloqueo de scroll del documento mientras el menú móvil está abierto. */
+  :global(html.nav-open),
+  :global(html.nav-open body) {
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+
+  const details = document.querySelector<HTMLDetailsElement>("[data-mobile-menu]");
+
+  if (details) {
+    const summary = details.querySelector("summary")!;
+    const scrim = details.querySelector("[data-mobile-scrim]")!;
+    const panel = details.querySelector("[data-mobile-panel]")!;
+    const items = details.querySelectorAll("[data-mobile-item]");
+    const top = summary.querySelector('[data-burger="top"]')!;
+    const mid = summary.querySelector('[data-burger="mid"]')!;
+    const bot = summary.querySelector('[data-burger="bot"]')!;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const t = (s: number) => (reduce ? 0 : s);
+
+    // Timeline única: velo + panel + stagger de ítems + morph hamburguesa→X.
+    // Se reproduce al abrir y se invierte al cerrar (por eso el cierre no puede
+    // delegarse al toggle nativo de <details>: hay que esperar a la animación).
+    const tl = gsap
+      .timeline({
+        paused: true,
+        defaults: { ease: "power3.out" },
+        onReverseComplete: () => {
+          details.open = false;
+        },
+      })
+      .fromTo(scrim, { opacity: 0 }, { opacity: 1, duration: t(0.3) }, 0)
+      .fromTo(
+        panel,
+        { opacity: 0, y: -12, scaleY: 0.96 },
+        { opacity: 1, y: 0, scaleY: 1, transformOrigin: "50% 0%", duration: t(0.38) },
+        0
+      )
+      .fromTo(
+        items,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: t(0.32), stagger: t(0.045) },
+        t(0.08)
+      )
+      // El morph gira sobre el centro exacto del viewBox (12,12) y lleva las
+      // líneas a esa altura con `attr`, para que la X quede perfectamente cruzada.
+      .to(top, { attr: { y1: 12, y2: 12 }, rotate: 45, svgOrigin: "12 12", duration: t(0.35) }, 0)
+      .to(bot, { attr: { y1: 12, y2: 12 }, rotate: -45, svgOrigin: "12 12", duration: t(0.35) }, 0)
+      .to(mid, { opacity: 0, scaleX: 0, svgOrigin: "12 12", duration: t(0.2) }, 0);
+
+    const closeMenu = () => {
+      if (!details.open || tl.reversed()) return;
+      tl.timeScale(1.4).reverse();
+    };
+
+    // Al hacer clic estando abierto, el navegador cerraría <details> de golpe:
+    // lo frenamos y dejamos que la timeline invertida haga el cierre.
+    summary.addEventListener("click", (e) => {
+      if (details.open) {
+        e.preventDefault();
+        closeMenu();
+      }
+    });
+
+    details.addEventListener("toggle", () => {
+      summary.setAttribute("aria-expanded", String(details.open));
+      summary.setAttribute("aria-label", details.open ? "Cerrar menú de navegación" : "Abrir menú de navegación");
+      document.documentElement.classList.toggle("nav-open", details.open);
+      if (details.open) tl.timeScale(1).play(0);
+    });
+
+    scrim.addEventListener("click", closeMenu);
+
+    // Cerrar al navegar (incluye anclas de la misma página, donde no hay recarga).
+    panel.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeMenu));
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && details.open) {
+        closeMenu();
+        summary.focus();
+      }
+    });
+
+    // Al pasar a escritorio el panel queda huérfano: cerrar sin animación
+    // y liberar el scroll del documento.
+    window.matchMedia("(min-width: 1024px)").addEventListener("change", (e) => {
+      if (e.matches && details.open) {
+        tl.pause(0);
+        details.open = false;
+      }
+    });
+  }
+</script>

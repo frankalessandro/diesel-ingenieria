@@ -1,0 +1,88 @@
+---
+import CircuitLine from './CircuitLine.astro';
+import { company, whatsappLink } from '../data/company';
+
+const siteLinks = [
+  { label: 'Nosotros', href: '/nosotros' },
+  { label: 'Servicios', href: '/servicios' },
+  { label: 'Especialidades', href: '/especialidades' },
+  { label: 'Sectores', href: '/sectores' },
+  { label: 'Proyectos', href: '/proyectos' },
+  { label: 'Contacto', href: '/contacto' },
+];
+
+const contactItems = [
+  { label: 'Dirección', value: company.addressShort, icon: 'M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z', ring: true },
+  { label: 'Más líneas', value: company.phones.mobiles.join(' · '), icon: 'M3 5.5A1.5 1.5 0 0 1 4.5 4h2.1a1 1 0 0 1 .96.73l.9 3.16a1 1 0 0 1-.29 1.03l-1.4 1.24a12.3 12.3 0 0 0 5.87 5.87l1.24-1.4a1 1 0 0 1 1.03-.29l3.16.9a1 1 0 0 1 .73.96v2.1A1.5 1.5 0 0 1 17.3 20C9.4 20 3 13.6 3 5.7Z' },
+  { label: 'Teléfono fijo', value: company.phones.landline, icon: 'M3 5.5A1.5 1.5 0 0 1 4.5 4h2.1a1 1 0 0 1 .96.73l.9 3.16a1 1 0 0 1-.29 1.03l-1.4 1.24a12.3 12.3 0 0 0 5.87 5.87l1.24-1.4a1 1 0 0 1 1.03-.29l3.16.9a1 1 0 0 1 .73.96v2.1A1.5 1.5 0 0 1 17.3 20C9.4 20 3 13.6 3 5.7Z' },
+  { label: 'Cobertura', value: `${company.coverage} · Servicio en sitio`, icon: 'M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z' },
+];
+---
+
+<footer class="relative isolate overflow-hidden border-t border-ink-900/10 bg-paper-2">
+  <CircuitLine class="pointer-events-none absolute -left-16 -top-10 hidden h-56 w-[30rem] text-steel-600/[0.07] md:block" aria-hidden="true" />
+  <div class="relative mx-auto max-w-7xl px-6 py-16">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+      <!-- Marca + CTA -->
+      <div>
+        <a href="/" class="flex items-center gap-3" aria-label="Diesel Ingeniería, inicio">
+          <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-steel-600 to-steel-800 text-oil-400">
+            <svg viewBox="0 0 24 24" class="h-6 w-6" fill="currentColor" aria-hidden="true">
+              <path d="M12 2c-.3 0-.6.13-.8.36C9.1 5.2 6 9.9 6 13.5 6 17.6 8.7 21 12 21s6-3.4 6-7.5c0-3.6-3.1-8.3-5.2-11.14A1.02 1.02 0 0 0 12 2Zm0 15.5a3.75 3.75 0 0 1-3.75-3.75.75.75 0 0 1 1.5 0A2.25 2.25 0 0 0 12 16a.75.75 0 0 1 0 1.5Z"/>
+            </svg>
+          </span>
+          <span class="font-display text-lg font-bold tracking-wide text-ink-900">DIESEL INGENIERÍA</span>
+        </a>
+
+        <p class="mt-5 max-w-md text-sm leading-relaxed text-ink-600">
+          25 años de experiencia en Sistemas Hidráulicos y Neumáticos. Mantenimiento, fabricación y suministro, con servicio en sitio en {company.coverage}.
+        </p>
+
+        <div class="mt-7 flex flex-wrap items-center gap-3">
+          <a href="/contacto" class="cursor-pointer rounded-lg bg-oil-500 px-6 py-3 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">
+            Solicitar diagnóstico
+          </a>
+          <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" class="group inline-flex cursor-pointer items-center gap-2 rounded-lg border border-ink-900/15 bg-white px-6 py-3 text-sm font-bold text-ink-800 transition-colors hover:border-[#25D366] hover:text-[#128C4B]">
+            <svg viewBox="0 0 24 24" class="h-4 w-4 text-[#25D366]" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.82L2 22l5.4-1.35a9.9 9.9 0 0 0 4.64 1.15c5.46 0 9.9-4.45 9.9-9.9C21.95 6.45 17.5 2 12.04 2Zm4.47 12c-.24.66-1.2 1.24-1.64 1.31-.42.06-.95.09-1.53-.1-.35-.11-.8-.26-1.38-.51-2.43-1.05-4.02-3.5-4.14-3.66-.12-.16-.99-1.32-.99-2.51s.63-1.78.85-2.02c.22-.24.48-.3.64-.3h.47c.15 0 .35-.01.55.42.21.49.7 1.7.76 1.82.06.12.1.26.02.42-.08.16-.12.26-.24.4-.13.16-.26.33-.37.42-.12.12-.25.25-.11.49.14.24.62 1.03 1.34 1.67.92.82 1.7 1.08 1.94 1.2.24.12.4.1.53-.06.14-.16.61-.71.77-.95.16-.24.33-.2.55-.12.23.08 1.43.67 1.67.79.24.12.4.18.46.28.06.1.06.59-.14 1.16Z"/></svg>
+            {company.phones.whatsapp.display}
+          </a>
+        </div>
+
+        <p class="mt-8 font-mono text-xs uppercase tracking-[0.16em] text-ink-500">{company.name} · NIT {company.nit}</p>
+      </div>
+
+      <!-- Contacto -->
+      <div class="rounded-2xl border border-ink-900/10 bg-white p-6 shadow-card sm:p-7">
+        <h3 class="font-display text-sm font-bold uppercase tracking-wider text-steel-700">Contacto directo</h3>
+        <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {contactItems.map((item) => (
+            <div class="flex gap-3">
+              <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-oil-600" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d={item.icon}/>
+                {item.ring && <circle cx="12" cy="9.5" r="2.5"/>}
+              </svg>
+              <div>
+                <p class="text-xs font-bold uppercase tracking-wider text-ink-500">{item.label}</p>
+                <p class="mt-1 text-sm text-ink-700">{item.value}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra inferior: legal + mapa del sitio en línea (no columnas de menú) -->
+    <div class="mt-12 flex flex-col gap-5 border-t border-ink-900/10 pt-6 lg:flex-row lg:items-center lg:justify-between">
+      <nav class="flex flex-wrap gap-x-5 gap-y-2" aria-label="Enlaces del pie de página">
+        {siteLinks.map((link) => (
+          <a href={link.href} class="link-underline text-sm font-semibold text-ink-600 transition-colors hover:text-oil-700">{link.label}</a>
+        ))}
+      </nav>
+      <p class="text-xs text-ink-500">© {new Date().getFullYear()} {company.name}</p>
+    </div>
+
+    <p class="mt-4 text-xs text-ink-400">
+      Cobertura {company.coverage} · Sin redes sociales — contáctenos por WhatsApp, teléfono o correo.
+    </p>
+  </div>
+</footer>
