@@ -4,6 +4,7 @@ import SteelBanner from '../components/SteelBanner.astro';
 import MediaFrame from '../components/MediaFrame.astro';
 import CircuitLine from '../components/CircuitLine.astro';
 import BrandGrid from '../components/BrandGrid.astro';
+import ClientWall from '../components/ClientWall.astro';
 import { company, figures, whatsappLink } from '../data/company';
 import logoJohnDeere from '../assets/logos-marcas/john-deere-6-logo.svg';
 import logoVolvo from '../assets/logos-marcas/volvo-logo.svg';
@@ -24,13 +25,6 @@ const specSheet = [
   { k: 'Fabricación', v: 'Cilindros y unidades de potencia' },
   { k: 'Servicio', v: 'En sitio' },
   { k: 'Mantenimiento', v: 'Predictivo, preventivo y correctivo' },
-];
-
-const stats = [
-  { value: figures.years, suffix: '', label: 'Años de experiencia' },
-  { value: figures.maintenanceGamas, suffix: '', label: 'Gamas de mantenimiento' },
-  { value: figures.pressCapacityGal, suffix: ' Gal', label: 'Rediseño y reparación de prensas hidráulicas' },
-  { value: figures.pressurePsi, suffix: ' psi', label: 'Niveles de presión' },
 ];
 
 const whatWeDo = [
@@ -118,7 +112,7 @@ const philosophy = [
 ---
 
 <Layout
-  title="Diesel Ingeniería SAS | Sistemas Hidráulicos en Cali, Colombia"
+  title="Diesel Ingeniería S.A.S. | Sistemas Hidráulicos en Cali, Colombia"
   description="25 años en Sistemas Hidráulicos. Mantenimiento predictivo, preventivo y correctivo, fabricación y suministro de componentes. Cali, Suroccidente Colombiano y Eje Cafetero."
   path="/"
 >
@@ -138,7 +132,7 @@ const philosophy = [
           </span>
 
           <h1 class="mt-7 font-display text-[12vw] font-bold leading-[0.96] tracking-tight text-ink-900 text-balance sm:text-6xl lg:text-[4.8rem]">
-            <span data-hero-line class="block">Especialistas en sistemas</span>
+            <span data-hero-line class="block">Especialistas en Sistemas</span>
             <span data-hero-line class="block text-steel-700">Hidráulicos</span>
           </h1>
 
@@ -161,7 +155,7 @@ const philosophy = [
         <aside data-hero-side class="relative mx-auto w-full max-w-sm">
           <div class="surface overflow-hidden rounded-2xl">
             <div class="flex items-center justify-between border-b border-ink-900/10 bg-steel-50 px-6 py-4">
-              <span class="font-mono text-xs font-bold uppercase tracking-[0.18em] text-steel-700">Diesel Ingeniería</span>
+              <span class="font-mono text-xs font-bold uppercase tracking-[0.18em] text-steel-700">Diesel Ingeniería S.A.S.</span>
               <span class="flex h-6 w-6 items-center justify-center rounded-full bg-oil-500 text-ink-950">
                 <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true"><path d="M12 2c-.3 0-.6.13-.8.36C9.1 5.2 6 9.9 6 13.5 6 17.6 8.7 21 12 21s6-3.4 6-7.5c0-3.6-3.1-8.3-5.2-11.14A1.02 1.02 0 0 0 12 2Z"/></svg>
               </span>
@@ -184,19 +178,8 @@ const philosophy = [
       </div>
     </section>
 
-    <!-- ============ STATS (overlapping) ============ -->
-    <section class="relative z-20 mx-auto -mt-8 max-w-7xl px-6 lg:-mt-12" data-reveal-group>
-      <div class="grid grid-cols-2 divide-x divide-y divide-ink-100 overflow-hidden rounded-2xl border border-ink-900/10 bg-white shadow-lift lg:grid-cols-4 lg:divide-y-0">
-        {stats.map((s) => (
-          <div class="reveal px-6 py-8 sm:px-8">
-            <p class="flex flex-wrap items-baseline gap-x-1 font-display text-3xl font-bold text-ink-900 sm:text-5xl">
-              <span data-counter={s.value.includes('.') ? s.value.replace('.', '') : s.value}>0</span>{s.suffix && <span class="text-oil-600">{s.suffix.trim()}</span>}
-            </p>
-            <p class="mt-2 text-sm font-semibold text-ink-600">{s.label}</p>
-          </div>
-        ))}
-      </div>
-    </section>
+    <!-- ============ CLIENTES (muro con modal) ============ -->
+    <ClientWall />
 
     <!-- ============ ASÍ TRABAJAMOS (espacio de imagen) ============ -->
     <section class="mx-auto max-w-7xl px-6 pt-24" data-reveal-group>
@@ -221,7 +204,7 @@ const philosophy = [
       <div class="reveal flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div class="max-w-2xl">
           <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ 01 — Qué hacemos</span>
-          <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Todo el ciclo del sistema hidráulico</h2>
+          <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Todo el ciclo del <span class="bg-linear-to-r from-oil-600 via-oil-500 to-oil-400 bg-clip-text uppercase text-transparent">sistema hidráulico</span></h2>
         </div>
         <p class="max-w-sm text-ink-600">Las tres gamas de mantenimiento más nuestra capacidad de fabricación de cilindros y unidades de potencia.</p>
       </div>

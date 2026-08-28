@@ -60,11 +60,11 @@ const sectors = [
 const tabCss = sectors
   .map(
     (s) => `
-    #tab-${s.id}:checked ~ .switch-grid [data-btn="${s.id}"] { background-color: var(--color-oil-500); border-color: var(--color-oil-400); color: var(--color-ink-950); }
-    #tab-${s.id}:checked ~ .switch-grid [data-btn="${s.id}"] .btn-icon { background-color: rgb(8 13 19 / 0.14); color: var(--color-ink-950); }
-    #tab-${s.id}:checked ~ .switch-grid [data-btn="${s.id}"] .font-display { color: var(--color-ink-950); }
+    #tab-${s.id}:checked ~ .switch-scroller [data-btn="${s.id}"] { background-color: var(--color-oil-500); border-color: var(--color-oil-400); color: var(--color-ink-950); }
+    #tab-${s.id}:checked ~ .switch-scroller [data-btn="${s.id}"] .btn-icon { background-color: rgb(8 13 19 / 0.14); color: var(--color-ink-950); }
+    #tab-${s.id}:checked ~ .switch-scroller [data-btn="${s.id}"] .font-display { color: var(--color-ink-950); }
     #tab-${s.id}:checked ~ .frame-corners [data-panel="${s.id}"] { display: grid; }
-    #tab-${s.id}:focus-visible ~ .switch-grid [data-btn="${s.id}"] { outline: 2px solid var(--color-oil-400); outline-offset: 2px; }
+    #tab-${s.id}:focus-visible ~ .switch-scroller [data-btn="${s.id}"] { outline: 2px solid var(--color-oil-400); outline-offset: 2px; }
     #tab-${s.id}:checked ~ .carousel-dots [data-dot="${s.id}"] { background-color: var(--color-oil-400); width: 1.1rem; border-radius: 9999px; }
   `,
   )
@@ -72,7 +72,7 @@ const tabCss = sectors
 ---
 
 <Layout
-  title="Sectores atendidos | Diesel Ingeniería"
+  title="Sectores atendidos | Diesel Ingeniería S.A.S."
   description="Sistemas hidráulicos para los sectores industrial, agrícola, construcción, minería, forestal, portuario/offshore, manipulación de cargas, elevación en alturas e infraestructura en Colombia."
   path="/sectores"
 >
@@ -103,7 +103,7 @@ const tabCss = sectors
             <input type="radio" name="sector-tab" id={`tab-${s.id}`} class="sr-only" checked={i === 0} />
           ))}
 
-          <div class="relative -mx-6 px-6 sm:mx-0 sm:px-0">
+          <div class="switch-scroller relative -mx-6 px-6 sm:mx-0 sm:px-0">
             <div class="switch-grid touch-pan-x flex snap-x snap-proximity gap-3 overflow-x-auto overscroll-x-contain pb-1 sm:grid sm:grid-cols-4 sm:gap-3 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
               {sectors.map((s) => (
                 <label for={`tab-${s.id}`} data-btn={s.id} class="switch-btn relative flex w-[40%] shrink-0 cursor-pointer snap-center flex-col items-center gap-3 rounded-xl border border-white/25 bg-white/[0.09] px-4 py-6 text-center shadow-[0_1px_0_0_rgb(255_255_255_/_0.06)_inset] transition-colors duration-200 sm:w-auto sm:shrink">

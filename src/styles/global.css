@@ -320,6 +320,34 @@ h1, h2, h3, h4, .font-display {
 .edge-top { clip-path: polygon(0 2.5vw, 100% 0, 100% 100%, 0 100%); }
 .edge-bottom { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2.5vw), 0 100%); }
 
+/* ---- Muro de clientes ---- */
+/* Barrido tipo escáner de medición sobre el panel (una sola pasada, vía GSAP) */
+.client-scan {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(217 130 43 / 0.14) 45%,
+    rgb(217 130 43 / 0.4) 50%,
+    rgb(217 130 43 / 0.14) 55%,
+    transparent
+  );
+}
+/* Puntos indicadores de intervención: micro-stagger al hover de la placa */
+[data-client-plate] .iv-dot {
+  transition: transform 0.3s ease;
+}
+[data-client-plate]:hover .iv-dot,
+[data-client-plate]:focus-visible .iv-dot {
+  transform: scale(1.4);
+}
+[data-client-plate]:hover .iv-dot:nth-child(2) { transition-delay: 0.05s; }
+[data-client-plate]:hover .iv-dot:nth-child(3) { transition-delay: 0.1s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .client-scan { display: none; }
+  [data-client-plate] .iv-dot { transition: none; }
+}
+
 /* Ticket / spec label */
 .spec-chip {
   font-family: var(--font-mono);

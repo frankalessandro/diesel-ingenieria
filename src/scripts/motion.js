@@ -331,6 +331,123 @@ function initHorizontalScroll() {
   });
 }
 
+/* ---------- Muro de clientes: barrido de entrada + modal "Registro de cliente" ---------- */
+function initClientWall() {
+  const modal = document.querySelector("[data-client-modal]");
+  if (!modal) return;
+
+  // Barrido tipo escáner: una sola pasada cuando el panel entra en viewport.
+  const scan = document.querySelector("[data-client-scan]");
+  if (scan && !reduceMotion) {
+    gsap.fromTo(
+      scan,
+      { xPercent: -100, opacity: 0 },
+      {
+        xPercent: 400,
+        opacity: 1,
+        duration: 1.1,
+        ease: "power2.inOut",
+        scrollTrigger: { trigger: scan, start: "top 80%", once: true },
+        onStart: () => gsap.set(scan, { opacity: 1 }),
+        onComplete: () => gsap.set(scan, { opacity: 0 }),
+      },
+    );
+  }
+
+  const backdrop = modal.querySelector("[data-client-backdrop]");
+  const dialog = modal.querySelector("[data-client-dialog]");
+  const watermark = modal.querySelector("[data-client-watermark]");
+  const titleEl = modal.querySelector("[data-cm-title]");
+  const sectorEl = modal.querySelector("[data-cm-sector]");
+  const listEl = modal.querySelector("[data-cm-list]");
+  const bodies = document.querySelector("[data-client-bodies]");
+  const closeBtn = modal.querySelector("[data-client-close]");
+  const plates = document.querySelectorAll("[data-client-plate]");
+  if (!bodies || !plates.length) return;
+
+  let lastTrigger = null;
+  let anim = null;
+
+  const openModal = (slug, trigger) => {
+    const src = bodies.querySelector(`[data-client-body="${slug}"]`);
+    if (!src) return;
+    lastTrigger = trigger || null;
+
+    titleEl.textContent = src.dataset.name || "";
+    sectorEl.textContent = src.dataset.sector || "";
+    watermark.textContent = src.dataset.name || "";
+    listEl.innerHTML = src.innerHTML;
+
+    modal.hidden = false;
+    document.documentElement.style.overflow = "hidden";
+    closeBtn?.focus();
+
+    anim?.kill();
+    const items = listEl.querySelectorAll("[data-cm-item]");
+
+    if (reduceMotion) {
+      gsap.set([backdrop, dialog, watermark], { clearProps: "all" });
+      gsap.set(items, { clearProps: "all" });
+      return;
+    }
+
+    anim = gsap
+      .timeline({ defaults: { ease: "power3.out" } })
+      .fromTo(backdrop, { opacity: 0 }, { opacity: 1, duration: 0.3 })
+      .fromTo(
+        dialog,
+        { opacity: 0, y: 44, scale: 0.96, clipPath: "inset(0% 0% 100% 0%)" },
+        { opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0% 0% 0%)", duration: 0.55 },
+        "-=0.12",
+      )
+      .fromTo(watermark, { opacity: 0, xPercent: -58 }, { opacity: 0.6, xPercent: -50, duration: 0.6 }, "<")
+      .fromTo(items, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.07 }, "-=0.25");
+  };
+
+  const closeModal = () => {
+    document.documentElement.style.overflow = "";
+    const finish = () => {
+      modal.hidden = true;
+      listEl.innerHTML = "";
+    };
+    anim?.kill();
+    if (reduceMotion) {
+      finish();
+    } else {
+      gsap
+        .timeline({ onComplete: finish })
+        .to(dialog, { opacity: 0, y: 22, scale: 0.97, duration: 0.24, ease: "power2.in" })
+        .to(backdrop, { opacity: 0, duration: 0.2 }, "-=0.14");
+    }
+    lastTrigger?.focus();
+  };
+
+  plates.forEach((btn) => {
+    btn.addEventListener("click", () => openModal(btn.dataset.slug, btn));
+  });
+  modal.querySelectorAll("[data-client-close], [data-client-backdrop]").forEach((el) => {
+    el.addEventListener("click", closeModal);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.hidden) closeModal();
+  });
+  // Focus trap simple dentro del diálogo.
+  modal.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab" || modal.hidden) return;
+    const f = modal.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])');
+    if (!f.length) return;
+    const first = f[0];
+    const last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
+}
+
 /* ---------- Navbar solidify on scroll ---------- */
 function initNavbar() {
   const nav = document.querySelector("[data-nav]");
@@ -393,6 +510,7 @@ function init() {
   initMagnetic();
   initTilt();
   initSectorFlip();
+  initClientWall();
   initCounters();
   initParallax();
   initHorizontalScroll();

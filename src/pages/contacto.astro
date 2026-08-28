@@ -31,7 +31,7 @@ const inputClass = "w-full rounded-lg border border-ink-900/15 bg-white px-3.5 p
 ---
 
 <Layout
-  title="Contacto | Diesel Ingeniería SAS"
+  title="Contacto | Diesel Ingeniería S.A.S."
   description={`Solicite diagnóstico o cotización. WhatsApp, teléfono, correo y dirección en Cali. Servicio en ${company.coverage}.`}
   path="/contacto"
 >
@@ -124,7 +124,7 @@ const inputClass = "w-full rounded-lg border border-ink-900/15 bg-white px-3.5 p
         <div class="reveal">
           <div class="overflow-hidden rounded-2xl border border-ink-900/10 shadow-card">
             <iframe
-              title="Ubicación Diesel Ingeniería en Cali"
+              title="Ubicación Diesel Ingeniería S.A.S. en Cali"
               src="https://maps.google.com/maps?q=Calle%2034%20No.%203N-32%2C%20Barrio%20Bueno%20Madrid%2C%20Santiago%20de%20Cali&z=15&output=embed"
               class="h-80 w-full"
               loading="lazy"
@@ -162,7 +162,7 @@ const inputClass = "w-full rounded-lg border border-ink-900/15 bg-white px-3.5 p
       errorEl?.classList.add('hidden');
 
       const lines = [
-        'Hola Diesel Ingeniería, quisiera solicitar un diagnóstico/cotización:',
+        'Hola Diesel Ingeniería S.A.S., quisiera solicitar un diagnóstico/cotización:',
         `Nombre: ${data.get('nombre')}`,
         data.get('empresa') ? `Empresa: ${data.get('empresa')}` : '',
         `Teléfono: ${data.get('telefono')}`,
