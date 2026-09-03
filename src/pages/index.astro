@@ -371,7 +371,7 @@ const inputClass =
 
       <div class="circuit-track relative z-10" data-circuit-track>
         <div class="circuit-stage" data-circuit-stage>
-          <div class="mx-auto w-full max-w-7xl px-6">
+          <div class="mx-auto w-full max-w-6xl px-6">
             <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
               <div class="max-w-xl">
                 <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ 02 — Servicios</span>
@@ -465,7 +465,7 @@ const inputClass =
             </div>
 
             {/* Un solo panel para todos los tamaños: cambia con la estación activa. */}
-            <div class="surface mt-6 grid grid-cols-1 items-start gap-6 rounded-2xl p-6 sm:p-8 lg:mt-8 lg:grid-cols-2 lg:gap-12">
+            <div class="surface mx-auto mt-6 grid w-full max-w-5xl grid-cols-1 items-start gap-6 rounded-2xl p-6 sm:p-8 lg:mt-8 lg:grid-cols-2 lg:gap-12">
               <div>
                 <h3 data-circuit-title class="font-display text-xl font-bold text-ink-900 sm:text-2xl lg:text-3xl">{servicePanels[0].title}</h3>
                 <p data-circuit-desc class="mt-2.5 max-w-md leading-relaxed text-ink-600">{servicePanels[0].desc}</p>
@@ -585,6 +585,9 @@ const inputClass =
           <input type="radio" name="sector-tab" id={`tab-${s.id}`} class="sr-only" checked={i === 0} />
         ))}
 
+        {/* Reglas radio-tab generadas por sector: activan botón + panel sin JS. */}
+        <style is:inline set:html={tabCss}></style>
+
         <div class="switch-scroller relative -mx-6 px-6 sm:mx-0 sm:px-0">
           <div class="switch-grid touch-pan-x flex snap-x snap-proximity gap-3 overflow-x-auto overscroll-x-contain pb-1 sm:grid sm:grid-cols-4 sm:gap-3 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {sectors.map((s) => (
@@ -631,7 +634,7 @@ const inputClass =
               </div>
 
               <div class="flex items-center border-t border-white/10 bg-black/15 p-6 sm:p-8 md:border-l md:border-t-0">
-                <MediaFrame ratio="1/1" variant="dark" label={`Foto — ${s.title}`} class="w-full" />
+                <MediaFrame ratio="16/9" variant="dark" label={`Foto — ${s.title}`} class="mx-auto w-full max-w-md md:max-w-none md:aspect-square" />
               </div>
 
               <div class="flex flex-col justify-center border-t border-white/10 bg-black/15 p-8 sm:p-10 md:border-l md:border-t-0">
@@ -931,7 +934,7 @@ const inputClass =
   .circuit-stage {
     position: sticky;
     top: 6.5rem;
-    padding-block: 1.5rem 2rem;
+    padding-block: 0 2rem;
   }
 
   /* Recorta el esquema; en pantallas angostas el SVG es más ancho que esto
