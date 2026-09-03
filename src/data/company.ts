@@ -22,7 +22,15 @@ export const company = {
     whatsapp: { display: "316 742 7795", e164: "573167427795" },
     mobiles: ["315 612 2355", "304 351 3924"],
     landline: "(2) 399 5478",
+    landlineTel: "+5723995478",
   },
+} as const;
+
+// Ubicación — enlace a Google Maps y URL de embed (misma dirección que arriba).
+export const maps = {
+  link: "https://maps.google.com/?q=Calle+34+No.+3N-32,+Barrio+Bueno+Madrid,+Santiago+de+Cali",
+  embed:
+    "https://maps.google.com/maps?q=Calle%2034%20No.%203N-32%2C%20Barrio%20Bueno%20Madrid%2C%20Santiago%20de%20Cali&z=15&output=embed",
 } as const;
 
 // Cifras destacadas usadas en varios lugares (hero, especialidades, etc.).

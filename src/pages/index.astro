@@ -66,22 +66,78 @@ const servicePanels = [
   { short: 'Suministro', x: 1000, title: 'Suministro de componentes', desc: 'Conseguimos y suministramos a nivel nacional los componentes hidráulicos que su equipo necesita, de las marcas líderes del sector.', points: ['Bombas, motores y válvulas', 'Marcas líderes del sector', 'Entrega a nivel nacional'] },
 ];
 
+// Sectores atendidos — panel interactivo (radio-tabs sin JS). Antes vivía en
+// /sectores; ahora es la sección 04 del index.
 const sectors = [
-  { name: 'Industrial', href: '/sectores#industrial', icon: 'M4 21V9l8-6 8 6v12M9 21v-6h6v6', apps: 'Plásticos · Siderúrgica · Papel · Química · Alimentos' },
-  { name: 'Agrícola', href: '/sectores#agricola', icon: 'M12 3v9m0 0-3.5-3.5M12 12l3.5-3.5M5 21c0-4 3-7 7-7s7 3 7 7', apps: 'Tractores · Cosechadoras · Pulverizadoras · Alzadoras · Bulldozer · Excavadoras' },
-  { name: 'Construcción y minería', href: '/sectores#construccion-mineria', icon: 'M3 21h18M6 21V10l6-5 6 5v11M10 21v-6h4v6', apps: 'Retroexcavadoras · Cargadores · Percutores' },
-  { name: 'Forestal', href: '/sectores#forestal', icon: 'M12 3 6 12h3l-4 6h5v3h4v-3h5l-4-6h3L12 3Z', apps: 'Cargadores · Forwarders · Rotadores' },
-  { name: 'Portuaria / Offshore', href: '/sectores#portuaria-offshore', icon: 'M3 20h18M4 20V9l4-2 4 2 4-2 4 2v11M8 12h.01M14 12h.01', apps: 'Plataformas · grúas' },
-  { name: 'Manipulación de cargas', href: '/sectores#manipulacion-cargas', icon: 'M4 16h16M6 16V8h4v8M14 16V5h4v11', apps: 'Elevadores · Pantográficas · Canastas' },
-  { name: 'Equipos de Elevación y Acceso en Alturas', href: '/sectores#elevacion-alturas', icon: 'M12 3v18M7 8l5-5 5 5M5 21h14', apps: 'Grúas Canasta · Plataformas Elevadoras (Man Lift)' },
-  { name: 'Infraestructura', href: '/sectores#infraestructura', icon: 'M4 21V10l4-3 4 3v11M12 21V6l4-3 4 3v15M4 21h16', apps: 'Grúas de Brazo' },
+  {
+    id: 'industrial', n: '01', title: 'Industrial',
+    lead: 'Sistemas hidráulicos para líneas de producción y procesos.',
+    apps: ['Inyección de plásticos', 'Siderúrgica', 'Pulpa de papel y convertidoras', 'Industria metalúrgica', 'Industria química', 'Alimentos y bebidas', 'Automotriz', 'Petrolera'],
+    icon: 'M4 21V9l8-6 8 6v12M9 21v-6h6v6',
+  },
+  {
+    id: 'agricola', n: '02', title: 'Agrícola',
+    lead: 'Mantenimiento y reparación para la maquinaria del campo.',
+    apps: ['Tractores', 'Cosechadoras', 'Pulverizadoras', 'Alzadoras', 'Bulldozer', 'Excavadoras', 'Máquinas e implementos agrícolas en general'],
+    icon: 'M12 3v9m0 0-3.5-3.5M12 12l3.5-3.5M5 21c0-4 3-7 7-7s7 3 7 7',
+  },
+  {
+    id: 'construccion-mineria', n: '03', title: 'Construcción y minería',
+    lead: 'Soporte para los equipos de mayor exigencia de presión y ciclo de trabajo.',
+    apps: ['Retroexcavadoras', 'Cargadores', 'Percutores'],
+    icon: 'M3 21h18M6 21V10l6-5 6 5v11M10 21v-6h4v6',
+  },
+  {
+    id: 'forestal', n: '04', title: 'Forestal',
+    lead: 'Kits hidráulicos y rotadores para el trabajo forestal.',
+    apps: ['Cargadores forestales', 'Excavadoras forestales', 'Arrastradores', 'Forwarders', 'Cabezales y rotativos Baltrotors (1–16 toneladas)'],
+    icon: 'M12 3 6 12h3l-4 6h5v3h4v-3h5l-4-6h3L12 3Z',
+  },
+  {
+    id: 'portuaria-offshore', n: '05', title: 'Portuaria / Offshore',
+    lead: 'Sistemas para operación marítima y petrolera.',
+    apps: ['Plataformas offshore', 'Grúas', 'Industria petrolera', 'Aplicaciones portuarias varias'],
+    icon: 'M3 20h18M4 20V9l4-2 4 2 4-2 4 2v11M8 12h.01M14 12h.01',
+  },
+  {
+    id: 'manipulacion-cargas', n: '06', title: 'Manipulación de cargas',
+    lead: 'Cilindros y centrales hidráulicas para equipos de elevación y traslado.',
+    apps: ['Gatos hidráulicos', 'Mesas pantográficas', 'Elevadores', 'Apiladores', 'Canastas aéreas'],
+    icon: 'M4 16h16M6 16V8h4v8M14 16V5h4v11',
+  },
+  {
+    id: 'elevacion-alturas', n: '07', title: 'Elevación y Acceso en Alturas', full: 'Equipos de Elevación y Acceso en Alturas',
+    lead: 'Cilindros y centrales hidráulicas para equipos de elevación y acceso en alturas.',
+    apps: ['Grúas Canasta', 'Plataformas Elevadoras (Man Lift)'],
+    icon: 'M12 3v18M7 8l5-5 5 5M5 21h14',
+  },
+  {
+    id: 'infraestructura', n: '08', title: 'Infraestructura',
+    lead: 'Sistemas hidráulicos para equipos de montaje y obra de infraestructura.',
+    apps: ['Grúas de Brazo'],
+    icon: 'M4 21V10l4-3 4 3v11M12 21V6l4-3 4 3v15M4 21h16',
+  },
 ];
+
+// Reglas CSS generadas por sector (radio-tabs sin JS): botón activo + panel visible.
+const tabCss = sectors
+  .map(
+    (s) => `
+    #tab-${s.id}:checked ~ .switch-scroller [data-btn="${s.id}"] { background-color: var(--color-oil-500); border-color: var(--color-oil-400); color: var(--color-ink-950); }
+    #tab-${s.id}:checked ~ .switch-scroller [data-btn="${s.id}"] .btn-icon { background-color: rgb(8 13 19 / 0.14); color: var(--color-ink-950); }
+    #tab-${s.id}:checked ~ .switch-scroller [data-btn="${s.id}"] .font-display { color: var(--color-ink-950); }
+    #tab-${s.id}:checked ~ .frame-corners [data-panel="${s.id}"] { display: grid; }
+    #tab-${s.id}:focus-visible ~ .switch-scroller [data-btn="${s.id}"] { outline: 2px solid var(--color-oil-400); outline-offset: 2px; }
+    #tab-${s.id}:checked ~ .carousel-dots [data-dot="${s.id}"] { background-color: var(--color-oil-400); width: 1.1rem; border-radius: 9999px; }
+  `,
+  )
+  .join('\n');
 
 const projects = [
   { n: '01', span: 'lg:col-span-8', title: 'Mini centrales hidráulicas', desc: 'Tanques de 1 a 20 litros, bomba de engranaje de 0,5 a 7,3 cc, motor eléctrico de 12/24/110/220/380 V y potencias de 1 a 5 Cv, hasta 180 bar. Para canasta aérea, elevadores, camión remolque, mesa pantográfica y más.' },
   { n: '02', span: 'lg:col-span-4', title: 'Compactadoras de residuos', desc: 'Fabricación de sistemas hidráulicos para equipos compactadores.' },
-  { n: '03', span: 'lg:col-span-4', title: 'Elevadores hidráulicos', desc: 'De carga, más modernización de elevadores hidráulicos existentes.' },
-  { n: '04', span: 'lg:col-span-8', title: 'Repotenciación de sistemas y equipos', desc: 'Actualización de tableros eléctricos y recuperación del desempeño de sistemas hidráulicos en operación.' },
+  { n: '03', span: 'lg:col-span-4', title: 'Elevadores hidráulicos', desc: 'Elevadores de carga y de pasajeros, además de modernización de elevadores hidráulicos existentes.' },
+  { n: '04', span: 'lg:col-span-8', title: 'Repotenciación de sistemas y equipos', desc: 'Actualización de equipos y tableros eléctricos de control para recuperar o mejorar el desempeño de sistemas hidráulicos que ya están en operación.' },
 ];
 
 const brands = [
@@ -98,11 +154,25 @@ const brands = [
 ];
 
 const philosophy = [
-  { title: 'Calidad', desc: 'Control en cada reparación, mecanizado y prueba en banco.' },
-  { title: 'Seguridad', desc: 'Trabajo seguro en taller y en intervenciones de campo.' },
-  { title: 'Medio ambiente', desc: 'Manejo responsable de aceites, filtros y residuos del mantenimiento.' },
-  { title: 'Mejora continua', desc: 'Actualización en técnicas de diagnóstico y tecnología del sector.' },
+  { title: 'Calidad', desc: 'Control en cada reparación, mecanizado y prueba en banco.', icon: 'M9 12l2 2 4-4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z' },
+  { title: 'Seguridad', desc: 'Trabajo seguro en taller y en intervenciones de campo.', icon: 'M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6l-7-3ZM9 12l2 2 4-4' },
+  { title: 'Medio ambiente', desc: 'Manejo responsable de aceites, filtros y residuos del mantenimiento.', icon: 'M12 3c-3 4-6 7-6 11a6 6 0 0 0 12 0c0-4-3-7-6-11Z' },
+  { title: 'Mejora continua', desc: 'Actualización en técnicas de diagnóstico y tecnología del sector.', icon: 'M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5' },
 ];
+
+// ---- Contacto (sección final del index) ----
+const serviceOptions = [
+  'Mantenimiento predictivo',
+  'Mantenimiento preventivo',
+  'Mantenimiento correctivo',
+  'Fabricación a medida',
+  'Filtración y microfiltrado',
+  'Suministro de componentes',
+  'Otro / no estoy seguro',
+];
+
+const inputClass =
+  'w-full rounded-lg border border-ink-900/15 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 transition-colors focus:border-oil-500 focus:outline-none focus:ring-2 focus:ring-oil-500/30 aria-[invalid=true]:border-oil-600 aria-[invalid=true]:ring-oil-600/20';
 ---
 
 <Layout
@@ -135,7 +205,7 @@ const philosophy = [
           </p>
 
           <div class="mt-9 flex flex-wrap items-center gap-4">
-            <a data-hero-cta href="/contacto" class="cta-pulse cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">
+            <a data-hero-cta href="/#contacto" class="cta-pulse cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">
               Solicitar diagnóstico
             </a>
             <a data-hero-cta href={wa} target="_blank" rel="noopener noreferrer" class="group flex cursor-pointer items-center gap-2 rounded-lg border border-ink-900/15 bg-white px-7 py-4 text-sm font-bold text-ink-800 transition-colors hover:border-steel-500 hover:text-steel-700">
@@ -501,39 +571,135 @@ const philosophy = [
         </div>
       </div>
     </section>
-    <!-- ============ SECTORES ============ -->
-    <section class="mx-auto max-w-7xl px-6 py-28" data-reveal-group>
-      <div class="reveal max-w-2xl">
-        <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ 04 — Sectores</span>
-        <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Donde se mueve la industria colombiana</h2>
+    <!-- ============ SECTORES — PANEL DE CONTROL (banda azul) ============ -->
+    <SteelBanner id="sectores" padding="py-28" class="scroll-mt-24">
+      <div class="reveal flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div class="max-w-2xl">
+          <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-400">/ 04 — Sectores</span>
+          <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-white text-balance sm:text-5xl">Donde se mueve la industria colombiana</h2>
+          <p class="mt-5 max-w-xl leading-relaxed text-steel-200/80">
+            Cada sector exige su propio criterio de presión, ciclo y ambiente de trabajo. Seleccione el suyo para ver las aplicaciones típicas que atendemos.
+          </p>
+        </div>
+        <p class="max-w-sm font-mono text-sm text-steel-200/70">{sectors.length} sectores atendidos · {figures.years} años de trayectoria en sistemas hidráulicos.</p>
       </div>
-      <div class="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {sectors.map((s) => (
-          <a href={s.href} class="surface surface-hover reveal group flex cursor-pointer items-center gap-5 rounded-2xl p-6 sm:p-7">
-            <span class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-steel-50 text-steel-700 transition-colors group-hover:bg-oil-500 group-hover:text-ink-950">
-              <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={s.icon}/></svg>
-            </span>
-            <div>
-              <h3 class="font-display text-lg font-bold text-ink-900">{s.name}</h3>
-              <p class="mt-1 text-sm text-ink-500">{s.apps}</p>
-            </div>
-          </a>
+
+      <!-- Selector radio (sin JS): array de botones tipo panel de control -->
+      <div class="reveal relative mt-10">
+        {sectors.map((s, i) => (
+          <input type="radio" name="sector-tab" id={`tab-${s.id}`} class="sr-only" checked={i === 0} />
         ))}
+
+        <div class="switch-scroller relative -mx-6 px-6 sm:mx-0 sm:px-0">
+          <div class="switch-grid touch-pan-x flex snap-x snap-proximity gap-3 overflow-x-auto overscroll-x-contain pb-1 sm:grid sm:grid-cols-4 sm:gap-3 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
+            {sectors.map((s) => (
+              <label for={`tab-${s.id}`} data-btn={s.id} class="switch-btn relative flex w-[40%] shrink-0 cursor-pointer snap-center flex-col items-center gap-3 rounded-xl border border-white/25 bg-white/[0.09] px-4 py-6 text-center shadow-[0_1px_0_0_rgb(255_255_255_/_0.06)_inset] transition-colors duration-200 sm:w-auto sm:shrink">
+                <span class="btn-icon flex h-11 w-11 items-center justify-center rounded-lg bg-white/10 text-oil-400 transition-colors duration-200">
+                  <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={s.icon}/></svg>
+                </span>
+                <span class="font-display text-sm font-bold leading-tight text-white">{s.title}</span>
+              </label>
+            ))}
+          </div>
+
+          <div class="scroll-hint pointer-events-none absolute inset-y-0 right-1 flex items-center pb-1 transition-opacity duration-300 sm:hidden" aria-hidden="true">
+            <span class="animate-scroll-hint flex h-7 w-7 items-center justify-center rounded-full bg-steel-900/80 text-white shadow-lift ring-1 ring-white/15 backdrop-blur-sm">
+              <svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 4.5 12.5 10l-5 5.5"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="carousel-dots mt-4 flex justify-center gap-1.5 sm:hidden" aria-hidden="true">
+          {sectors.map((s) => (
+            <span data-dot={s.id} class="dot h-1.5 w-1.5 rounded-full bg-white/20 transition-colors duration-200"></span>
+          ))}
+        </div>
+
+        <div class="frame-corners frame-corners-dark relative mt-4 overflow-hidden rounded-2xl border border-white/15 bg-white/[0.03]">
+          <span class="corner corner-tl" aria-hidden="true"></span>
+          <span class="corner corner-tr" aria-hidden="true"></span>
+          <span class="corner corner-bl" aria-hidden="true"></span>
+          <span class="corner corner-br" aria-hidden="true"></span>
+
+          {sectors.map((s) => (
+            <div data-panel={s.id} class="sector-panel relative hidden w-full grid-cols-1 md:grid-cols-[1fr_0.85fr_1.1fr]">
+              <div class="flex flex-col justify-between p-8 sm:p-10">
+                <div>
+                  <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-400">Sector / {s.n}</span>
+                  <h3 class="mt-2 font-display text-2xl font-bold leading-tight text-white sm:text-3xl">{s.full ?? s.title}</h3>
+                  <p class="mt-4 leading-relaxed text-steel-200/85">{s.lead}</p>
+                </div>
+                <a href="/#contacto" class="mt-8 inline-flex w-fit cursor-pointer items-center gap-1.5 text-sm font-bold text-oil-400 hover:text-oil-300">
+                  Hablar sobre este sector
+                  <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
+                </a>
+              </div>
+
+              <div class="flex items-center border-t border-white/10 bg-black/15 p-6 sm:p-8 md:border-l md:border-t-0">
+                <MediaFrame ratio="1/1" variant="dark" label={`Foto — ${s.title}`} class="w-full" />
+              </div>
+
+              <div class="flex flex-col justify-center border-t border-white/10 bg-black/15 p-8 sm:p-10 md:border-l md:border-t-0">
+                <span class="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-white/40">Aplicaciones típicas</span>
+                <ul class="mt-3 grid grid-cols-1 gap-x-6 gap-y-2.5 sm:grid-cols-2">
+                  {s.apps.map((app) => (
+                    <li class="flex items-center gap-2.5 text-sm font-medium text-steel-100/90">
+                      <svg viewBox="0 0 20 20" class="h-4 w-4 shrink-0 text-oil-400" fill="currentColor" aria-hidden="true"><path d="M9 12.75 6.75 10.5l-1.5 1.5L9 15.75l7.5-7.5-1.5-1.5L9 12.75Z"/></svg>
+                      {app}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </section>
+
+      <!-- Kit hidráulico destacado + llamado a la acción -->
+      <div class="reveal mt-6 grid grid-cols-1 gap-5 lg:grid-cols-[1.45fr_1fr]">
+        <div class="frame-corners frame-corners-dark relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.03] p-8 sm:p-10">
+          <span class="corner corner-tl" aria-hidden="true"></span>
+          <span class="corner corner-tr" aria-hidden="true"></span>
+          <span class="corner corner-bl" aria-hidden="true"></span>
+          <span class="corner corner-br" aria-hidden="true"></span>
+
+          <div class="flex items-center gap-3">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-oil-500/15 text-oil-400">
+              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 6 12h3l-4 6h5v3h4v-3h5l-4-6h3L12 3Z"/></svg>
+            </span>
+            <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-400">Aplicación destacada — Sector forestal</span>
+          </div>
+          <h3 class="mt-5 font-display text-2xl font-bold leading-tight text-white sm:text-3xl">Kit hidráulico forestal</h3>
+          <p class="mt-4 max-w-xl leading-relaxed text-steel-200/85">
+            Válvula de comando monoblock, válvula de seguridad anti-ruptura, válvulas de cartucho, rotadores y piezas de reposición para equipos forestales.
+          </p>
+          <ul class="mt-6 flex flex-wrap gap-2">
+            {['Sun Hydraulics', 'Badestnost', 'CBF Hydraulic'].map((brand) => (
+              <li class="rounded-full border border-oil-400/30 bg-oil-500/10 px-3 py-1.5 font-mono text-xs font-semibold text-oil-300">{brand}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="flex flex-col justify-center rounded-2xl border border-white/12 bg-gradient-to-br from-white/[0.07] to-transparent p-8 text-center sm:p-10">
+          <h3 class="font-display text-xl font-bold leading-tight text-white sm:text-2xl">¿No encuentra su sector?</h3>
+          <p class="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-steel-200/80">
+            Atendemos maquinaria hidráulica de diversas industrias en {company.coverage}.
+          </p>
+          <a href="/#contacto" class="mt-6 inline-flex items-center justify-center gap-2 self-center rounded-lg bg-oil-500 px-6 py-3.5 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">
+            Hablar con un técnico
+            <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
+          </a>
+        </div>
+      </div>
+    </SteelBanner>
 
     <!-- ============ PROYECTOS (bento) ============ -->
     <section class="border-y border-ink-900/10 bg-paper-2 py-28" data-reveal-group>
       <div class="mx-auto max-w-7xl px-6">
-        <div class="reveal flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div class="max-w-2xl">
-            <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ 05 — Proyectos</span>
-            <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Fabricación e ingeniería aplicada</h2>
-          </div>
-          <a href="/proyectos" class="inline-flex w-fit cursor-pointer items-center gap-2 text-sm font-bold text-steel-700 hover:text-oil-700">
-            Ver todos los proyectos
-            <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
-          </a>
+        <div class="reveal max-w-2xl">
+          <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ 05 — Proyectos</span>
+          <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Fabricación e ingeniería aplicada</h2>
+          <p class="mt-5 leading-relaxed text-ink-600">Proyectos de fabricación e ingeniería hidráulica para clientes industriales y de aplicación móvil.</p>
         </div>
         <div class="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-2">
           {projects.map((p) => (
@@ -547,52 +713,213 @@ const philosophy = [
             </div>
           ))}
         </div>
+
+        <div class="reveal mt-8 rounded-2xl border border-ink-900/10 bg-paper px-6 py-8 text-center sm:px-10">
+          <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ Aplicación industrial y móvil</span>
+          <p class="mx-auto mt-3 max-w-2xl leading-relaxed text-ink-600">
+            Diseñamos soluciones hidráulicas para el sector industrial en general y para equipos móviles especializados, como camiones canasta usados en el mantenimiento de líneas eléctricas.
+          </p>
+        </div>
       </div>
     </section>
 
     <!-- ============ MARCAS DE EQUIPOS ============ -->
     <section class="border-b border-ink-900/10 bg-paper py-24">
       <div class="mx-auto max-w-7xl px-6" data-reveal-group>
-        <p class="reveal text-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas de Equipos</p>
+        <p class="reveal text-center font-mono text-xs font-bold uppercase tracking-[0.2em] text-ink-500">Marcas de Equipos que manejamos</p>
         <BrandGrid brands={brands} class="reveal mt-8" />
       </div>
     </section>
 
-    <!-- ============ FILOSOFÍA ============ -->
-    <section class="mx-auto max-w-7xl px-6 py-28" data-reveal-group>
-      <div class="grid grid-cols-1 gap-14 lg:grid-cols-[0.9fr_1.1fr]">
+    <!-- ============ POR QUÉ DIESEL (banda azul — diferenciador antes del CTA) ============ -->
+    <SteelBanner padding="py-28">
+      <div class="reveal mx-auto max-w-3xl text-center">
+        <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-400">/ 06 — Por qué Diesel</span>
+        <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-white text-balance sm:text-5xl">Reparación real, no solo cambio de repuestos</h2>
+        <p class="mx-auto mt-6 max-w-2xl leading-relaxed text-steel-200/85">
+          Desarme, rectificado, mecanizado de piezas, suministro de seal kit, prueba en banco hidráulico y soldadura. Todo respaldado por 25 años de experiencia y una filosofía de trabajo de calidad, seguridad, protección del medio ambiente y mejoramiento continuo.
+        </p>
+      </div>
+
+      <ol class="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+        {philosophy.map((p, i) => (
+          <li class="reveal group flex h-full flex-col rounded-2xl border border-white/12 bg-white/[0.05] p-6 transition-colors hover:border-oil-400/40 hover:bg-white/[0.08]">
+            <div class="flex items-center justify-between">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-oil-500/15 text-oil-400 transition-colors group-hover:bg-oil-500 group-hover:text-ink-950">
+                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={p.icon}/></svg>
+              </span>
+              <span class="font-display text-3xl font-bold leading-none" style="color: rgb(255 255 255 / 0.14)">0{i + 1}</span>
+            </div>
+            <h3 class="mt-5 font-display text-lg font-bold text-white">{p.title}</h3>
+            <p class="mt-2.5 flex-1 leading-relaxed text-steel-200/80">{p.desc}</p>
+          </li>
+        ))}
+      </ol>
+    </SteelBanner>
+
+    <!-- ============ CONTACTO (cierre — solo formulario) ============ -->
+    <section id="contacto" class="noise relative isolate overflow-hidden border-y border-ink-900/10 bg-steel-50">
+      <div class="absolute inset-0 dot-grid opacity-60" aria-hidden="true"></div>
+      <span class="pointer-events-none absolute -bottom-6 left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-[20vw] font-bold leading-none text-stroke opacity-70 sm:text-[15vw]" data-drift="-10" aria-hidden="true">CONTACTO</span>
+
+      <div class="relative z-10 mx-auto max-w-2xl px-6 py-28" data-reveal-group>
         <div class="reveal">
-          <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ 06 — Por qué Diesel</span>
-          <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Reparación real, no solo cambio de repuestos</h2>
-          <p class="mt-6 max-w-md leading-relaxed text-ink-600">
-            Desarme, rectificado, mecanizado de piezas, suministro de seal kit, prueba en banco hidráulico y soldadura. Todo respaldado por 25 años de experiencia y una filosofía de trabajo de calidad, seguridad, protección del medio ambiente y mejoramiento continuo.
+          <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ 07 — Contacto</span>
+          <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Cuéntenos qué máquina tiene y qué falla presenta</h2>
+          <p class="mt-5 leading-relaxed text-ink-600">
+            Indique la máquina, la marca y la falla. Al enviar se abre WhatsApp con su solicitud lista para mandarnos.
           </p>
         </div>
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {philosophy.map((p, i) => (
-            <div class:list={["surface reveal rounded-2xl p-7", i % 2 === 1 && "sm:mt-8"]}>
-              <h3 class="font-display text-lg font-bold text-steel-700">{p.title}</h3>
-              <p class="mt-2.5 leading-relaxed text-ink-600">{p.desc}</p>
+
+        <div class="reveal relative mt-10">
+          <div class="absolute -right-3 -top-3 -z-10 hidden h-24 w-24 rounded-xl hazard opacity-90 sm:block" aria-hidden="true"></div>
+
+            <form
+              id="contacto-form"
+              data-wa={company.phones.whatsapp.e164}
+              data-name={company.name}
+              novalidate
+              class="rounded-2xl border border-ink-900/10 bg-white p-6 shadow-lift sm:p-8"
+            >
+              <div class="flex items-center gap-2.5">
+                <span class="h-1.5 w-1.5 rounded-full bg-oil-500"></span>
+                <span class="font-mono text-xs font-bold uppercase tracking-[0.18em] text-steel-700">Solicitud de diagnóstico / cotización</span>
+              </div>
+
+              <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div>
+                  <label for="c-nombre" class="mb-1.5 block text-sm font-semibold text-ink-800">Nombre completo <span class="text-oil-600">*</span></label>
+                  <input id="c-nombre" name="nombre" type="text" autocomplete="name" required class={inputClass} placeholder="Su nombre" aria-describedby="err-nombre" />
+                  <p id="err-nombre" class="mt-1.5 text-xs font-semibold text-oil-700" hidden></p>
+                </div>
+                <div>
+                  <label for="c-empresa" class="mb-1.5 block text-sm font-semibold text-ink-800">Empresa</label>
+                  <input id="c-empresa" name="empresa" type="text" autocomplete="organization" class={inputClass} placeholder="Razón social (opcional)" />
+                </div>
+              </div>
+
+              <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div>
+                  <label for="c-telefono" class="mb-1.5 block text-sm font-semibold text-ink-800">Teléfono <span class="text-oil-600">*</span></label>
+                  <input id="c-telefono" name="telefono" type="tel" autocomplete="tel" required class={inputClass} placeholder="300 000 0000" aria-describedby="err-telefono" />
+                  <p id="err-telefono" class="mt-1.5 text-xs font-semibold text-oil-700" hidden></p>
+                </div>
+                <div>
+                  <label for="c-correo" class="mb-1.5 block text-sm font-semibold text-ink-800">Correo</label>
+                  <input id="c-correo" name="correo" type="email" autocomplete="email" class={inputClass} placeholder="correo@empresa.com" aria-describedby="err-correo" />
+                  <p id="err-correo" class="mt-1.5 text-xs font-semibold text-oil-700" hidden></p>
+                </div>
+              </div>
+
+              <div class="mt-5">
+                <label for="c-servicio" class="mb-1.5 block text-sm font-semibold text-ink-800">Tipo de servicio <span class="text-oil-600">*</span></label>
+                <select id="c-servicio" name="servicio" required class={`${inputClass} cursor-pointer`} aria-describedby="err-servicio">
+                  <option value="">Seleccione una opción</option>
+                  {serviceOptions.map((opt) => <option value={opt}>{opt}</option>)}
+                </select>
+                <p id="err-servicio" class="mt-1.5 text-xs font-semibold text-oil-700" hidden></p>
+              </div>
+
+              <div class="mt-5">
+                <label for="c-mensaje" class="mb-1.5 block text-sm font-semibold text-ink-800">Máquina, marca y falla <span class="text-oil-600">*</span></label>
+                <textarea id="c-mensaje" name="mensaje" required rows="4" class={inputClass} placeholder="Ej.: Excavadora CAT 320D — pérdida de fuerza en el brazo y sobrecalentamiento del aceite" aria-describedby="err-mensaje"></textarea>
+                <p id="err-mensaje" class="mt-1.5 text-xs font-semibold text-oil-700" hidden></p>
+              </div>
+
+              {/* Honeypot anti-spam — oculto para personas, tentador para bots. */}
+              <div class="absolute left-[-9999px]" aria-hidden="true">
+                <label for="c-web">No completar</label>
+                <input id="c-web" name="sitio_web" type="text" tabindex="-1" autocomplete="off" />
+              </div>
+
+              <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <button type="submit" class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-oil-500 px-6 py-3.5 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">
+                  <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 21a9 9 0 1 0-7.9-4.7L3 21l4.8-1.3A8.9 8.9 0 0 0 12 21Z"/></svg>
+                  Enviar por WhatsApp
+                </button>
+                <span class="text-xs text-ink-500">No se guarda nada en un servidor: el mensaje viaja por su WhatsApp.</span>
+              </div>
+            </form>
+
+            <div id="form-ok" class="rounded-2xl border border-ink-900/10 bg-white p-8 text-center shadow-lift" hidden>
+              <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-oil-100 text-oil-700">
+                <svg viewBox="0 0 20 20" class="h-6 w-6" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 0 1 1.4-1.4l3.8 3.8 6.8-6.8a1 1 0 0 1 1.4 0Z" clip-rule="evenodd"/></svg>
+              </span>
+              <h3 class="mt-4 font-display text-xl font-bold text-ink-900">Abrimos WhatsApp con su solicitud</h3>
+              <p class="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-ink-600">Si no se abrió automáticamente, use el botón. Le respondemos lo antes posible.</p>
+              <a data-wa-link href={wa} target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-oil-500 px-6 py-3 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">
+                Abrir WhatsApp
+              </a>
             </div>
-          ))}
         </div>
       </div>
     </section>
-
-    <!-- ============ CTA FINAL ============ -->
-    <SteelBanner width="narrow" padding="py-28" class="text-center">
-      <h2 class="reveal font-display text-4xl font-bold leading-tight text-balance sm:text-6xl">¿Qué equipo necesita que le revisemos?</h2>
-      <p class="reveal mx-auto mt-5 max-w-xl text-lg text-steel-200/85">Cuéntenos marca, modelo y falla. Respondemos por WhatsApp, teléfono o correo, con servicio en {company.coverage}.</p>
-      <div class="reveal mt-9 flex flex-wrap items-center justify-center gap-4">
-        <a href="/contacto" class="cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">Solicitar diagnóstico</a>
-        <a href={wa} target="_blank" rel="noopener noreferrer" class="cursor-pointer rounded-lg border border-white/25 bg-white/10 px-7 py-4 text-sm font-bold text-white transition-colors hover:border-oil-400 hover:bg-white/15">{company.phones.whatsapp.display}</a>
-      </div>
-      <p class="reveal mt-8 font-mono text-xs uppercase tracking-[0.2em] text-steel-200/60">Cali · {company.coverage} · Servicio en sitio</p>
-    </SteelBanner>
   </main>
 </Layout>
 
 <style>
+  /* ---- Selector de sectores (banda azul) ---- */
+  /* Crecimiento leve al hover: señala que la tarjeta es un botón sin empujar el
+     layout (solo transform). */
+  .switch-btn {
+    transition:
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.28s ease;
+  }
+  .switch-btn:hover {
+    border-color: rgb(217 130 43 / 0.5);
+    background-color: rgb(255 255 255 / 0.14);
+    transform: translateY(-3px) scale(1.025);
+    box-shadow: 0 10px 24px -12px rgb(8 13 19 / 0.55);
+  }
+  .switch-btn:active {
+    transform: translateY(-1px) scale(1.01);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .switch-btn {
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+    .switch-btn:hover,
+    .switch-btn:active {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  /* Carrusel de sectores en mobile: sin scrollbar visible, snap suave */
+  .switch-grid {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .switch-grid::-webkit-scrollbar {
+    display: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .switch-grid {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Difumina el borde derecho real del carrusel (sin parche de color superpuesto) */
+  @media (max-width: 639px) {
+    .switch-grid {
+      -webkit-mask-image: linear-gradient(to left, transparent 0, #000 40px);
+      mask-image: linear-gradient(to left, transparent 0, #000 40px);
+      transition: -webkit-mask-image 0.3s, mask-image 0.3s;
+    }
+    .switch-grid.is-at-end {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+
+  /* Se oculta cuando el carrusel llega al final (sin más contenido a la derecha) */
+  .scroll-hint.is-at-end {
+    opacity: 0;
+  }
+
   /* ---- Esquema hidráulico de la sección Servicios ---- */
   .circuit-dots {
     background-image: radial-gradient(rgb(27 81 130 / 0.14) 1.1px, transparent 1.1px);
@@ -679,3 +1006,97 @@ const philosophy = [
 
 
 </style>
+
+<script>
+  // Pista de scroll lateral del selector de sectores (solo mobile): se apaga al
+  // llegar al final del carrusel.
+  const track = document.querySelector<HTMLElement>('.switch-grid');
+  const hint = document.querySelector<HTMLElement>('.scroll-hint');
+  if (track && hint) {
+    const updateHint = () => {
+      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      hint.classList.toggle('is-at-end', atEnd);
+      track.classList.toggle('is-at-end', atEnd);
+    };
+    track.addEventListener('scroll', updateHint, { passive: true });
+    updateHint();
+  }
+</script>
+
+<script>
+  // Formulario de contacto: validación por campo + arma un mensaje de WhatsApp.
+  // No hay backend — el mensaje viaja por el WhatsApp del visitante.
+  const form = document.getElementById('contacto-form') as HTMLFormElement | null;
+
+  if (form) {
+    const field = (name: string) =>
+      document.getElementById('c-' + name) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null;
+    const errEl = (name: string) => document.getElementById('err-' + name);
+
+    const rules: Record<string, (v: string) => true | string> = {
+      nombre: (v) => v.trim().length >= 2 || 'Ingrese su nombre.',
+      telefono: (v) => v.replace(/\D/g, '').length >= 7 || 'Ingrese un teléfono de contacto válido.',
+      correo: (v) => v.trim() === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) || 'El correo no parece válido.',
+      servicio: (v) => v !== '' || 'Seleccione un tipo de servicio.',
+      mensaje: (v) => v.trim().length >= 10 || 'Describa el equipo y la falla (mínimo 10 caracteres).',
+    };
+
+    const validate = (name: string): boolean => {
+      const el = field(name);
+      if (!el) return true;
+      const res = rules[name](el.value);
+      const ok = res === true;
+      const box = errEl(name);
+      if (box) {
+        box.textContent = ok ? '' : (res as string);
+        box.hidden = ok;
+      }
+      el.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      return ok;
+    };
+
+    Object.keys(rules).forEach((name) => {
+      const el = field(name);
+      el?.addEventListener('blur', () => validate(name));
+      el?.addEventListener('input', () => {
+        const box = errEl(name);
+        if (box && !box.hidden) validate(name);
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Honeypot: si un bot lo llena, cortamos en silencio.
+      const trap = document.getElementById('c-web') as HTMLInputElement | null;
+      if (trap && trap.value.trim() !== '') return;
+
+      const results = Object.keys(rules).map(validate);
+      if (results.includes(false)) {
+        (form.querySelector('[aria-invalid="true"]') as HTMLElement | null)?.focus();
+        return;
+      }
+
+      const val = (name: string) => (field(name)?.value ?? '').trim();
+      const lines = [
+        `Hola ${form.dataset.name ?? 'Diesel Ingeniería S.A.S.'}, solicito un diagnóstico/cotización:`,
+        `Nombre: ${val('nombre')}`,
+        val('empresa') && `Empresa: ${val('empresa')}`,
+        `Teléfono: ${val('telefono')}`,
+        val('correo') && `Correo: ${val('correo')}`,
+        `Servicio: ${val('servicio')}`,
+        `Detalle: ${val('mensaje')}`,
+      ].filter(Boolean) as string[];
+
+      const url = `https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(lines.join('\n'))}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+
+      const ok = document.getElementById('form-ok');
+      const link = ok?.querySelector('[data-wa-link]') as HTMLAnchorElement | null;
+      if (link) link.href = url;
+      form.hidden = true;
+      if (ok) ok.hidden = false;
+      form.reset();
+    });
+  }
+</script>

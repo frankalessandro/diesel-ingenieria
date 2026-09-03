@@ -1,37 +1,21 @@
 ---
 import { company, whatsappLink } from "../data/company";
 
-interface NavChild {
-  label: string;
-  href: string;
-}
 interface NavItem {
   label: string;
   href: string;
-  children?: NavChild[];
 }
 
 const nav: NavItem[] = [
   { label: "Inicio", href: "/" },
   { label: "Servicios", href: "/servicios" },
   { label: "Especialidades", href: "/especialidades" },
-  { label: "Sectores", href: "/sectores" },
-  {
-    label: "Empresa",
-    href: "/nosotros",
-    children: [
-      { label: "Nosotros", href: "/nosotros" },
-      { label: "Proyectos", href: "/proyectos" },
-      { label: "Contacto", href: "/contacto" },
-    ],
-  },
+  { label: "Nosotros", href: "/nosotros" },
 ];
 
 const current = Astro.url.pathname;
-const isActive = (item: NavItem): boolean => {
-  const paths = [item.href, ...(item.children?.map((c) => c.href.split("#")[0]) ?? [])];
-  return paths.some((p) => current === p || (p !== "/" && current.startsWith(p)));
-};
+const isActive = (item: NavItem): boolean =>
+  current === item.href || (item.href !== "/" && current.startsWith(item.href));
 ---
 
 <header class="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
@@ -59,36 +43,20 @@ const isActive = (item: NavItem): boolean => {
     <nav data-nav-links class="relative hidden items-center gap-0.5 lg:flex" aria-label="Navegación principal">
       <span data-nav-indicator class="pointer-events-none absolute left-0 top-1/2 z-0 h-9 -translate-y-1/2 rounded-lg bg-steel-100 opacity-0"></span>
       {nav.map((item) => (
-        <div class="group relative z-10">
-          <a
-            data-nav-link
-            href={item.href}
-            class:list={["flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-semibold transition-colors xl:px-3.5", isActive(item) ? "is-active text-steel-700" : "text-ink-700 hover:text-steel-700"]}
-          >
-            {item.label}
-            {item.children && (
-              <svg viewBox="0 0 20 20" class="dd-caret h-3.5 w-3.5 text-ink-400 transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd"/>
-              </svg>
-            )}
-          </a>
-          {item.children && (
-            <div class="dd-panel invisible absolute left-0 top-full w-64 origin-top rounded-xl border border-ink-900/10 bg-white p-2 opacity-0 shadow-lift">
-              {item.children.map((child) => (
-                <a href={child.href} class="dd-item block rounded-lg px-3 py-2 text-sm font-medium text-ink-600 transition-colors hover:bg-steel-50 hover:text-oil-700">
-                  {child.label}
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
+        <a
+          data-nav-link
+          href={item.href}
+          class:list={["relative z-10 flex items-center rounded-lg px-3 py-2 text-sm font-semibold transition-colors xl:px-3.5", isActive(item) ? "is-active text-steel-700" : "text-ink-700 hover:text-steel-700"]}
+        >
+          {item.label}
+        </a>
       ))}
     </nav>
 
     <div class="flex shrink-0 items-center gap-1.5 sm:gap-2">
       {/* CTA: compacta en tablet, completa en desktop grande */}
       <a
-        href="/contacto"
+        href="/#contacto"
         class="hidden cursor-pointer items-center rounded-lg bg-oil-500 px-4 py-2.5 text-sm font-bold text-ink-950 shadow-sm transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-oil-400 hover:shadow-glow sm:inline-flex lg:px-4 xl:px-5"
       >
         <span class="xl:hidden">Diagnóstico</span>
@@ -138,23 +106,11 @@ const isActive = (item: NavItem): boolean => {
                 >
                   {item.label}
                 </a>
-                {item.children && (
-                  <div class="ml-3 mt-0.5 flex flex-col border-l border-ink-100 pl-3">
-                    {item.children.map((child) => (
-                      <a
-                        href={child.href}
-                        class:list={["flex min-h-11 items-center rounded-lg px-3 text-[15px] font-medium transition-colors hover:bg-steel-50 hover:text-oil-700", current === child.href ? "text-oil-700" : "text-ink-600"]}
-                      >
-                        {child.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
               </div>
             ))}
           </nav>
 
-          <a href="/contacto" data-mobile-item class="mt-2 flex min-h-12 cursor-pointer items-center justify-center rounded-lg bg-oil-500 px-3 text-[15px] font-bold text-ink-950 transition-colors hover:bg-oil-400">
+          <a href="/#contacto" data-mobile-item class="mt-2 flex min-h-12 cursor-pointer items-center justify-center rounded-lg bg-oil-500 px-3 text-[15px] font-bold text-ink-950 transition-colors hover:bg-oil-400">
             Solicitar diagnóstico
           </a>
           <a
@@ -186,45 +142,6 @@ const isActive = (item: NavItem): boolean => {
     background-color: rgb(255 255 255 / 0.96);
   }
 
-  /* Dropdown: panel + stagger de los ítems. Hover en puntero, focus-within
-     para teclado (el panel es inalcanzable con Tab si solo depende de :hover). */
-  .dd-panel {
-    transform: translateY(0.5rem) scale(0.98);
-    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
-  }
-  /* Puente invisible que cubre el hueco entre el tab y el panel,
-     para que el hover sea continuo y el indicador no vuelva al tab activo. */
-  .dd-panel::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: -0.75rem;
-    height: 0.75rem;
-  }
-  .group:hover .dd-panel,
-  .group:focus-within .dd-panel {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0.35rem) scale(1);
-  }
-  .dd-item {
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-  }
-  .group:hover .dd-item,
-  .group:focus-within .dd-item {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .group:hover .dd-item:nth-child(1), .group:focus-within .dd-item:nth-child(1) { transition-delay: 0.03s; }
-  .group:hover .dd-item:nth-child(2), .group:focus-within .dd-item:nth-child(2) { transition-delay: 0.06s; }
-  .group:hover .dd-item:nth-child(3), .group:focus-within .dd-item:nth-child(3) { transition-delay: 0.09s; }
-  .group:hover .dd-item:nth-child(4), .group:focus-within .dd-item:nth-child(4) { transition-delay: 0.12s; }
-  .group:hover .dd-item:nth-child(5), .group:focus-within .dd-item:nth-child(5) { transition-delay: 0.15s; }
-  .group:hover .dd-item:nth-child(6), .group:focus-within .dd-item:nth-child(6) { transition-delay: 0.18s; }
-
   /* Velo de marca (steel), no un gris plano: oscurece hacia abajo y desenfoca la
      página para que el panel blanco flote con contraste real. */
   .mobile-scrim {
@@ -242,10 +159,6 @@ const isActive = (item: NavItem): boolean => {
   @keyframes navIn {
     from { opacity: 0; transform: translateY(-14px); }
     to { opacity: 1; transform: none; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .dd-item { transition-delay: 0s !important; }
   }
 
   /* Bloqueo de scroll del documento mientras el menú móvil está abierto. */
