@@ -3,10 +3,12 @@ interface Props {
   kicker: string;
   title: string;
   lead: string;
+  /** Variante HTML del lead (para resaltar términos como "sistema hidráulico"). Tiene prioridad sobre `lead`. */
+  leadHtml?: string;
   watermark?: string;
   index?: string;
 }
-const { kicker, title, lead, watermark, index } = Astro.props;
+const { kicker, title, lead, leadHtml, watermark, index } = Astro.props;
 ---
 
 <section data-hero data-parallax-scope class="noise relative isolate overflow-hidden border-b border-ink-900/10 bg-paper pt-36 pb-20">
@@ -28,6 +30,6 @@ const { kicker, title, lead, watermark, index } = Astro.props;
     <h1 class="mt-7 max-w-4xl wrap-break-word font-display text-4xl font-bold leading-[1.05] tracking-tight text-ink-900 text-balance sm:text-6xl sm:leading-[1.02] lg:text-7xl">
       <span data-hero-line class="block">{title}</span>
     </h1>
-    <p data-hero-sub class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-600">{lead}</p>
+    <p data-hero-sub class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-600">{leadHtml ? <Fragment set:html={leadHtml} /> : lead}</p>
   </div>
 </section>

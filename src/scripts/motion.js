@@ -28,8 +28,19 @@ function initHeroIntro() {
     // rompen el word-wrap normal y pueden partir una palabra a la mitad)
     // y entran con un stagger marcado, en vez del simple slide de línea
     // completa que había antes.
+    const GRADIENT_CLS = ["bg-linear-to-r", "from-oil-600", "via-oil-500", "to-oil-400", "bg-clip-text", "uppercase", "text-transparent"];
+    const norm = (s) => s.trim().toLowerCase().replace(/[^0-9a-záéíóúñü]/gi, "");
     const wordBatches = Array.from(lines).map((line) => {
       const split = new SplitText(line, { type: "words", wordsClass: "inline-block will-change-transform" });
+      // `background-clip: text` sólo recorta el texto que es hijo directo del
+      // elemento con el degradado; SplitText mueve cada palabra a su propio
+      // span, así que hay que re-aplicar el degradado a las palabras marcadas.
+      const gradientWords = (line.dataset.gradient || "").split(/[\s,]+/).map(norm).filter(Boolean);
+      if (gradientWords.length) {
+        split.words.forEach((w) => {
+          if (gradientWords.includes(norm(w.textContent))) w.classList.add(...GRADIENT_CLS);
+        });
+      }
       return split.words;
     });
     tl.from(wordBatches.flat(), { yPercent: 130, duration: 0.9, stagger: 0.045, ease: "power4.out" }, "-=0.2");
