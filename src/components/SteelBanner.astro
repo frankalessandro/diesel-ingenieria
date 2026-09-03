@@ -10,13 +10,15 @@ interface Props {
   hazard?: boolean;
   /** Padding vertical (utilidad Tailwind). */
   padding?: string;
+  /** id del `<section>` — para anclas de navegación (ej. `/#sectores`). */
+  id?: string;
   class?: string;
 }
 
-const { width = 'wide', hazard = true, padding = 'py-24', class: className } = Astro.props;
+const { width = 'wide', hazard = true, padding = 'py-24', id, class: className } = Astro.props;
 ---
 
-<section class:list={['panel-steel noise relative overflow-hidden', padding, className]}>
+<section id={id} class:list={['panel-steel noise relative overflow-hidden', padding, className]}>
   {hazard && (
     <>
       <div class="hazard absolute inset-x-0 top-0 h-1.5" aria-hidden="true"></div>

@@ -184,12 +184,19 @@ function initTilt() {
   });
 }
 
-/* ---------- Selector de sectores: entrada suave del panel (la base sigue
-   siendo el radio+CSS, esto es puramente aditivo y no rompe el fallback) ---------- */
+/* ---------- Selector de sectores: entrada del panel al activar un botón.
+   La base sigue siendo el radio+CSS (fallback sin JS); esto es aditivo.
+
+   Coreografía: un "frente de presión" barre el panel de izquierda a derecha
+   (clip-path, mismo lenguaje que el esquema hidráulico), las tres columnas
+   suben desenfocándose en foco con stagger, y la lista de aplicaciones
+   entra en cascada detrás. ---------- */
 function initSectorFlip() {
   if (reduceMotion) return;
   const radios = document.querySelectorAll('input[name="sector-tab"]');
   if (!radios.length) return;
+
+  let tl;
 
   radios.forEach((radio) => {
     radio.addEventListener("change", () => {
@@ -197,8 +204,42 @@ function initSectorFlip() {
       const id = radio.id.replace("tab-", "");
       const panel = document.querySelector(`[data-panel="${id}"]`);
       const btn = document.querySelector(`[data-btn="${id}"]`);
-      if (panel) gsap.fromTo(panel, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" });
-      if (btn) gsap.fromTo(btn, { scale: 0.94 }, { scale: 1, duration: 0.35, ease: "back.out(2)" });
+
+      if (btn) {
+        gsap.fromTo(btn, { scale: 0.94 }, { scale: 1, duration: 0.35, ease: "back.out(2)", overwrite: true });
+        const icon = btn.querySelector(".btn-icon");
+        if (icon) gsap.fromTo(icon, { rotate: -14, scale: 0.7 }, { rotate: 0, scale: 1, duration: 0.5, ease: "back.out(3)", overwrite: true });
+      }
+
+      if (!panel) return;
+
+      const cols = panel.children;
+      const apps = panel.querySelectorAll("li");
+
+      // Reinicia cualquier entrada en curso (cambios rápidos de botón).
+      if (tl) tl.kill();
+      tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        onComplete: () => gsap.set([panel, cols, apps], { clearProps: "clipPath,filter,transform,opacity" }),
+      });
+
+      tl.fromTo(
+        panel,
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power2.inOut" },
+      )
+        .fromTo(
+          cols,
+          { opacity: 0, y: 26, filter: "blur(7px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, stagger: 0.09 },
+          0.1,
+        )
+        .fromTo(
+          apps,
+          { opacity: 0, x: -12 },
+          { opacity: 1, x: 0, duration: 0.4, stagger: 0.04 },
+          "-=0.28",
+        );
     });
   });
 }
