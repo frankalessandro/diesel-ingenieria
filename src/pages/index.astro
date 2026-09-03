@@ -6,6 +6,7 @@ import CircuitLine from '../components/CircuitLine.astro';
 import BrandGrid from '../components/BrandGrid.astro';
 import ClientWall from '../components/ClientWall.astro';
 import { company, figures, whatsappLink } from '../data/company';
+import { categories, totalItems } from '../data/especialidades';
 import logoJohnDeere from '../assets/logos-marcas/john-deere-6-logo.svg';
 import logoVolvo from '../assets/logos-marcas/volvo-logo.svg';
 import logoCat from '../assets/logos-marcas/cat-logo-png-transparent.png';
@@ -54,23 +55,16 @@ const whatWeDo = [
   },
 ];
 
+// `short` es la etiqueta del componente en el esquema hidráulico; `x` es su
+// posición sobre la línea de presión (mismo sistema de coordenadas del SVG).
 const servicePanels = [
-  { title: 'Mantenimiento Predictivo', desc: 'Calculamos la eficiencia de bombas y motores con el equipo en su ciclo de trabajo, para proyectar el desgaste antes de la falla.', points: ['Medición con la máquina operando', 'Estanqueidad de cilindros en campo', 'Herramienta para mantenimiento'] },
-  { title: 'Mantenimiento Preventivo', desc: 'Ejecución de check-lists según la necesidad del cliente y el lugar donde se requiera, con técnicos capacitados y herramientas adecuadas.', points: ['Microfiltrado del aceite en sitio', 'Bloques de válvula calibrados', 'Mayor tiempo de operatividad'] },
-  { title: 'Mantenimiento Correctivo', desc: 'Reparación completa de la parte hidráulica y eléctrica de control.', points: ['Bombas, motores y cilindros', 'Válvulas y mandos direccionales', 'Tarjetas y tableros eléctricos'] },
-  { title: 'Fabricación a medida', desc: 'Fabricación de cilindros hidráulicos y unidades de potencia; construcción de centrales hidráulicas.', points: ['Cilindros y unidades de potencia', 'Tanques de 20 a 1.500 litros', 'Bancos de prueba'] },
-  { title: 'Filtración', desc: 'Unidades de filtración portátiles propias, de alta eficiencia, para aceites muy viscosos, con servicio en el sitio del cliente.', points: ['Capacidad 27 a 55 L/min', 'Filtrado simple 10µ / doble 5µ', 'Indicador visual de saturación'] },
-  { title: 'Suministro de componentes', desc: 'Conseguimos y suministramos a nivel nacional los componentes hidráulicos que su equipo necesita, de las marcas líderes del sector.', points: ['Bombas, motores y válvulas', 'Marcas líderes del sector', 'Entrega a nivel nacional'] },
+  { short: 'Predictivo', x: 300, title: 'Mantenimiento Predictivo', desc: 'Calculamos la eficiencia de bombas y motores con el equipo en su ciclo de trabajo, para proyectar el desgaste antes de la falla.', points: ['Medición con la máquina operando', 'Estanqueidad de cilindros en campo', 'Herramienta para mantenimiento'] },
+  { short: 'Preventivo', x: 440, title: 'Mantenimiento Preventivo', desc: 'Ejecución de check-lists según la necesidad del cliente y el lugar donde se requiera, con técnicos capacitados y herramientas adecuadas.', points: ['Microfiltrado del aceite en sitio', 'Bloques de válvula calibrados', 'Mayor tiempo de operatividad'] },
+  { short: 'Correctivo', x: 580, title: 'Mantenimiento Correctivo', desc: 'Reparación completa de la parte hidráulica y eléctrica de control.', points: ['Bombas, motores y cilindros', 'Válvulas y mandos direccionales', 'Tarjetas y tableros eléctricos'] },
+  { short: 'Fabricación', x: 720, title: 'Fabricación a medida', desc: 'Fabricación de cilindros hidráulicos y unidades de potencia; construcción de centrales hidráulicas.', points: ['Cilindros y unidades de potencia', 'Tanques de 20 a 1.500 litros', 'Bancos de prueba'] },
+  { short: 'Filtración', x: 860, title: 'Filtración', desc: 'Unidades de filtración portátiles propias, de alta eficiencia, para aceites muy viscosos, con servicio en el sitio del cliente.', points: ['Capacidad 27 a 55 L/min', 'Filtrado simple 10µ / doble 5µ', 'Indicador visual de saturación'] },
+  { short: 'Suministro', x: 1000, title: 'Suministro de componentes', desc: 'Conseguimos y suministramos a nivel nacional los componentes hidráulicos que su equipo necesita, de las marcas líderes del sector.', points: ['Bombas, motores y válvulas', 'Marcas líderes del sector', 'Entrega a nivel nacional'] },
 ];
-
-const specStats = [
-  { value: figures.nhmMaxCc, unit: 'cc', label: 'Desplazamiento máx. en motores radiales NHM' },
-  { value: figures.pressureBar, unit: 'bar', label: 'Presión en bombas radiales y acoples rápidos' },
-  { value: figures.manifoldMaxLpm, unit: 'l/min', label: 'Caudal en cartuchos de bloques manifold (Sun Hydraulics)' },
-  { value: figures.tankMaxLitros, unit: 'L', label: 'Centrales hidráulicas y tanques a medida' },
-];
-
-const specialties = ['Bombas hidráulicas', 'Motores hidráulicos', 'Válvulas y controles', 'Direcciones hidráulicas', 'Cilindros', 'Acumuladores', 'Filtración', 'Neumática', 'Lubricación', 'Instrumentación', 'Accesorios'];
 
 const sectors = [
   { name: 'Industrial', href: '/sectores#industrial', icon: 'M4 21V9l8-6 8 6v12M9 21v-6h6v6', apps: 'Plásticos · Siderúrgica · Papel · Química · Alimentos' },
@@ -295,84 +289,218 @@ const philosophy = [
       </style>
     </section>
 
-    <!-- ============ SERVICIOS — HORIZONTAL SCROLL ============ -->
-    <section data-hscroll class="relative bg-paper py-24 lg:overflow-hidden lg:py-28">
-      <div class="mx-auto max-w-none">
-        <div data-hscroll-track class="flex flex-col gap-6 px-6 lg:flex-row lg:items-stretch lg:gap-8 lg:px-16">
-          <div class="flex shrink-0 flex-col justify-center lg:w-[30vw] lg:max-w-md">
-            <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ 02 — Servicios</span>
-            <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Seis frentes de trabajo</h2>
-            <p class="mt-5 max-w-sm text-ink-600">Desde anticipar una falla hasta suministrar el componente que la máquina necesita. Desliza para recorrerlos.</p>
-            <a href="/servicios" class="mt-7 inline-flex w-fit cursor-pointer items-center gap-2 rounded-lg bg-ink-900 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-steel-700">
-              Ver servicios en detalle
-              <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
-            </a>
-            <div class="mt-8 hidden items-center gap-2 text-ink-400 lg:flex">
-              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6 3 12l6 6M15 6l6 6-6 6"/></svg>
-              <span class="font-mono text-xs uppercase tracking-widest">Scroll horizontal</span>
-            </div>
-          </div>
+    <!-- ============ SERVICIOS — CIRCUITO HIDRÁULICO ============ -->
+    {/* El esquema es la navegación: cada componente sobre la línea de presión
+        es un servicio, y el scroll empuja el aceite por el circuito.
 
-          {servicePanels.map((s) => (
-            <article class="surface surface-hover group flex shrink-0 flex-col justify-between rounded-2xl p-8 lg:w-[31vw] lg:max-w-sm">
-              <div>
-                <MediaFrame ratio="16/9" label={`Foto — ${s.title}`} class="h-24 sm:h-28" />
-                <h3 class="mt-6 font-display text-2xl font-bold text-ink-900">{s.title}</h3>
-                <p class="mt-3 leading-relaxed text-ink-600">{s.desc}</p>
+        Estructura: un track alto con un stage `position: sticky` adentro. El
+        stage se queda quieto mientras el track pasa, y ese recorrido es el que
+        alimenta la animación — el mismo mecanismo en desktop y en mobile, sin
+        pin de GSAP (que en mobile es frágil).
+
+        En mobile el SVG se dibuja más ancho que la pantalla y se desplaza en
+        horizontal siguiendo el frente de presión, como un banner que paneo.
+        Ver initServiceCircuit() en scripts/motion.js. */}
+    <section data-circuit class="relative isolate bg-paper">
+      <div class="circuit-dots pointer-events-none absolute inset-0" aria-hidden="true"></div>
+
+      <div class="circuit-track relative z-10" data-circuit-track>
+        <div class="circuit-stage" data-circuit-stage>
+          <div class="mx-auto w-full max-w-7xl px-6">
+            <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+              <div class="max-w-xl">
+                <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ 02 — Servicios</span>
+                <h2 class="mt-3 font-display text-3xl font-bold leading-tight text-ink-900 text-balance sm:text-4xl lg:text-5xl">Seis frentes de trabajo</h2>
               </div>
-              <ul class="mt-7 space-y-2.5 border-t border-ink-100 pt-6">
-                {s.points.map((p) => (
-                  <li class="flex items-start gap-2.5 text-sm font-medium text-ink-700">
+              <div class="flex flex-col gap-4 sm:flex-row sm:items-center lg:shrink-0">
+                <p class="max-w-xs text-sm text-ink-600">Desde anticipar una falla hasta suministrar el componente que la máquina necesita.</p>
+                <a href="/servicios" class="inline-flex w-fit cursor-pointer items-center gap-2 rounded-lg bg-ink-900 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-steel-700">
+                  Ver servicios en detalle
+                  <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
+                </a>
+              </div>
+            </div>
+
+            {/* Esquema ISO 1219: tanque → bomba → línea de presión con los seis
+                componentes → tanque de retorno. El wrapper recorta; el SVG se
+                desplaza por dentro en pantallas angostas. */}
+            <div class="circuit-viewport mt-7 lg:mt-10">
+              <svg class="circuit" data-circuit-svg viewBox="0 0 1200 210" role="img"
+                   aria-label="Esquema hidráulico con tanque, bomba y los seis servicios representados como componentes sobre la línea de presión.">
+                <path class="c-line" d="M44 108 V174 H116 V108"/>
+                <path class="c-line" d="M80 158 V60 H124"/>
+                <text class="c-label" x="80" y="192" text-anchor="middle">Tanque</text>
+
+                <circle class="c-line" cx="150" cy="60" r="26"/>
+                <path class="c-solid" d="M143 50 L143 70 L164 60 Z"/>
+                <text class="c-label" x="150" y="18" text-anchor="middle">Bomba</text>
+
+                <path class="c-line" data-circuit-path d="M176 60 H1150 V110 H1096 V145"/>
+                <path class="c-fill" data-circuit-fill d="M176 60 H1150 V110 H1096 V145"/>
+                <text class="c-note" x="1146" y="44" text-anchor="end">{figures.pressureBar} bar</text>
+
+                <path class="c-line" d="M1060 130 V196 H1132 V130"/>
+                <text class="c-label" x="1096" y="186" text-anchor="middle">Retorno</text>
+
+                <!-- Manómetro: medir con la máquina operando -->
+                <g class="station" data-station="0">
+                  <circle class="halo" cx="300" cy="60" r="46"/>
+                  <rect class="box" x="274" y="34" width="52" height="52" rx="6"/>
+                  <circle class="c-sym glyph" cx="300" cy="60" r="14"/>
+                  <path class="c-sym glyph" d="M300 60 L309 51"/>
+                  <path class="c-sym glyph" d="M289 50 L291 52 M311 50 L309 52"/>
+                  <text class="c-label" x="300" y="112" text-anchor="middle">Predictivo</text>
+                </g>
+                <!-- Verificación: check-lists en sitio -->
+                <g class="station" data-station="1">
+                  <circle class="halo" cx="440" cy="60" r="46"/>
+                  <rect class="box" x="414" y="34" width="52" height="52" rx="6"/>
+                  <path class="c-sym glyph" d="M429 61 L437 69 L452 50"/>
+                  <path class="c-sym glyph" d="M428 47 H444" stroke-width="1.4"/>
+                  <text class="c-label" x="440" y="112" text-anchor="middle">Preventivo</text>
+                </g>
+                <!-- Motor hidráulico: triángulo hacia adentro (lo opuesto a la bomba) -->
+                <g class="station" data-station="2">
+                  <circle class="halo" cx="580" cy="60" r="46"/>
+                  <rect class="box" x="554" y="34" width="52" height="52" rx="6"/>
+                  <circle class="c-sym glyph" cx="580" cy="60" r="14"/>
+                  <path class="c-solid glyph filled" d="M586 50 L586 70 L568 60 Z"/>
+                  <text class="c-label" x="580" y="112" text-anchor="middle">Correctivo</text>
+                </g>
+                <!-- Cilindro de doble efecto con vástago -->
+                <g class="station" data-station="3">
+                  <circle class="halo" cx="720" cy="60" r="46"/>
+                  <rect class="box" x="694" y="34" width="52" height="52" rx="6"/>
+                  <rect class="c-sym glyph" x="702" y="49" width="24" height="22" rx="1.5"/>
+                  <path class="c-sym glyph" d="M712 49 V71" stroke-width="3.6"/>
+                  <path class="c-sym glyph" d="M712 60 H740" stroke-width="3"/>
+                  <text class="c-label" x="720" y="112" text-anchor="middle">Fabricación</text>
+                </g>
+                <!-- Filtro ISO: rombo con línea punteada perpendicular al flujo -->
+                <g class="station" data-station="4">
+                  <circle class="halo" cx="860" cy="60" r="46"/>
+                  <rect class="box" x="834" y="34" width="52" height="52" rx="6"/>
+                  <path class="c-sym glyph" d="M860 45 L876 60 L860 75 L844 60 Z"/>
+                  <path class="c-sym glyph" d="M860 45 V75" stroke-dasharray="3 3" stroke-width="1.6"/>
+                  <text class="c-label" x="860" y="112" text-anchor="middle">Filtración</text>
+                </g>
+                <!-- Componentes en stock -->
+                <g class="station" data-station="5">
+                  <circle class="halo" cx="1000" cy="60" r="46"/>
+                  <rect class="box" x="974" y="34" width="52" height="52" rx="6"/>
+                  <rect class="c-sym glyph" x="985" y="45" width="12" height="12" rx="1.5"/>
+                  <rect class="c-sym glyph" x="1001" y="45" width="12" height="12" rx="1.5"/>
+                  <rect class="c-sym glyph" x="993" y="61" width="12" height="12" rx="1.5"/>
+                  <text class="c-label" x="1000" y="112" text-anchor="middle">Suministro</text>
+                </g>
+
+                <circle class="front-halo" data-circuit-halo cx="176" cy="60" r="11" opacity="0"/>
+                <circle class="front-dot" data-circuit-dot cx="176" cy="60" r="5" opacity="0"/>
+              </svg>
+            </div>
+
+            {/* Un solo panel para todos los tamaños: cambia con la estación activa. */}
+            <div class="surface mt-6 grid grid-cols-1 items-start gap-6 rounded-2xl p-6 sm:p-8 lg:mt-8 lg:grid-cols-2 lg:gap-12">
+              <div>
+                <h3 data-circuit-title class="font-display text-xl font-bold text-ink-900 sm:text-2xl lg:text-3xl">{servicePanels[0].title}</h3>
+                <p data-circuit-desc class="mt-2.5 max-w-md leading-relaxed text-ink-600">{servicePanels[0].desc}</p>
+              </div>
+              <ul data-circuit-points class="grid gap-2.5 lg:gap-3">
+                {servicePanels[0].points.map((p) => (
+                  <li class="flex items-start gap-3 border-b border-ink-100 pb-2.5 text-sm font-medium text-ink-700 last:border-0 last:pb-0 lg:pb-3">
                     <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-oil-500"></span>{p}
                   </li>
                 ))}
               </ul>
-            </article>
-          ))}
+            </div>
+
+            <div class="mt-5 h-[3px] max-w-xs overflow-hidden rounded-full bg-ink-200 lg:mt-6">
+              <div class="h-full w-full origin-left scale-x-0 rounded-full bg-oil-500" data-circuit-progress></div>
+            </div>
+          </div>
         </div>
-        <div class="mx-6 mt-10 hidden h-1 max-w-xs overflow-hidden rounded-full bg-ink-200 lg:mx-16 lg:block">
-          <div class="h-full w-full origin-left scale-x-0 rounded-full bg-oil-500" data-hscroll-progress></div>
-        </div>
+        {/* Hermano en flujo normal que le da recorrido al stage pegajoso. No
+            sirve padding en el track: el sticky se constriñe al content-box,
+            que sin este spacer mide exactamente lo mismo que el stage. */}
+        <div class="circuit-spacer" aria-hidden="true"></div>
       </div>
+
+      {/* Única fuente de verdad para el panel: motion.js lee de acá en vez
+          de duplicar los textos en el script. */}
+      <script type="application/json" data-circuit-data set:html={JSON.stringify(servicePanels)}></script>
     </section>
 
-    <!-- ============ ESPECIALIDADES ============ -->
+    <!-- ============ ESPECIALIDADES — ÍNDICE DE DESPIECE ============ -->
+    {/* El despiece es el documento nativo del oficio: una lista de partes con
+        su conteo de líneas. Contrasta a propósito con las secciones de tarjetas
+        que tiene alrededor, y sale de src/data/especialidades.ts — las mismas
+        familias que despliega la página /especialidades. */}
     <section data-parallax-scope class="relative isolate overflow-hidden border-y border-ink-900/10 bg-white py-28">
-      <span class="pointer-events-none absolute -top-2 right-0 select-none whitespace-nowrap font-display text-[15vw] font-bold leading-none text-stroke opacity-80" data-drift="-12" aria-hidden="true">DOMINIO TÉCNICO</span>
+      <span class="pointer-events-none absolute -top-2 right-0 select-none whitespace-nowrap font-display text-[15vw] font-bold leading-none text-stroke opacity-80" data-drift="-12" aria-hidden="true">DESPIECE</span>
 
       <div class="relative z-10 mx-auto max-w-7xl px-6" data-reveal-group>
-        <div class="grid grid-cols-1 gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+        <div class="grid grid-cols-1 gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
           <div class="reveal lg:sticky lg:top-28">
             <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-600">/ 03 — Especialidades</span>
-            <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">No somos una vitrina de venta: es lo que dominamos</h2>
-            <p class="mt-5 text-ink-600">Reparamos, mecanizamos y conseguimos a nivel nacional los componentes que su proyecto necesita. Estas cifras reflejan el rango de componentes que manejamos.</p>
+            <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-ink-900 text-balance sm:text-5xl">Si mueve aceite, <span class="text-oil-600">lo conocemos</span></h2>
+            <p class="mt-5 leading-relaxed text-ink-600">
+              Once familias de componentes hidráulicos y neumáticos. Los reparamos, los mecanizamos y los conseguimos
+              a nivel nacional: no vendemos catálogo, resolvemos el equipo que está parado.
+            </p>
+
+            <dl class="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-ink-900/10 bg-ink-900/10">
+              <div class="bg-white px-5 py-4">
+                <dt class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400">Familias</dt>
+                <dd class="mt-1 font-display text-3xl font-bold text-ink-900"><span data-counter={categories.length}>0</span></dd>
+              </div>
+              <div class="bg-white px-5 py-4">
+                <dt class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400">Líneas de producto</dt>
+                <dd class="mt-1 font-display text-3xl font-bold text-ink-900"><span data-counter={totalItems}>0</span></dd>
+              </div>
+            </dl>
+
             <a href="/especialidades" class="mt-7 inline-flex cursor-pointer items-center gap-2 rounded-lg bg-oil-500 px-6 py-3.5 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">
               Ver todas las especialidades
               <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
             </a>
           </div>
 
-          <div>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {specStats.map((c) => (
-                <div class="reveal surface rounded-2xl p-6">
-                  <p class="flex flex-wrap items-baseline gap-x-1.5 font-display text-3xl font-bold text-ink-900 sm:text-5xl">
-                    <span data-counter={c.value.replace('.', '')}>0</span><span class="text-lg text-oil-600">{c.unit}</span>
-                  </p>
-                  <p class="mt-3 text-xs leading-relaxed text-ink-500">{c.label}</p>
-                </div>
-              ))}
+          <div class="reveal surface overflow-hidden rounded-2xl">
+            <div class="flex items-center justify-between gap-4 border-b border-ink-900/10 bg-steel-50 px-6 py-3.5">
+              <span class="font-mono text-xs font-bold uppercase tracking-[0.18em] text-steel-700">Índice de componentes</span>
+              <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-400">Reparación · Mecanizado · Suministro</span>
             </div>
-            <div class="reveal mt-6 flex flex-wrap gap-2.5">
-              {specialties.map((cat) => (
-                <a href="/especialidades" class="spec-chip cursor-pointer rounded-full px-4 py-2 text-sm font-semibold transition-colors hover:border-oil-500 hover:bg-oil-100 hover:text-oil-700">{cat}</a>
+
+            <ul class="divide-y divide-ink-100">
+              {categories.map((cat) => (
+                <li>
+                  <a
+                    href={`/especialidades#${cat.id}`}
+                    class="despiece-row group grid cursor-pointer grid-cols-[auto_1fr_auto] items-center gap-x-5 px-6 py-3.5 transition-colors hover:bg-steel-50"
+                  >
+                    <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-steel-50 text-steel-700 transition-colors group-hover:bg-oil-500 group-hover:text-ink-950">
+                      <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={cat.icon}/></svg>
+                    </span>
+
+                    {/* Sólo el nombre y el conteo: el índice tiene que abrir el
+                        apetito, no saciarlo. El detalle vive en /especialidades. */}
+                    <span class="min-w-0 font-display text-lg font-bold text-ink-900">{cat.title}</span>
+
+                    <span class="flex shrink-0 items-center gap-3">
+                      <span class="font-mono text-xs font-bold tabular-nums text-steel-600">
+                        {cat.items.length}
+                        <span class="ml-1 hidden font-normal uppercase tracking-wider text-ink-400 sm:inline">{cat.items.length === 1 ? 'línea' : 'líneas'}</span>
+                      </span>
+                      <svg viewBox="0 0 20 20" class="h-4 w-4 text-ink-300 transition-[transform,color] group-hover:translate-x-1 group-hover:text-oil-600" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
+                    </span>
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
       </div>
     </section>
-
     <!-- ============ SECTORES ============ -->
     <section class="mx-auto max-w-7xl px-6 py-28" data-reveal-group>
       <div class="reveal max-w-2xl">
@@ -463,3 +591,91 @@ const philosophy = [
     </SteelBanner>
   </main>
 </Layout>
+
+<style>
+  /* ---- Esquema hidráulico de la sección Servicios ---- */
+  .circuit-dots {
+    background-image: radial-gradient(rgb(27 81 130 / 0.14) 1.1px, transparent 1.1px);
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(120% 90% at 50% 42%, #000 20%, transparent 78%);
+    mask-image: radial-gradient(120% 90% at 50% 42%, #000 20%, transparent 78%);
+  }
+
+  /* --- Track alto + stage pegajoso: el recorrido del track es el que
+         alimenta la animación, en desktop y en mobile por igual. --- */
+  .circuit-track { position: relative; }
+  /* El recorrido que el stage "consume" quieto mientras se anima. */
+  .circuit-spacer { height: 260vh; }
+  .circuit-stage {
+    position: sticky;
+    top: 6.5rem;
+    padding-block: 1.5rem 2rem;
+  }
+
+  /* Recorta el esquema; en pantallas angostas el SVG es más ancho que esto
+     y se desplaza por dentro siguiendo el frente de presión. */
+  .circuit-viewport { overflow: hidden; }
+  .circuit { display: block; height: auto; width: 100%; will-change: transform; }
+
+  /* Angosto: el esquema se dibuja a tamaño legible y paneo en horizontal. */
+  @media (max-width: 1023px) {
+    .circuit { width: 860px; max-width: none; }
+    .circuit-spacer { height: 300vh; }
+  }
+
+  @media (min-width: 1024px) {
+    .circuit-stage { top: 7rem; padding-block: 2rem 2.5rem; }
+    .circuit-spacer { height: 240vh; }
+  }
+
+  /* Sin movimiento: nada de track ni sticky, todo en flujo. */
+  @media (prefers-reduced-motion: reduce) {
+    .circuit-spacer { display: none; }
+    .circuit-stage { position: static; }
+    .circuit { width: 100%; }
+    .circuit-viewport { overflow-x: auto; }
+  }
+
+  .c-line  { fill: none; stroke: rgb(27 58 92 / 0.26); stroke-width: 2.5; }
+  .c-fill  { fill: none; stroke: var(--color-oil-500); stroke-width: 3.5; stroke-linecap: round; }
+  .c-sym   { fill: none; stroke: var(--color-steel-700); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .c-solid { fill: var(--color-steel-700); stroke: none; }
+
+  .c-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    fill: var(--color-ink-400);
+    text-transform: uppercase;
+  }
+  .c-note {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    fill: var(--color-steel-600);
+  }
+
+  /* La caja va rellena para que la tubería "entre" y "salga" del componente. */
+  .station .box {
+    fill: #fff;
+    stroke: rgb(27 58 92 / 0.3);
+    stroke-width: 2;
+    transition: stroke 0.35s ease, fill 0.35s ease;
+  }
+  .station .glyph { transition: stroke 0.35s ease, fill 0.35s ease; }
+  .station .c-label { transition: fill 0.35s ease; }
+  .station .halo { fill: var(--color-oil-500); opacity: 0; transition: opacity 0.4s ease; }
+
+  .station.is-on .box { stroke: var(--color-oil-500); fill: var(--color-oil-100); }
+  .station.is-on .glyph { stroke: var(--color-oil-700); }
+  .station.is-on .glyph.filled { fill: var(--color-oil-700); stroke: none; }
+  .station.is-on .c-label { fill: var(--color-oil-700); }
+  .station.is-on .halo { opacity: 0.14; }
+
+  .front-dot  { fill: var(--color-oil-500); }
+  .front-halo { fill: var(--color-oil-500); }
+
+
+</style>

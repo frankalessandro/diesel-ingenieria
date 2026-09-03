@@ -296,49 +296,190 @@ function initParallax() {
   });
 }
 
-/* ---------- Horizontal pinned scroll ---------- */
-function initHorizontalScroll() {
-  if (reduceMotion) return;
+/* ---------- Servicios: el scroll empuja el aceite por el circuito ---------- */
+function initServiceCircuit() {
+  const section = document.querySelector("[data-circuit]");
+  if (!section) return;
+
+  const track = section.querySelector("[data-circuit-track]");
+  const svg = section.querySelector("[data-circuit-svg]");
+  const path = section.querySelector("[data-circuit-path]");
+  const fill = section.querySelector("[data-circuit-fill]");
+  const dot = section.querySelector("[data-circuit-dot]");
+  const halo = section.querySelector("[data-circuit-halo]");
+  const progEl = section.querySelector("[data-circuit-progress]");
+  const titleEl = section.querySelector("[data-circuit-title]");
+  const descEl = section.querySelector("[data-circuit-desc]");
+  const pointsEl = section.querySelector("[data-circuit-points]");
+  const dataEl = section.querySelector("[data-circuit-data]");
+  const stations = Array.from(section.querySelectorAll(".station"));
+  if (!track || !svg || !path || !fill || !dataEl || !stations.length) return;
+
+  let services;
+  try {
+    services = JSON.parse(dataEl.textContent);
+  } catch {
+    return;
+  }
+
+  // La línea de presión arranca en x=176 del viewBox; cada componente está a
+  // (x - 176) de recorrido sobre esa misma polilínea.
+  const ORIGIN_X = 176;
+  const VIEWBOX_W = 1200;
+  const total = path.getTotalLength();
+  let current = 0;
+
+  const POINT_CLS =
+    "flex items-start gap-3 border-b border-ink-100 pb-2.5 text-sm font-medium text-ink-700 last:border-0 last:pb-0 lg:pb-3";
+  const BULLET_CLS = "mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-oil-500";
+
+  function paint(i) {
+    const s = services[i];
+    titleEl.textContent = s.title;
+    descEl.textContent = s.desc;
+    pointsEl.replaceChildren(
+      ...s.points.map((p) => {
+        const li = document.createElement("li");
+        li.className = POINT_CLS;
+        const bullet = document.createElement("span");
+        bullet.className = BULLET_CLS;
+        li.append(bullet, document.createTextNode(p));
+        return li;
+      }),
+    );
+  }
+
+  // animate=false para el estado inicial y para los cambios de viewport:
+  // pintar sin el parpadeo de una transición que no ocurrió.
+  function setActive(i, animate) {
+    if (i === current) return;
+    current = i;
+    stations.forEach((g, k) => g.classList.toggle("is-on", k === i));
+
+    if (!animate) {
+      paint(i);
+      gsap.set([titleEl, descEl, pointsEl], { clearProps: "all" });
+      return;
+    }
+
+    gsap
+      .timeline({ defaults: { ease: "power3.out" } })
+      .to([titleEl, descEl, pointsEl], { opacity: 0, y: -8, duration: 0.16, ease: "power2.in" })
+      .add(() => paint(i))
+      // El <ul> también tiene que volver a opacidad 1: si sólo se animan los
+      // <li>, la lista entera queda invisible después del primer cambio.
+      .set(pointsEl, { opacity: 1, y: 0 })
+      .fromTo([titleEl, descEl], { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05 })
+      .fromTo(pointsEl.children, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.35, stagger: 0.06 }, "-=0.3");
+  }
+
+  stations[0].classList.add("is-on");
+
   const mm = gsap.matchMedia();
 
-  mm.add("(min-width: 1024px)", () => {
-    document.querySelectorAll("[data-hscroll]").forEach((section) => {
-      const track = section.querySelector("[data-hscroll-track]");
-      if (!track) return;
+  mm.add("(prefers-reduced-motion: no-preference)", () => {
+    gsap.set(fill, { strokeDasharray: total, strokeDashoffset: total });
 
-      const getDistance = () => track.scrollWidth - document.documentElement.clientWidth + 96;
+    // El stage es `position: sticky`, así que el trigger sólo tiene que medir
+    // el recorrido del track — nada de pin, que en mobile es frágil.
+    ScrollTrigger.create({
+      trigger: track,
+      start: "top top+=104",
+      end: "bottom bottom",
+      scrub: 0.6,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        const p = self.progress;
+        const run = total * p;
 
-      const tween = gsap.to(track, {
-        x: () => -getDistance(),
-        ease: "none",
-      });
+        gsap.set(fill, { strokeDashoffset: total - run });
+        if (progEl) gsap.set(progEl, { scaleX: p });
 
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        end: () => "+=" + getDistance(),
-        pin: true,
-        scrub: 1,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        animation: tween,
-      });
+        // El frente de presión viaja sobre la propia trayectoria.
+        const pt = path.getPointAtLength(Math.min(run, total));
+        const lit = p > 0.004;
+        gsap.set([dot, halo], { attr: { cx: pt.x, cy: pt.y } });
+        gsap.set(dot, { opacity: lit ? 1 : 0 });
+        gsap.set(halo, { opacity: lit ? 0.25 : 0 });
 
-      // Progress line inside the section
-      const bar = section.querySelector("[data-hscroll-progress]");
-      if (bar) {
-        gsap.to(bar, {
-          scaleX: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: () => "+=" + getDistance(),
-            scrub: true,
-          },
-        });
-      }
+        // Cuando el esquema es más ancho que su marco (pantallas angostas),
+        // se desplaza para mantener el frente de presión a la vista.
+        const frameW = svg.parentElement.clientWidth;
+        const drawnW = svg.getBoundingClientRect().width || frameW;
+        const slack = drawnW - frameW;
+        if (slack > 1) {
+          const scale = drawnW / VIEWBOX_W;
+          const target = frameW * 0.5 - pt.x * scale;
+          gsap.set(svg, { x: Math.max(-slack, Math.min(0, target)) });
+        } else {
+          gsap.set(svg, { x: 0 });
+        }
+
+        let idx = 0;
+        for (let k = 0; k < services.length; k++) {
+          if (run >= services[k].x - ORIGIN_X) idx = k;
+        }
+        setActive(idx, true);
+      },
     });
+
+    return () => {
+      setActive(0, false);
+      stations.forEach((g, k) => g.classList.toggle("is-on", k === 0));
+      gsap.set(fill, { strokeDashoffset: 0 });
+      gsap.set([dot, halo], { opacity: 0 });
+      gsap.set(svg, { x: 0 });
+    };
+  });
+
+  mm.add("(prefers-reduced-motion: reduce)", () => {
+    // Sin recorrido que seguir: circuito completo y todos los componentes
+    // encendidos; el panel se queda en el primer servicio.
+    gsap.set(fill, { strokeDasharray: total, strokeDashoffset: 0 });
+    gsap.set([dot, halo], { opacity: 0 });
+    gsap.set(svg, { x: 0 });
+    if (progEl) gsap.set(progEl, { scaleX: 1 });
+    stations.forEach((g) => g.classList.add("is-on"));
+
+    return () => {
+      stations.forEach((g, k) => g.classList.toggle("is-on", k === 0));
+    };
+  });
+}
+
+/* ---------- Especialidades: las hojas de plano se apilan (sticky) ---------- */
+function initSpecSheets() {
+  const stack = document.querySelector("[data-spec-stack]");
+  if (!stack) return;
+
+  const sheets = Array.from(stack.querySelectorAll("[data-spec-sheet]"));
+  if (sheets.length < 2) return;
+
+  const mm = gsap.matchMedia();
+
+  // El apilado real lo hace `position: sticky` en CSS — en mobile igual que en
+  // desktop. GSAP sólo aporta el retroceso de la hoja que queda atrás.
+  mm.add("(prefers-reduced-motion: no-preference)", () => {
+    sheets.forEach((sheet, i) => {
+      if (i === sheets.length - 1) return;
+      // Sólo escala, nunca opacidad: varias hojas translúcidas apiladas se
+      // leen unas a través de otras. La profundidad la da el canto visible.
+      gsap.to(sheet, {
+        scale: 0.955,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sheets[i + 1],
+          start: "top bottom",
+          end: "top top+=180",
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      });
+    });
+
+    return () => {
+      gsap.set(sheets, { clearProps: "transform" });
+    };
   });
 }
 
@@ -524,7 +665,8 @@ function init() {
   initClientWall();
   initCounters();
   initParallax();
-  initHorizontalScroll();
+  initServiceCircuit();
+  initSpecSheets();
   initScrollGauge();
   initNavbar();
   initNavIndicator();
