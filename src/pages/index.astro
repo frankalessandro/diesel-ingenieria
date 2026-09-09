@@ -72,7 +72,7 @@ const sectors = [
   {
     id: 'industrial', n: '01', title: 'Industrial',
     lead: 'Sistemas hidráulicos para líneas de producción y procesos.',
-    apps: ['Inyección de plásticos', 'Siderúrgica', 'Pulpa de papel y convertidoras', 'Industria metalúrgica', 'Industria química', 'Alimentos y bebidas', 'Automotriz', 'Petrolera'],
+    apps: ['Inyección de plásticos', 'Siderúrgica', 'Pulpa de papel y convertidoras', 'Industria metalúrgica', 'Industria química', 'Alimentos', 'Automotriz', 'Reciclaje'],
     icon: 'M4 21V9l8-6 8 6v12M9 21v-6h6v6',
   },
   {
@@ -84,19 +84,19 @@ const sectors = [
   {
     id: 'construccion-mineria', n: '03', title: 'Construcción y minería',
     lead: 'Soporte para los equipos de mayor exigencia de presión y ciclo de trabajo.',
-    apps: ['Retroexcavadoras', 'Cargadores', 'Percutores'],
+    apps: ['Construcción civil', 'Manipulación de carga', 'Máquinas viales', 'Equipos mineros'],
     icon: 'M3 21h18M6 21V10l6-5 6 5v11M10 21v-6h4v6',
   },
   {
     id: 'forestal', n: '04', title: 'Forestal',
     lead: 'Kits hidráulicos y rotadores para el trabajo forestal.',
-    apps: ['Cargadores forestales', 'Excavadoras forestales', 'Arrastradores', 'Forwarders', 'Cabezales y rotativos Baltrotors (1–16 toneladas)'],
+    apps: ['Cargadores', 'Forwarders', 'Rotadores'],
     icon: 'M12 3 6 12h3l-4 6h5v3h4v-3h5l-4-6h3L12 3Z',
   },
   {
-    id: 'portuaria-offshore', n: '05', title: 'Portuaria / Offshore',
-    lead: 'Sistemas para operación marítima y petrolera.',
-    apps: ['Plataformas offshore', 'Grúas', 'Industria petrolera', 'Aplicaciones portuarias varias'],
+    id: 'portuaria', n: '05', title: 'Portuaria',
+    lead: 'Sistemas para operación marítima.',
+    apps: ['Plataformas', 'Grúas'],
     icon: 'M3 20h18M4 20V9l4-2 4 2 4-2 4 2v11M8 12h.01M14 12h.01',
   },
   {
@@ -112,8 +112,8 @@ const sectors = [
     icon: 'M12 3v18M7 8l5-5 5 5M5 21h14',
   },
   {
-    id: 'infraestructura', n: '08', title: 'Infraestructura',
-    lead: 'Sistemas hidráulicos para equipos de montaje y obra de infraestructura.',
+    id: 'infraestructura-electrica', n: '08', title: 'Infraestructura Eléctrica',
+    lead: 'Sistemas hidráulicos para equipos de montaje en infraestructura eléctrica.',
     apps: ['Grúas de Brazo'],
     icon: 'M4 21V10l4-3 4 3v11M12 21V6l4-3 4 3v15M4 21h16',
   },
@@ -653,34 +653,11 @@ const inputClass =
         </div>
       </div>
 
-      <!-- Kit hidráulico destacado + llamado a la acción -->
-      <div class="reveal mt-6 grid grid-cols-1 gap-5 lg:grid-cols-[1.45fr_1fr]">
-        <div class="frame-corners frame-corners-dark relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.03] p-8 sm:p-10">
-          <span class="corner corner-tl" aria-hidden="true"></span>
-          <span class="corner corner-tr" aria-hidden="true"></span>
-          <span class="corner corner-bl" aria-hidden="true"></span>
-          <span class="corner corner-br" aria-hidden="true"></span>
-
-          <div class="flex items-center gap-3">
-            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-oil-500/15 text-oil-400">
-              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 6 12h3l-4 6h5v3h4v-3h5l-4-6h3L12 3Z"/></svg>
-            </span>
-            <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-400">Aplicación destacada — Sector forestal</span>
-          </div>
-          <h3 class="mt-5 font-display text-2xl font-bold leading-tight text-white sm:text-3xl">Kit hidráulico forestal</h3>
-          <p class="mt-4 max-w-xl leading-relaxed text-steel-200/85">
-            Válvula de comando monoblock, válvula de seguridad anti-ruptura, válvulas de cartucho, rotadores y piezas de reposición para equipos forestales.
-          </p>
-          <ul class="mt-6 flex flex-wrap gap-2">
-            {['Sun Hydraulics', 'Badestnost', 'CBF Hydraulic'].map((brand) => (
-              <li class="rounded-full border border-oil-400/30 bg-oil-500/10 px-3 py-1.5 font-mono text-xs font-semibold text-oil-300">{brand}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div class="flex flex-col justify-center rounded-2xl border border-white/12 bg-gradient-to-br from-white/[0.07] to-transparent p-8 text-center sm:p-10">
+      <!-- Llamado a la acción -->
+      <div class="reveal mt-6 flex justify-center">
+        <div class="flex w-full max-w-2xl flex-col justify-center rounded-2xl border border-white/12 bg-gradient-to-br from-white/[0.07] to-transparent p-8 text-center sm:p-10">
           <h3 class="font-display text-xl font-bold leading-tight text-white sm:text-2xl">¿No encuentra su sector?</h3>
-          <p class="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-steel-200/80">
+          <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-steel-200/80">
             Atendemos maquinaria hidráulica de diversas industrias en {company.coverage}.
           </p>
           <a href="/#contacto" class="mt-6 inline-flex items-center justify-center gap-2 self-center rounded-lg bg-oil-500 px-6 py-3.5 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">
