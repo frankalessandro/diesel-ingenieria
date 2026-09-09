@@ -416,6 +416,48 @@ function initServiceCircuit() {
 
   stations[0].classList.add("is-on");
 
+  // Cada estación es un botón: además de cambiar el panel, lleva el scroll al
+  // punto del recorrido que le corresponde, para que seguir bajando continúe
+  // desde ahí en vez de re-recorrer todo lo que el click se saltó.
+  let trigger = null;
+
+  function goTo(i) {
+    if (trigger) {
+      // Progreso del recorrido en el que la estación i queda encendida; el
+      // epsilon evita quedarse justo en el borde del umbral.
+      const p = Math.min(1, (services[i].x - ORIGIN_X) / total + 0.005);
+      // Remedir antes de calcular: si algo de arriba cambió de alto desde el
+      // último refresh, start/end quedan corridos y el salto cae en la
+      // estación equivocada.
+      trigger.refresh();
+      const y = trigger.start + p * (trigger.end - trigger.start);
+      // Salto instantáneo ("instant" y no "auto": el documento tiene
+      // scroll-behavior: smooth y un scroll suave de miles de píxeles
+      // encendería todas las estaciones intermedias de paso). Como el stage
+      // es sticky nada se mueve en pantalla: el scrub de 0.6s es el que
+      // anima la línea de presión hasta el componente elegido.
+      window.scrollTo({ top: Math.round(y), behavior: "instant" });
+      return;
+    }
+    // Sin ScrollTrigger (prefers-reduced-motion): sólo se repinta el panel.
+    current = i;
+    paint(i);
+    stations.forEach((g, k) => g.classList.toggle("is-on", k === i));
+  }
+
+  stations.forEach((g, i) => {
+    g.setAttribute("role", "button");
+    g.setAttribute("tabindex", "0");
+    g.setAttribute("aria-label", services[i].title);
+    g.addEventListener("click", () => goTo(i));
+    g.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+        e.preventDefault();
+        goTo(i);
+      }
+    });
+  });
+
   const mm = gsap.matchMedia();
 
   mm.add("(prefers-reduced-motion: no-preference)", () => {
@@ -423,7 +465,7 @@ function initServiceCircuit() {
 
     // El stage es `position: sticky`, así que el trigger sólo tiene que medir
     // el recorrido del track — nada de pin, que en mobile es frágil.
-    ScrollTrigger.create({
+    trigger = ScrollTrigger.create({
       trigger: track,
       start: "top top+=104",
       end: "bottom bottom",
@@ -465,6 +507,7 @@ function initServiceCircuit() {
     });
 
     return () => {
+      trigger = null;
       setActive(0, false);
       stations.forEach((g, k) => g.classList.toggle("is-on", k === 0));
       gsap.set(fill, { strokeDashoffset: 0 });
