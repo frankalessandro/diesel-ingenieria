@@ -119,6 +119,15 @@ const sectors = [
   },
 ];
 
+// Flechas prev/next del panel (cíclicas): para el sector i, qué radio activa
+// cada flecha. Se renderiza un juego de 8 flechas por lado y solo se muestra la
+// que corresponde al sector activo.
+const sectorNav = sectors.map((s, i) => ({
+  id: s.id,
+  prev: sectors[(i - 1 + sectors.length) % sectors.length],
+  next: sectors[(i + 1) % sectors.length],
+}));
+
 // Reglas CSS generadas por sector (radio-tabs sin JS): botón activo + panel visible.
 const tabCss = sectors
   .map(
@@ -126,12 +135,30 @@ const tabCss = sectors
     #tab-${s.id}:checked ~ .switch-scroller [data-btn="${s.id}"] { background-color: var(--color-oil-500); border-color: var(--color-oil-400); color: var(--color-ink-950); }
     #tab-${s.id}:checked ~ .switch-scroller [data-btn="${s.id}"] .btn-icon { background-color: rgb(8 13 19 / 0.14); color: var(--color-ink-950); }
     #tab-${s.id}:checked ~ .switch-scroller [data-btn="${s.id}"] .font-display { color: var(--color-ink-950); }
-    #tab-${s.id}:checked ~ .frame-corners [data-panel="${s.id}"] { display: grid; }
+    #tab-${s.id}:checked ~ .switch-scroller [data-btn="${s.id}"] .sec-num { color: rgb(8 13 19 / 0.55); }
+    #tab-${s.id}:checked ~ .panel-row .frame-corners [data-panel="${s.id}"] { display: grid; }
+    #tab-${s.id}:checked ~ .panel-row [data-nav="${s.id}"] { display: flex; }
     #tab-${s.id}:focus-visible ~ .switch-scroller [data-btn="${s.id}"] { outline: 2px solid var(--color-oil-400); outline-offset: 2px; }
     #tab-${s.id}:checked ~ .carousel-dots [data-dot="${s.id}"] { background-color: var(--color-oil-400); width: 1.1rem; border-radius: 9999px; }
   `,
   )
   .join('\n');
+
+// Desde md la tira es un acordeón horizontal: la columna fijada (o la enfocada
+// por teclado) se ensancha y despliega el lead. El rótulo siempre es horizontal
+// (sin flip); el hover lo pisa con !important desde el <style> de la página.
+const tabCssDesktop = `@media (min-width: 768px) {
+${sectors
+  .map(
+    (s) => `
+    #tab-${s.id}:checked ~ .switch-scroller [data-btn="${s.id}"],
+    #tab-${s.id}:focus-visible ~ .switch-scroller [data-btn="${s.id}"] { flex-grow: 3.4; }
+    #tab-${s.id}:checked ~ .switch-scroller [data-btn="${s.id}"] .sec-lead,
+    #tab-${s.id}:focus-visible ~ .switch-scroller [data-btn="${s.id}"] .sec-lead { max-height: 4rem; opacity: 0.75; }
+  `,
+  )
+  .join('\n')}
+}`;
 
 const projects = [
   { n: '01', span: 'lg:col-span-8', title: 'Mini centrales hidráulicas', desc: 'Tanques de 1 a 20 litros, bomba de engranaje de 0,5 a 7,3 cc, motor eléctrico de 12/24/110/220/380 V y potencias de 1 a 5 Cv, hasta 180 bar. Para canasta aérea, elevadores, camión remolque, mesa pantográfica y más.' },
@@ -588,45 +615,64 @@ const inputClass =
       <!-- Selector radio (sin JS): array de botones tipo panel de control -->
       <div class="reveal relative mt-10">
         {sectors.map((s, i) => (
-          <input type="radio" name="sector-tab" id={`tab-${s.id}`} class="sr-only" checked={i === 0} />
+          <input type="radio" name="sector-tab" id={`tab-${s.id}`} class="sr-only sector-radio" checked={i === 0} />
         ))}
 
         {/* Reglas radio-tab generadas por sector: activan botón + panel sin JS. */}
         <style is:inline set:html={tabCss}></style>
+        <style is:inline set:html={tabCssDesktop}></style>
 
-        <div class="switch-scroller relative -mx-6 px-6 sm:mx-0 sm:px-0">
-          <div class="switch-grid touch-pan-x flex snap-x snap-proximity gap-3 overflow-x-auto overscroll-x-contain pb-1 sm:grid sm:grid-cols-4 sm:gap-3 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
+        <div class="switch-scroller relative -mx-6 px-6 sm:mx-0 sm:px-0 md:px-14">
+          <div class="switch-grid touch-pan-x flex snap-x snap-proximity gap-3 overflow-x-auto overscroll-x-contain pb-1 md:h-40 md:gap-2 md:overflow-visible md:pb-0">
             {sectors.map((s) => (
-              <label for={`tab-${s.id}`} data-btn={s.id} class="switch-btn relative flex w-[40%] shrink-0 cursor-pointer snap-center flex-col items-center gap-3 rounded-xl border border-white/25 bg-white/[0.09] px-4 py-6 text-center shadow-[0_1px_0_0_rgb(255_255_255_/_0.06)_inset] transition-colors duration-200 sm:w-auto sm:shrink">
-                <span class="btn-icon flex h-11 w-11 items-center justify-center rounded-lg bg-white/10 text-oil-400 transition-colors duration-200">
+              <label for={`tab-${s.id}`} data-btn={s.id} class="switch-btn relative flex w-[40%] shrink-0 cursor-pointer snap-center flex-col items-center gap-3 overflow-hidden rounded-xl border border-white/25 bg-white/[0.09] px-4 py-6 text-center shadow-[0_1px_0_0_rgb(255_255_255_/_0.06)_inset] md:w-auto md:min-w-0 md:shrink md:grow md:basis-0 md:justify-center md:gap-2 md:px-3 md:py-3">
+                <span class="sec-num hidden font-mono text-[11px] font-bold text-white/40 transition-colors duration-200 md:block">{s.n}</span>
+                <span class="btn-icon flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-white/10 text-oil-400 transition-colors duration-200 md:h-9 md:w-9">
                   <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={s.icon}/></svg>
                 </span>
-                <span class="font-display text-sm font-bold leading-tight text-white">{s.title}</span>
+                <span class="font-display text-sm font-bold leading-tight text-white md:hidden">{s.title}</span>
+                <span class="sec-label hidden font-display text-[0.8125rem] font-bold leading-tight text-balance text-white md:block">{s.title}</span>
+                <span class="sec-lead hidden max-w-[24rem] overflow-hidden text-xs leading-snug text-current opacity-0 md:block" aria-hidden="true">{s.lead}</span>
               </label>
             ))}
           </div>
 
-          <div class="scroll-hint pointer-events-none absolute inset-y-0 right-1 flex items-center pb-1 transition-opacity duration-300 sm:hidden" aria-hidden="true">
+          <div class="scroll-hint pointer-events-none absolute inset-y-0 right-1 flex items-center pb-1 transition-opacity duration-300 md:hidden" aria-hidden="true">
             <span class="animate-scroll-hint flex h-7 w-7 items-center justify-center rounded-full bg-steel-900/80 text-white shadow-lift ring-1 ring-white/15 backdrop-blur-sm">
               <svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 4.5 12.5 10l-5 5.5"/></svg>
             </span>
           </div>
         </div>
 
-        <div class="carousel-dots mt-4 flex justify-center gap-1.5 sm:hidden" aria-hidden="true">
+        <div class="carousel-dots mt-4 flex justify-center gap-1.5 md:hidden" aria-hidden="true">
           {sectors.map((s) => (
             <span data-dot={s.id} class="dot h-1.5 w-1.5 rounded-full bg-white/20 transition-colors duration-200"></span>
           ))}
         </div>
 
-        <div class="frame-corners frame-corners-dark relative mt-4 overflow-hidden rounded-2xl border border-white/15 bg-white/[0.03]">
+        <div class="panel-row mt-4 flex items-stretch gap-3 md:gap-4">
+          <!-- Flecha anterior: un juego por sector, solo visible la del activo (cíclica) -->
+          <div class="sector-nav hidden shrink-0 items-center md:flex">
+            {sectorNav.map((n) => (
+              <label
+                for={`tab-${n.prev.id}`}
+                data-nav={n.id}
+                class="sector-nav-btn hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/[0.06] text-white/70 transition-colors hover:border-oil-400 hover:bg-white/[0.12] hover:text-white"
+                aria-label={`Sector anterior: ${n.prev.title}`}
+              >
+                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+              </label>
+            ))}
+          </div>
+
+        <div class="frame-corners frame-corners-dark relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-white/15 bg-white/[0.03]">
           <span class="corner corner-tl" aria-hidden="true"></span>
           <span class="corner corner-tr" aria-hidden="true"></span>
           <span class="corner corner-bl" aria-hidden="true"></span>
           <span class="corner corner-br" aria-hidden="true"></span>
 
           {sectors.map((s) => (
-            <div data-panel={s.id} class="sector-panel relative hidden w-full grid-cols-1 md:grid-cols-[1fr_0.85fr_1.1fr]">
+            <div data-panel={s.id} class="sector-panel relative hidden w-full grid-cols-1 md:grid-cols-2">
               <div class="flex flex-col justify-between p-8 sm:p-10">
                 <div>
                   <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-400">Sector / {s.n}</span>
@@ -640,12 +686,12 @@ const inputClass =
               </div>
 
               <div class="flex items-center border-t border-white/10 bg-black/15 p-6 sm:p-8 md:border-l md:border-t-0">
-                <MediaFrame ratio="16/9" variant="dark" label={`Foto — ${s.title}`} class="mx-auto w-full max-w-md md:max-w-none md:aspect-square" />
+                <MediaFrame ratio="16/9" variant="dark" label={`Foto — ${s.title}`} class="mx-auto w-full max-w-md md:max-w-none md:aspect-[4/3]" />
               </div>
 
-              <div class="flex flex-col justify-center border-t border-white/10 bg-black/15 p-8 sm:p-10 md:border-l md:border-t-0">
+              <div class="flex flex-col justify-center border-t border-white/10 bg-black/15 p-8 sm:p-10 md:col-span-2">
                 <span class="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-white/40">Aplicaciones típicas</span>
-                <ul class="mt-3 grid grid-cols-1 gap-x-6 gap-y-2.5 sm:grid-cols-2">
+                <ul class="mt-3 grid grid-cols-1 gap-x-6 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
                   {s.apps.map((app) => (
                     <li class="flex items-center gap-2.5 text-sm font-medium text-steel-100/90">
                       <svg viewBox="0 0 20 20" class="h-4 w-4 shrink-0 text-oil-400" fill="currentColor" aria-hidden="true"><path d="M9 12.75 6.75 10.5l-1.5 1.5L9 15.75l7.5-7.5-1.5-1.5L9 12.75Z"/></svg>
@@ -657,16 +703,35 @@ const inputClass =
             </div>
           ))}
         </div>
+
+          <!-- Flecha siguiente: un juego por sector, solo visible la del activo (cíclica) -->
+          <div class="sector-nav hidden shrink-0 items-center md:flex">
+            {sectorNav.map((n) => (
+              <label
+                for={`tab-${n.next.id}`}
+                data-nav={n.id}
+                class="sector-nav-btn hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/[0.06] text-white/70 transition-colors hover:border-oil-400 hover:bg-white/[0.12] hover:text-white"
+                aria-label={`Sector siguiente: ${n.next.title}`}
+              >
+                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              </label>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <!-- Llamado a la acción -->
-      <div class="reveal mt-6 flex justify-center">
-        <div class="flex w-full max-w-2xl flex-col justify-center rounded-2xl border border-white/12 bg-gradient-to-br from-white/[0.07] to-transparent p-8 text-center sm:p-10">
-          <h3 class="font-display text-xl font-bold leading-tight text-white sm:text-2xl">¿No encuentra su sector?</h3>
-          <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-steel-200/80">
-            Atendemos maquinaria hidráulica de diversas industrias en {company.coverage}.
-          </p>
-          <a href="/#contacto" class="mt-6 inline-flex items-center justify-center gap-2 self-center rounded-lg bg-oil-500 px-6 py-3.5 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">
+      <!-- Llamado a la acción — pie del panel, sin caja: hairline + tipografía -->
+      <div class="reveal relative mt-12 border-t border-white/12 pt-9 md:mx-14">
+        <span class="absolute -top-px left-0 h-0.5 w-16 bg-oil-500" aria-hidden="true"></span>
+        <div class="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between sm:gap-12">
+          <div class="max-w-2xl">
+            <span class="font-mono text-xs font-bold uppercase tracking-[0.2em] text-oil-400">¿No encuentra su sector?</span>
+            <p class="mt-4 font-display text-2xl font-bold leading-[1.15] text-white text-balance sm:text-[1.75rem]">
+              Atendemos maquinaria hidráulica de diversas industrias en {company.coverage}.
+            </p>
+          </div>
+
+          <a href="/#contacto" class="inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 self-start rounded-lg bg-oil-500 px-6 py-3.5 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">
             Hablar con un técnico
             <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
           </a>
@@ -840,8 +905,18 @@ const inputClass =
 
 <style>
   /* ---- Selector de sectores (banda azul) ---- */
+  /* Los radios viven al inicio del bloque, pero al enfocarlos (click en una
+     flecha del panel, que está más abajo) el navegador salta a su posición.
+     Se los ancla al centro vertical del bloque para que el foco quede a la
+     altura del panel y no haya scroll brusco hacia arriba. */
+  .sector-radio {
+    top: 50%;
+    left: 50%;
+  }
+
   /* Crecimiento leve al hover: señala que la tarjeta es un botón sin empujar el
-     layout (solo transform). */
+     layout (solo transform). Aplica al carrusel de mobile; en desktop el gesto
+     pasa a ser el ensanche de la columna (más abajo). */
   .switch-btn {
     transition:
       transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
@@ -869,6 +944,60 @@ const inputClass =
     }
   }
 
+  /* ---- Tira de sectores en desktop: acordeón horizontal ----
+     La columna fijada por el radio queda ensanchada y naranja; el hover la pisa
+     temporalmente (de ahí los !important) y al salir el cursor vuelve sola a la
+     fijada. Todo con flex-grow: sin JS y sin salto de ancho del contenedor. */
+  @media (min-width: 768px) {
+    .switch-btn {
+      transition:
+        flex-grow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease;
+    }
+    .switch-btn:hover,
+    .switch-btn:active {
+      transform: none;
+      box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.06) inset;
+    }
+
+    /* El rótulo siempre es horizontal; al expandirse se despliega el lead
+       (max-height + opacity), sin flip de writing-mode. */
+    .sec-lead {
+      max-height: 0;
+      opacity: 0;
+      transition:
+        max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.25s ease;
+    }
+
+    /* El hover manda sobre el estado fijado mientras el cursor esté en la tira. */
+    .switch-grid:hover .switch-btn {
+      flex-grow: 1 !important;
+    }
+    .switch-grid .switch-btn:hover {
+      flex-grow: 3.4 !important;
+      border-color: var(--color-oil-400);
+      background-color: rgb(255 255 255 / 0.14);
+    }
+    .switch-grid:hover .switch-btn:not(:hover) .sec-lead {
+      max-height: 0 !important;
+      opacity: 0 !important;
+    }
+    .switch-grid .switch-btn:hover .sec-lead {
+      max-height: 4rem !important;
+      opacity: 0.75 !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .switch-btn,
+      .sec-lead {
+        transition: none;
+      }
+    }
+  }
+
   /* Carrusel de sectores en mobile: sin scrollbar visible, snap suave */
   .switch-grid {
     scrollbar-width: none;
@@ -884,7 +1013,7 @@ const inputClass =
   }
 
   /* Difumina el borde derecho real del carrusel (sin parche de color superpuesto) */
-  @media (max-width: 639px) {
+  @media (max-width: 767px) {
     .switch-grid {
       -webkit-mask-image: linear-gradient(to left, transparent 0, #000 40px);
       mask-image: linear-gradient(to left, transparent 0, #000 40px);

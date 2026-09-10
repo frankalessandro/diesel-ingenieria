@@ -108,7 +108,7 @@ Orden de secciones: Hero → Muro de clientes → "Así se ve el trabajo" → 01
 ### / 03 — Especialidades (índice de despiece)
 
 **Título:** Si mueve aceite, **lo conocemos**
-**Párrafo:** Once familias de componentes hidráulicos y neumáticos. Los reparamos, los mecanizamos y los conseguimos a nivel nacional: no vendemos catálogo, resolvemos el equipo que está parado.
+**Párrafo:** Once familias de componentes hidráulicos. Los reparamos, los mecanizamos y los conseguimos a nivel nacional: no vendemos catálogo, resolvemos el equipo que está parado.
 **Contadores:** Familias **11** · Líneas de producto **47**
 **Botón:** Ver todas las especialidades *(→ `/especialidades`)*
 **Encabezado del índice:** Índice de componentes · Reparación · Mecanizado · Suministro
