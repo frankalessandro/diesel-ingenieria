@@ -108,17 +108,6 @@ export const categories: Especialidad[] = [
     ],
   },
   {
-    id: 'neumatica',
-    title: 'Sistemas neumáticos',
-    intro: 'Potencia por aire comprimido, complementaria a la línea hidráulica.',
-    icon: 'M3 8h10a3 3 0 1 0-3-3M3 16h14a3 3 0 1 1-3 3M3 12h17.5a2.5 2.5 0 1 0-2.5-2.5',
-    items: [
-      { name: 'Válvulas neumáticas', specs: 'Control direccional y de proceso' },
-      { name: 'Actuadores y cilindros neumáticos', specs: 'Lineales y rotativos' },
-      { name: 'Racores y conexiones rápidas', specs: 'Para circuitos de aire comprimido' },
-    ],
-  },
-  {
     id: 'lubricacion',
     title: 'Sistemas de lubricación',
     intro: 'Engrase centralizado para equipos con múltiples puntos críticos.',
