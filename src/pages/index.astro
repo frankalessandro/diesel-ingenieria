@@ -2,8 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import SteelBanner from '../components/SteelBanner.astro';
 import MediaFrame from '../components/MediaFrame.astro';
-import CircuitLine from '../components/CircuitLine.astro';
 import BrandGrid from '../components/BrandGrid.astro';
+import HeroFoto from '../components/HeroFoto.astro';
 import ClientWall from '../components/ClientWall.astro';
 import { company, figures, whatsappLink } from '../data/company';
 import { categories, totalItems } from '../data/especialidades';
@@ -19,14 +19,6 @@ import logoTerex from '../assets/logos-marcas/Terex-logo.png';
 import logoFord from '../assets/logos-marcas/ford.svg';
 
 const wa = whatsappLink();
-
-const specSheet = [
-  { k: 'Especialidad', v: 'Hidráulica' },
-  { k: 'Cobertura', v: company.coverage },
-  { k: 'Fabricación', v: 'Cilindros y unidades de potencia' },
-  { k: 'Servicio', v: 'En sitio' },
-  { k: 'Mantenimiento', v: 'Predictivo, preventivo y correctivo' },
-];
 
 const whatWeDo = [
   {
@@ -209,60 +201,7 @@ const inputClass =
 >
   <main>
     <!-- ============ HERO ============ -->
-    <section data-hero data-parallax-scope class="noise relative isolate overflow-hidden bg-paper pt-32 pb-24 lg:pt-40">
-      <div class="pointer-events-none absolute -right-24 -top-24 h-[38rem] w-[38rem] rounded-full bg-steel-200/45 blur-[130px]" data-parallax="0.2" aria-hidden="true"></div>
-      <div class="pointer-events-none absolute -left-32 bottom-[-6rem] h-96 w-96 rounded-full bg-oil-100/70 blur-[110px]" data-parallax="0.12" aria-hidden="true"></div>
-      <CircuitLine class="pointer-events-none absolute -right-10 bottom-0 hidden h-64 w-[26rem] text-steel-600/[0.09] lg:block" data-parallax="0.06" aria-hidden="true" />
-      <span class="pointer-events-none absolute -bottom-10 left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-[19vw] font-bold leading-none text-stroke opacity-70 sm:text-[15vw]" data-drift="10" aria-hidden="true">HIDRÁULICA</span>
-
-      <div class="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-14 px-6 lg:grid-cols-[1.15fr_0.85fr]">
-        <div>
-          <h1 class="font-display text-[12vw] font-bold leading-[0.96] tracking-tight text-ink-900 text-balance sm:text-6xl lg:text-[4.8rem]">
-            <span data-hero-line data-gradient="sistemas" class="block">Especialistas en <span class="bg-linear-to-r from-oil-600 via-oil-500 to-oil-400 bg-clip-text uppercase text-transparent">Sistemas</span></span>
-            <span data-hero-line data-gradient="hidráulicos" class="block bg-linear-to-r from-oil-600 via-oil-500 to-oil-400 bg-clip-text uppercase text-transparent">Hidráulicos</span>
-          </h1>
-
-          <p data-hero-sub class="mt-7 max-w-xl text-lg leading-relaxed text-ink-600">
-            Diagnosticamos, reparamos y fabricamos sistemas hidráulicos movidos con aceite mineral utilizados en su maquinaria pesada e industrial.
-          </p>
-
-          <div class="mt-9 flex flex-wrap items-center gap-4">
-            <a data-hero-cta href="/#contacto" class="cta-pulse cursor-pointer rounded-lg bg-oil-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-glow transition-colors hover:bg-oil-400">
-              Solicitar diagnóstico
-            </a>
-            <a data-hero-cta href={wa} target="_blank" rel="noopener noreferrer" class="group flex cursor-pointer items-center gap-2 rounded-lg border border-ink-900/15 bg-white px-7 py-4 text-sm font-bold text-ink-800 transition-colors hover:border-steel-500 hover:text-steel-700">
-              Escribir por WhatsApp
-              <svg viewBox="0 0 20 20" class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L11.29 6.16a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.098-3.09H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Ficha técnica de la empresa -->
-        <aside data-hero-side class="relative mx-auto w-full max-w-sm">
-          <div class="surface overflow-hidden rounded-2xl">
-            <div class="flex items-center justify-between border-b border-ink-900/10 bg-steel-50 px-6 py-4">
-              <span class="font-mono text-xs font-bold uppercase tracking-[0.18em] text-steel-700">Diesel Ingeniería S.A.S.</span>
-              <span class="flex h-6 w-6 items-center justify-center rounded-full bg-oil-500 text-ink-950">
-                <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true"><path d="M12 2c-.3 0-.6.13-.8.36C9.1 5.2 6 9.9 6 13.5 6 17.6 8.7 21 12 21s6-3.4 6-7.5c0-3.6-3.1-8.3-5.2-11.14A1.02 1.02 0 0 0 12 2Z"/></svg>
-              </span>
-            </div>
-            <div class="flex items-end gap-3 px-6 pt-6">
-              <span class="font-display text-7xl font-bold leading-none text-ink-900"><span data-counter={figures.years}>0</span></span>
-              <span class="pb-2 font-display text-sm font-bold uppercase tracking-[0.14em] text-oil-600">Años de<br>experiencia</span>
-            </div>
-            <dl class="mt-6 divide-y divide-ink-100 px-6 pb-6">
-              {specSheet.map((row) => (
-                <div class="flex items-center justify-between gap-4 py-2.5">
-                  <dt class="font-mono text-xs uppercase tracking-wider text-ink-500">{row.k}</dt>
-                  <dd class="text-right text-sm font-bold text-ink-800">{row.v}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-          <div class="absolute -bottom-3 -left-3 -z-10 h-24 w-24 rounded-xl hazard opacity-90" aria-hidden="true"></div>
-        </aside>
-      </div>
-    </section>
+    <HeroFoto />
 
     <!-- ============ CLIENTES (muro con modal) ============ -->
     <ClientWall />
