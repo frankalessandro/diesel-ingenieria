@@ -1,0 +1,61 @@
+---
+/*
+ * Ficha técnica "DI · 000" — misma familia visual que las placas del muro de
+ * clientes. Va acoplada bajo la foto de "Así se ve el trabajo" (index): el
+ * contenedor (surface + esquinas) lo pone quien la usa.
+ */
+import { Image } from 'astro:assets';
+import logo from '../assets/Diesel Logo_birefnet.png';
+import { company, figures } from '../data/company';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const specSheet = [
+  { k: 'Especialidad', v: 'Hidráulica' },
+  { k: 'Servicio', v: 'En sitio' },
+  { k: 'Fabricación', v: 'Cilindros y unidades de potencia' },
+  { k: 'Mantenimiento', v: 'Predictivo, preventivo y correctivo' },
+  { k: 'Cobertura', v: company.coverage },
+];
+---
+
+<div class:list={[className]}>
+    <div class="flex items-center justify-between border-b border-ink-900/10 bg-steel-50 px-5 py-2.5">
+      <span class="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-ink-400">DI · 000</span>
+      <span class="flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-oil-600">
+        <span class="h-1.5 w-1.5 rounded-full bg-oil-500" aria-hidden="true"></span>
+        Quién le atiende
+      </span>
+    </div>
+
+    <div class="grid grid-cols-[auto_1fr] items-center gap-4 px-5 py-3">
+      <Image src={logo} alt="Diesel Ingeniería S.A.S." width={132} height={105} class="h-9 w-auto shrink-0 object-contain" />
+      <div class="border-l border-ink-900/10 pl-4">
+        <span class="block font-display text-base font-bold leading-tight text-ink-900">Diesel Ingeniería <span class="text-oil-600">S.A.S.</span></span>
+        <span class="mt-1 block text-[11px] font-bold uppercase tracking-wide text-steel-700">Especialistas en Sistemas Hidráulicos</span>
+      </div>
+    </div>
+
+    <dl class="grid grid-cols-2 border-t border-ink-900/10 sm:grid-cols-3">
+      <div class="flex flex-row-reverse items-end justify-end gap-2 border-b border-r border-ink-100 px-4 py-2.5">
+        <dt class="pb-0.5 font-display text-[10px] font-bold uppercase leading-tight tracking-[0.14em] text-oil-600">Años de<br>experiencia</dt>
+        <dd class="font-display text-4xl font-bold leading-none text-ink-900"><span data-counter={figures.years}>0</span></dd>
+      </div>
+      {specSheet.map((row, i) => (
+        <div class:list={[
+          'flex flex-col gap-0.5 border-ink-100 px-4 py-2.5',
+          i < 2 && 'border-b',
+          i === 2 && 'max-sm:border-b',
+          i !== 1 && i !== 4 && 'sm:border-r',
+          i % 2 === 1 && 'max-sm:border-r',
+        ]}>
+          <dt class="font-mono text-[10px] uppercase tracking-wider text-ink-500">{row.k}</dt>
+          <dd class="text-[13px] font-bold leading-snug text-ink-800">{row.v}</dd>
+        </div>
+      ))}
+    </dl>
+</div>

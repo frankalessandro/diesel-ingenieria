@@ -1,32 +1,23 @@
 ---
 /*
  * Hero alterno — la fotografía es el fondo a sangre y el contenido del hero
- * original (H1, bajada, CTAs y ficha "DI · 000") va encima.
+ * original (H1, bajada y CTAs) va encima.
  *
  * La foto se lee en dos planos: el cliente tranquilo a la izquierda y los
  * técnicos Diesel sobre la grúa a la derecha. Para no tapar caras ni logos,
  * todo el contenido baja al tercio inferior (mesa, planos, mangueras): el texto
- * sobre la mesa del cliente y la ficha sobre las piernas/mangueras de los
- * técnicos. Un velo oscuro desde abajo da el contraste.
+ * sobre la mesa del cliente. La ficha "DI · 000" vive ahora en "Así se ve el
+ * trabajo" (<FichaTecnica />). Un velo oscuro desde abajo da el contraste.
  *
  * El muro de clientes (<ClientWall />, -mt-12) monta su tarjeta sobre el borde
  * inferior oscuro: del respaldo en la foto a las empresas que ya lo tienen.
  * Reutiliza los hooks de motion.js (data-hero, data-hero-line/sub/cta/side).
  */
 import { Image } from 'astro:assets';
-import heroImg from '../assets/Posible hero.jpeg';
-import logo from '../assets/Diesel Logo_birefnet.png';
-import { company, figures, whatsappLink } from '../data/company';
+import heroImg from '../assets/hero image.jpg';
+import { whatsappLink } from '../data/company';
 
 const wa = whatsappLink();
-
-const specSheet = [
-  { k: 'Especialidad', v: 'Hidráulica' },
-  { k: 'Servicio', v: 'En sitio' },
-  { k: 'Fabricación', v: 'Cilindros y unidades de potencia' },
-  { k: 'Mantenimiento', v: 'Predictivo, preventivo y correctivo' },
-  { k: 'Cobertura', v: company.coverage },
-];
 ---
 
 <section
@@ -60,7 +51,7 @@ const specSheet = [
     Imagen de fondo: un jefe de operaciones revisa planos con tranquilidad en su oficina de obra mientras, al fondo, técnicos de Diesel Ingeniería trabajan en los cilindros hidráulicos de una grúa.
   </p>
 
-  <div class="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 gap-10 px-6 lg:grid-cols-[1fr_auto] lg:items-end">
+  <div class="relative z-10 mx-auto w-full max-w-7xl px-6">
     <div>
       <h1 class="font-display text-[12vw] font-bold leading-[0.96] tracking-tight text-white text-balance sm:text-6xl lg:text-[clamp(2.5rem,5.8svh,4.2rem)]">
         <span data-hero-line data-gradient="sistemas" class="block text-white">Especialistas en <span class="bg-linear-to-r from-oil-600 via-oil-500 to-oil-400 bg-clip-text uppercase text-transparent">Sistemas</span></span>
@@ -81,53 +72,6 @@ const specSheet = [
         </a>
       </div>
     </div>
-
-    <!-- Ficha técnica "DI · 000" compacta — misma familia visual que las placas
-         del muro de clientes, sobre la zona baja de la foto (mangueras). -->
-    <aside data-hero-side class="relative w-full max-w-md lg:w-[28rem] lg:justify-self-end">
-      <div class="surface frame-corners corners-tight relative overflow-hidden rounded-2xl bg-white/95 backdrop-blur-md">
-        <span class="corner corner-tl" aria-hidden="true"></span>
-        <span class="corner corner-tr" aria-hidden="true"></span>
-        <span class="corner corner-bl" aria-hidden="true"></span>
-        <span class="corner corner-br" aria-hidden="true"></span>
-
-        <div class="flex items-center justify-between border-b border-ink-900/10 bg-steel-50 px-5 py-2.5">
-          <span class="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-ink-400">DI · 000</span>
-          <span class="flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-oil-600">
-            <span class="h-1.5 w-1.5 rounded-full bg-oil-500" aria-hidden="true"></span>
-            Quién le atiende
-          </span>
-        </div>
-
-        <div class="grid grid-cols-[auto_1fr] items-center gap-4 px-5 py-3">
-          <Image src={logo} alt="Diesel Ingeniería S.A.S." width={132} height={105} class="h-9 w-auto shrink-0 object-contain" />
-          <div class="border-l border-ink-900/10 pl-4">
-            <span class="block font-display text-base font-bold leading-tight text-ink-900">Diesel Ingeniería <span class="text-oil-600">S.A.S.</span></span>
-            <span class="mt-1 block text-[11px] font-bold uppercase tracking-wide text-steel-700">Especialistas en Sistemas Hidráulicos</span>
-          </div>
-        </div>
-
-        <dl class="grid grid-cols-2 border-t border-ink-900/10 sm:grid-cols-3">
-          <div class="flex flex-row-reverse items-end justify-end gap-2 border-b border-r border-ink-100 px-4 py-2.5">
-            <dt class="pb-0.5 font-display text-[10px] font-bold uppercase leading-tight tracking-[0.14em] text-oil-600">Años de<br>experiencia</dt>
-            <dd class="font-display text-4xl font-bold leading-none text-ink-900"><span data-counter={figures.years}>0</span></dd>
-          </div>
-          {specSheet.map((row, i) => (
-            <div class:list={[
-              'flex flex-col gap-0.5 border-ink-100 px-4 py-2.5',
-              i < 2 && 'border-b',
-              i === 2 && 'max-sm:border-b',
-              i !== 1 && i !== 4 && 'sm:border-r',
-              i % 2 === 1 && 'max-sm:border-r',
-            ]}>
-              <dt class="font-mono text-[10px] uppercase tracking-wider text-ink-500">{row.k}</dt>
-              <dd class="text-[13px] font-bold leading-snug text-ink-800">{row.v}</dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-      <div class="absolute -bottom-3 -left-3 -z-10 h-20 w-20 rounded-xl hazard opacity-90" aria-hidden="true"></div>
-    </aside>
   </div>
 </section>
 
